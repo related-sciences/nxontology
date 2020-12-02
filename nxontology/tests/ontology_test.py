@@ -32,13 +32,13 @@ def create_metal_nxo() -> NXOntology:
     return nxo
 
 
-@pytest.fixture
+@pytest.fixture  # type: ignore [misc]
 def metal_nxo() -> NXOntology:
     """Returns a newly created metal ontology for each test."""
     return create_metal_nxo()
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture(scope="module")  # type: ignore [misc]
 def metal_nxo_frozen() -> NXOntology:
     """
     Frozen metals ontology,
@@ -115,7 +115,7 @@ def test_intrinsic_ic_unscaled(metal_nxo_frozen: NXOntology) -> None:
         ("copper", "metal", 1 / 3),
         ("platinum", "gold", 0.4),
     ],
-)
+)  # type: ignore [misc]
 def test_similarity_batet(
     metal_nxo_frozen: NXOntology, node_0: str, node_1: str, expected: float
 ) -> None:
@@ -132,7 +132,7 @@ def test_similarity_batet(
         ("copper", "silver", "coinage"),
         ("gold", "silver", "coinage"),
     ],
-)
+)  # type: ignore [misc]
 def test_similarity_mica(
     metal_nxo_frozen: NXOntology, node_0: str, node_1: str, expected: float
 ) -> None:
@@ -220,6 +220,4 @@ def export_metal_similarity_tsv() -> None:
 if __name__ == "__main__":
     import fire
 
-    fire.Fire(
-        {"export_metal_similarity_tsv": export_metal_similarity_tsv,}
-    )
+    fire.Fire({"export_metal_similarity_tsv": export_metal_similarity_tsv})
