@@ -146,7 +146,10 @@ class NXOntology(Freezable):
         return cast(bool, nx.is_frozen(self.graph))
 
     def similarity(
-        self, node_0: Node, node_1: Node, ic_metric: str = "intrinsic_ic_sanchez",
+        self,
+        node_0: Node,
+        node_1: Node,
+        ic_metric: str = "intrinsic_ic_sanchez",
     ) -> "SimilarityIC":
         """SimilarityIC instance for the specified nodes"""
         return SimilarityIC(self, node_0, node_1, ic_metric)
@@ -326,7 +329,7 @@ class Node_Info(Freezable):
     def intrinsic_ic_sanchez_scaled(self) -> float:
         """
         Like intrinsic_ic_sanchez, but scaled to be between [0,1],
-        by dividing by the theoretical IC of the most informative node. 
+        by dividing by the theoretical IC of the most informative node.
         """
         return self.intrinsic_ic_sanchez / math.log(len(self.nxo.leaves) + 1)
 
