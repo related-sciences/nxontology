@@ -5,7 +5,41 @@ Currently, the main area of functionality is computing similarity measures betwe
 
 ## Usage
 
-TODO
+Here is an example showing how to compute similarity metrics on an example ontology:
+
+```python
+from nxontology.examples import create_metal_nxo
+metals = create_metal_nxo()
+# Freezing the ontology prevents adding or removing nodes or edges.
+# Frozen ontologies cache expensive computations.
+metals.freeze()
+# Get object for computing similarity, using the Sanchez et al metric for information content.
+similarity = metals.similarity("gold", "silver", ic_metric="intrinsic_ic_sanchez")
+# Access a single similarity metric
+similarity.lin
+# Access all similarity metrics
+import pprint
+pprint.pprint(similarity.results())
+```
+
+The final line outputs:
+
+```python
+{'batet': 0.6,
+ 'batet_log': 0.5693234419266069,
+ 'ic_metric': 'intrinsic_ic_sanchez',
+ 'jiang': 0.41905978419640516,
+ 'jiang_seco': 0.6131471927654584,
+ 'lin': 0.5581154235118403,
+ 'mica': 'coinage',
+ 'n_common_ancestors': 3,
+ 'n_union_ancestors': 5,
+ 'node_0': 'gold',
+ 'node_0_subsumes_1': False,
+ 'node_1': 'silver',
+ 'node_1_subsumes_0': False,
+ 'resnik': 0.8754687373538999,
+```
 
 ## Bibliography
 
