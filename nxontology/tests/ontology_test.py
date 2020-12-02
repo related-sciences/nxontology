@@ -193,7 +193,7 @@ def get_metal_similarity_tsv() -> str:
 
 
 metal_sim_path: pathlib.Path = pathlib.Path(__file__).parent.joinpath(
-    "ontology_utils_test_metal_sim.tsv"
+    "ontology_test_metal_sim.tsv"
 )
 
 
