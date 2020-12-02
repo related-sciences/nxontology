@@ -187,7 +187,9 @@ def get_metal_similarity_tsv() -> str:
         ic_metrics=Node_Info.ic_metrics,
     )
     metal_sim_df = pd.DataFrame(sims)
-    tsv = metal_sim_df.to_csv(sep="\t", index=False, float_format="%.3g")
+    tsv = metal_sim_df.to_csv(
+        sep="\t", index=False, float_format="%.3g", line_terminator="\n"
+    )
     assert isinstance(tsv, str)
     return tsv
 
