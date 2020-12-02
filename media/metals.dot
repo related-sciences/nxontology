@@ -1,0 +1,20 @@
+// https://jbiomedsem.biomedcentral.com/articles/10.1186/2041-1480-2-5/figures/1
+strict digraph  {
+metal;
+precious;
+coinage;
+platinum;
+palladium;
+gold;
+silver;
+copper;
+metal -> precious;
+metal -> coinage;
+precious -> platinum;
+precious -> palladium;
+precious -> gold;
+precious -> silver;
+coinage -> gold;
+coinage -> silver;
+coinage -> copper;
+}

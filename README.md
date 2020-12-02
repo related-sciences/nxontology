@@ -5,7 +5,14 @@ Currently, the main area of functionality is computing similarity measures betwe
 
 ## Usage
 
-Here is an example showing how to compute similarity metrics on an example ontology:
+Here, we'll use the example [metals ontology](https://jbiomedsem.biomedcentral.com/articles/10.1186/2041-1480-2-5/figures/1 "From Figure 1 of Disjunctive shared information between ontology concepts: application to Gene Ontology. Couto & Silva. 2011. Released under CC BY 2.0."):
+
+![Metals ontology from Couto & Silva (2011)](media/metals.svg)
+
+Note that `NXOntology` represents the ontology as a [`networkx.DiGraph`](https://networkx.org/documentation/stable/reference/classes/digraph.html), where edge direction goes from superterm to subterm.
+Currently, users must create their own `networkx.DiGraph` to use this package.
+
+Given an `NXOntology` instance, here how to compute intrinsic similarity metrics.
 
 ```python
 from nxontology.examples import create_metal_nxo
@@ -18,27 +25,29 @@ similarity = metals.similarity("gold", "silver", ic_metric="intrinsic_ic_sanchez
 # Access a single similarity metric
 similarity.lin
 # Access all similarity metrics
-import pprint
-pprint.pprint(similarity.results())
+similarity.results()
 ```
 
-The final line outputs:
+The final line outputs a dictionary like:
 
 ```python
-{'batet': 0.6,
- 'batet_log': 0.5693234419266069,
- 'ic_metric': 'intrinsic_ic_sanchez',
- 'jiang': 0.41905978419640516,
- 'jiang_seco': 0.6131471927654584,
- 'lin': 0.5581154235118403,
- 'mica': 'coinage',
- 'n_common_ancestors': 3,
- 'n_union_ancestors': 5,
- 'node_0': 'gold',
- 'node_0_subsumes_1': False,
- 'node_1': 'silver',
- 'node_1_subsumes_0': False,
- 'resnik': 0.8754687373538999,
+{
+    'node_0': 'gold',
+    'node_1': 'silver',
+    'node_0_subsumes_1': False,
+    'node_1_subsumes_0': False,
+    'n_common_ancestors': 3,
+    'n_union_ancestors': 5,
+    'batet': 0.6,
+    'batet_log': 0.5693234419266069,
+    'ic_metric': 'intrinsic_ic_sanchez',
+    'mica': 'coinage',
+    'resnik': 0.8754687373538999,
+    'resnik_scaled': 0.48860840553061435,
+    'lin': 0.5581154235118403, 
+    'jiang': 0.41905978419640516,
+    'jiang_seco': 0.6131471927654584,
+}
 ```
 
 ## Bibliography
