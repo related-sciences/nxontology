@@ -5,6 +5,8 @@ pip-wheel-metadata/
 .ipynb_checkpoints
 .cache
 .pytest_cache/
+.venv
+.eggs/
 
 # System specific files
 
