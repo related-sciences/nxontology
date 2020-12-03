@@ -3,7 +3,7 @@ import pathlib
 from setuptools import setup
 
 directory = pathlib.Path(__file__).parent
-readme = directory.joinpath("README.md").read_text()
+readme = directory.joinpath("README.md").read_text(encoding="utf-8")
 
 setup(
     use_scm_version=True,
