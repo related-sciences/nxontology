@@ -52,6 +52,14 @@ The final line outputs a dictionary like:
 
 ## Bibliography
 
+Here's a list of alternative projects with code for computing semantic similarity measures on ontologies:
+
+- [Semantic Measures Library & ToolKit](https://www.semantic-measures-library.org/sml/) at [sharispe/slib](https://github.com/sharispe/slib) in Java.
+- [DiShIn](http://labs.rd.ciencias.ulisboa.pt/dishin/) at [lasigeBioTM/DiShIn](https://github.com/lasigeBioTM/DiShIn) in Python.
+- [Sematch](http://sematch.gsi.upm.es/) at [gsi-upm/sematch](https://github.com/gsi-upm/sematch) in Python.
+- [ontologySimilarity](https://rdrr.io/cran/ontologySimilarity/) mirrored at [cran/ontologySimilarity](https://github.com/cran/ontologySimilarity). Part of the [ontologyX](https://doi.org/10.1093/bioinformatics/btw763 "ontologyX: a suite of R packages for working with ontological data") suite of R packages. 
+- Materials for Machine Learning with Ontologies at [bio-ontology-research-group/machine-learning-with-ontologies](https://github.com/bio-ontology-research-group/machine-learning-with-ontologies) (compilation)
+
 Below are a list of references related to ontology-derived measures of similarity.
 Feel free to add any reference that provides useful context and details for algorithms supported by this package.
 
