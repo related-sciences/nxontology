@@ -1,5 +1,10 @@
 # NetworkX-based Python library for representing ontologies
 
+[![GitHub Actions CI Build Status](https://img.shields.io/github/workflow/status/related-sciences/nxontology/Build?label=actions&logo=github&style=for-the-badge)](https://github.com/related-sciences/nxontology/actions)  
+[![Software License](https://img.shields.io/github/license/related-sciences/nxontology?style=for-the-badge&logo=Apache)](https://github.com/related-sciences/nxontology/blob/main/LICENSE)  
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge&logo=Python)](https://github.com/psf/black)  
+[![PyPI](https://img.shields.io/pypi/v/nxontology.svg?logo=PyPI&style=for-the-badge)](https://pypi.org/project/nxontology/)  
+	
 nxontology is a Python library for representing ontologies using a NetworkX graph.
 Currently, the main area of functionality is computing similarity measures between pairs of nodes.
 
