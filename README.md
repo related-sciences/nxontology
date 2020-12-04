@@ -89,7 +89,9 @@ manubot cite \
   doi:10.1016/j.jbi.2010.09.002 \
   doi:10.1186/1471-2105-13-261 \
   doi:10.1016/j.jbi.2011.03.013 \
-  doi:10.1016/j.knosys.2010.10.001
+  doi:10.1016/j.knosys.2010.10.001 \
+  doi:10.1007/s10462-019-09725-4 \
+  doi:10.1002/asi.24021
 -->
 
 1. **Semantic Similarity in Biomedical Ontologies**   
@@ -164,3 +166,13 @@ DOI: [10.1016/j.jbi.2011.03.013](https://doi.org/10.1016/j.jbi.2011.03.013) · P
 David Sánchez, Montserrat Batet, David Isern  
 *Knowledge-Based Systems* (2011-03) <https://doi.org/cwzw4r>   
 DOI: [10.1016/j.knosys.2010.10.001](https://doi.org/10.1016/j.knosys.2010.10.001)
+
+16. **Leveraging synonymy and polysemy to improve semantic similarity assessments based on intrinsic information content**   
+Montserrat Batet, David Sánchez  
+*Artificial Intelligence Review* (2019-06-03) <https://doi.org/ghnfmt>   
+DOI: [10.1007/s10462-019-09725-4](https://doi.org/10.1007/s10462-019-09725-4)
+
+17. **An intrinsic information content-based semantic similarity measure considering the disjoint common subsumers of concepts of an ontology**   
+Abhijit Adhikari, Biswanath Dutta, Animesh Dutta, Deepjyoti Mondal, Shivang Singh  
+*Journal of the Association for Information Science and Technology* (2018-08) <https://doi.org/gd2j5b>   
+DOI: [10.1002/asi.24021](https://doi.org/10.1002/asi.24021)
