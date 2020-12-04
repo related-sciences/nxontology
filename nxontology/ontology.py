@@ -21,6 +21,8 @@ import fsspec
 import networkx as nx
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
 
+from .exceptions import DuplicateError, NodeNotFound
+
 
 class Freezable(abc.ABC):
     @property
@@ -103,6 +105,30 @@ class NXOntology(Freezable):
         # Construct an NXOntology from the DiGraph
         nxo = cls(digraph)
         return nxo
+
+    def add_node(self, node_for_adding: Node, **attr: Any) -> None:
+        """
+        Like networkx.DiGraph.add_node but raises a DuplicateError
+        if the node already exists.
+        """
+        if node_for_adding in self.graph:
+            raise DuplicateError(f"node already in graph: {node_for_adding}")
+        self.graph.add_node(node_for_adding, **attr)
+
+    def add_edge(self, u_of_edge: Node, v_of_edge: Node, **attr: Any) -> None:
+        """
+        Like networkx.DiGraph.add_edge but
+        raises a NodeNotFound if either node does not exist
+        or a DuplicateError if the edge already exists.
+        Edge should from general to specific,
+        such that `u_of_edge` is a parent/superterm/hypernym of `v_of_edge`.
+        """
+        for node in u_of_edge, v_of_edge:
+            if node not in self.graph:
+                raise NodeNotFound(f"node does not exist in graph: {node}")
+        if self.graph.has_edge(u_of_edge, v_of_edge):
+            raise DuplicateError(f"edge already in graph: {u_of_edge} --> {v_of_edge}")
+        self.graph.add_edge(u_of_edge, v_of_edge, **attr)
 
     @property  # type: ignore [misc]
     @cache_on_frozen

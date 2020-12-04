@@ -1,3 +1,4 @@
+from nxontology import exceptions
 from nxontology.ontology import NXOntology
 
-__all__ = ["NXOntology"]
+__all__ = ["NXOntology", "exceptions"]

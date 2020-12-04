@@ -6,6 +6,7 @@ import pandas as pd
 import pytest
 
 from nxontology.examples import create_metal_nxo
+from nxontology.exceptions import DuplicateError, NodeNotFound
 from nxontology.ontology import Node_Info, NXOntology, Similarity, SimilarityIC
 
 
@@ -25,6 +26,35 @@ def metal_nxo_frozen() -> NXOntology:
     metal_nxo = create_metal_nxo()
     metal_nxo.freeze()
     return metal_nxo
+
+
+def test_add_node(metal_nxo: NXOntology) -> None:
+    assert "brass" not in metal_nxo.graph
+    metal_nxo.add_node("brass", color="#b5a642")
+    assert "brass" in metal_nxo.graph
+    assert metal_nxo.graph.nodes["brass"]["color"] == "#b5a642"
+
+
+def test_add_node_duplicate(metal_nxo: NXOntology) -> None:
+    with pytest.raises(DuplicateError):
+        metal_nxo.add_node("gold")
+
+
+def test_add_edge(metal_nxo: NXOntology) -> None:
+    metal_nxo.add_edge("metal", "gold", note="already implied")
+    assert metal_nxo.graph.has_edge("metal", "gold")
+    assert metal_nxo.graph.edges["metal", "gold"]["note"] == "already implied"
+
+
+def test_add_edge_missing_node(metal_nxo: NXOntology) -> None:
+    assert "brass" not in metal_nxo.graph
+    with pytest.raises(NodeNotFound):
+        metal_nxo.add_edge("coinage", "brass")
+
+
+def test_add_edge_duplicate(metal_nxo: NXOntology) -> None:
+    with pytest.raises(DuplicateError):
+        metal_nxo.add_edge("coinage", "gold")
 
 
 def test_nxontology_read_write_node_link_json(
