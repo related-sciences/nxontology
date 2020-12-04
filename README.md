@@ -7,7 +7,8 @@ Currently, the main area of functionality is computing similarity measures betwe
 
 Here, we'll use the example [metals ontology](https://jbiomedsem.biomedcentral.com/articles/10.1186/2041-1480-2-5/figures/1 "From Figure 1 of Disjunctive shared information between ontology concepts: application to Gene Ontology. Couto & Silva. 2011. Released under CC BY 2.0."):
 
-![Metals ontology from Couto & Silva (2011)](media/metals.svg)
+![Metals ontology from Couto & Silva (2011)](https://raw.githubusercontent.com/related-sciences/nxontology/3e5ad706dab65bfaa07f5bf57257deac9741195c/media/metals.svg?sanitize=true)
+<!-- use absolute URL instead of media/metals.svg for PyPI long_description -->
 
 Note that `NXOntology` represents the ontology as a [`networkx.DiGraph`](https://networkx.org/documentation/stable/reference/classes/digraph.html), where edge direction goes from superterm to subterm.
 Currently, users must create their own `networkx.DiGraph` to use this package.
