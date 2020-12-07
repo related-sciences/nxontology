@@ -17,9 +17,9 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install ".[dev]"
+        pip install build
     - name: Build package
-      run: python setup.py sdist bdist_wheel
+      run: python -m build --sdist --wheel --outdir=dist
     - name: Deploy package
       if: '!github.event.repository.fork'
       uses: pypa/gh-action-pypi-publish@v1.4.1
