@@ -70,11 +70,14 @@ Here's a list of alternative projects with code for computing semantic similarit
 
 Below are a list of references related to ontology-derived measures of similarity.
 Feel free to add any reference that provides useful context and details for algorithms supported by this package.
+Metadata for a reference can be generated like `manubot cite --yml doi:10.1016/j.jbi.2011.03.013`.
+Adding CSL YAML output to `media/bibliography.yaml` will cache the metadata and allow manual edits in case of errors.
 
 <!--
-# code to generate references (does not include small number of manual edits) 
+# code to generate references (uses cached metadata in bibliography.yaml if available)
 manubot cite \
-  --format=markdown \
+  --md \
+  --bibliography=media/bibliography.yaml \
   doi:10.1371/journal.pcbi.1000443 \
   url:https://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.1065.1695 \
   doi:10.1186/1471-2105-9-S5-S4 \
@@ -92,6 +95,18 @@ manubot cite \
   doi:10.1016/j.knosys.2010.10.001 \
   doi:10.1007/s10462-019-09725-4 \
   doi:10.1002/asi.24021
+
+
+```bash
+# future code to render references with pandoc > 2.11
+pandoc \
+  --citeproc \
+  --metadata=nocite:\'@*\' \
+  --csl=https://citation-style.manubot.org \
+  --bibliography=media/bibliography.yaml \
+  --wrap=none \
+  --to=markdown_strict-raw_html <<< ""
+```
 -->
 
 1. **Semantic Similarity in Biomedical Ontologies**   
@@ -156,7 +171,7 @@ DOI: [10.1016/j.jbi.2010.09.002](https://doi.org/10.1016/j.jbi.2010.09.002) · P
 Vijay N Garla, Cynthia Brandt  
 *BMC Bioinformatics* (2012-10-10) <https://doi.org/gb8vpn>   
 DOI: [10.1186/1471-2105-13-261](https://doi.org/10.1186/1471-2105-13-261) · PMID: [23046094](https://www.ncbi.nlm.nih.gov/pubmed/23046094) · PMCID: [PMC3533586](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3533586)
- 
+
 14. **Semantic similarity estimation in the biomedical domain: An ontology-based information-theoretic perspective**   
 David Sánchez, Montserrat Batet  
 *Journal of Biomedical Informatics* (2011-10) <https://doi.org/d2436q>   
