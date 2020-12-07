@@ -17,7 +17,7 @@ jobs:
     - name: Install dependencies
       run: |
         pip install --upgrade pip
-        pip install build
+        pip install build wheel
     - name: Build package
       run: python -m build --sdist --wheel --outdir=dist
     - name: Deploy package
