@@ -7,6 +7,8 @@ pip-wheel-metadata/
 .pytest_cache/
 .venv
 .eggs/
+build/
+dist/
 
 # System specific files
 
