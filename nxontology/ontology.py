@@ -247,6 +247,8 @@ class Node_Info(Freezable):
     """
 
     def __init__(self, nxo: NXOntology, node: Node):
+        if node not in nxo.graph:
+            raise NodeNotFound(f"{node} not in graph.")
         self.nxo = nxo
         self.node = node
 

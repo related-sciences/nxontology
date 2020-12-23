@@ -97,6 +97,11 @@ def test_node_info_gold(metal_nxo_frozen: NXOntology) -> None:
     assert gold_info.n_ancestors == 4
 
 
+def test_node_info_not_found(metal_nxo_frozen: NXOntology) -> None:
+    with pytest.raises(NodeNotFound, match="not-a-metal not in graph"):
+        metal_nxo_frozen.node_info("not-a-metal")
+
+
 def test_intrinsic_ic_unscaled(metal_nxo_frozen: NXOntology) -> None:
     assert metal_nxo_frozen.n_nodes == 8
     # number of descendants per node including self
