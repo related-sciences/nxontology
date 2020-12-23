@@ -23,3 +23,21 @@ def create_metal_nxo() -> NXOntology:
     ]
     nxo.graph.add_edges_from(edges)
     return nxo
+
+
+def create_disconnected_nxo() -> NXOntology:
+    """
+    Fictitious ontology with disjoint / disconnected components.
+    Has multiple root nodes. Helpful for testing.
+    https://github.com/related-sciences/nxontology/issues/4
+    """
+    nxo = NXOntology()
+    nxo.add_node("water")
+    edges = [
+        ("metal", "precious"),
+        ("metal", "coinage"),
+        ("tree", "conifer"),
+        ("conifer", "pine"),
+    ]
+    nxo.graph.add_edges_from(edges)
+    return nxo

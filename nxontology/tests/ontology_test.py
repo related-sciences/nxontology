@@ -1,11 +1,13 @@
+import dataclasses
 import math
 import pathlib
+from typing import Callable
 
 import networkx
 import pandas as pd
 import pytest
 
-from nxontology.examples import create_metal_nxo
+from nxontology.examples import create_disconnected_nxo, create_metal_nxo
 from nxontology.exceptions import DuplicateError, NodeNotFound
 from nxontology.ontology import Node_Info, NXOntology, Similarity, SimilarityIC
 
@@ -182,53 +184,70 @@ def test_cache_on_node_info(metal_nxo: NXOntology) -> None:
     assert metal_nxo.node_info("gold") is cached_gold
 
 
-def get_metal_similarity_tsv() -> str:
+def get_similarity_tsv(nxo: NXOntology) -> str:
     """
-    Returns TSV text for all similarity metrics on the metal ontology.
+    Returns TSV text for all similarity metrics on the provided ontology.
     """
-    metal_nxo = create_metal_nxo()
-    nodes = sorted(metal_nxo.graph)
-    sims = metal_nxo.compute_similarities(
+    nodes = sorted(nxo.graph)
+    sims = nxo.compute_similarities(
         source_nodes=nodes,
         target_nodes=nodes,
         ic_metrics=Node_Info.ic_metrics,
     )
-    metal_sim_df = pd.DataFrame(sims)
-    tsv = metal_sim_df.to_csv(
+    sim_df = pd.DataFrame(sims)
+    tsv = sim_df.to_csv(
         sep="\t", index=False, float_format="%.3g", line_terminator="\n"
     )
     assert isinstance(tsv, str)
     return tsv
 
 
-metal_sim_path: pathlib.Path = pathlib.Path(__file__).parent.joinpath(
-    "ontology_test_metal_sim.tsv"
+@dataclasses.dataclass
+class Ontology:
+    name: str
+    sim_path: pathlib.Path
+    ctor: Callable[[], NXOntology]
+
+
+directory: pathlib.Path = pathlib.Path(__file__).parent
+metal_sim_path: pathlib.Path = directory.joinpath("ontology_test_metal_sim.tsv")
+disconnected_sim_path: pathlib.Path = directory.joinpath(
+    "ontology_test_disconnected_sim.tsv"
 )
+test_ontologies = [
+    Ontology("metal", metal_sim_path, create_metal_nxo),
+    Ontology("disconnected", disconnected_sim_path, create_disconnected_nxo),
+]
 
 
-def test_metal_similarities() -> None:
+@pytest.mark.parametrize("ontology", test_ontologies)
+def test_similarities(ontology: Ontology) -> None:
     """
     If this test fails, regenerate the expected output by executing:
     ```
-    ./bin/run_pipeline rs_utils/tests/ontology_utils_test.py export_metal_similarity_tsv
+    python nxontology/tests/ontology_test.py export_similarity_tsvs
     ```
     Confirm the changes to ontology_utils_test_metal_sim.tsv are desired before committing.
     """
-    tsv = get_metal_similarity_tsv()
-    expect_tsv = metal_sim_path.read_text()
+    # type ignored due to https://github.com/python/mypy/issues/6910
+    nxo = ontology.ctor()  # type: ignore [misc]
+    nxo.freeze()
+    tsv = get_similarity_tsv(nxo)
+    expect_tsv = ontology.sim_path.read_text()
     assert tsv == expect_tsv
 
 
-def export_metal_similarity_tsv() -> None:
+def export_similarity_tsvs() -> None:
     """
     Regenerate ontology_utils_test_metal_sim.tsv
-    Execute this with:
     """
-    tsv = get_metal_similarity_tsv()
-    metal_sim_path.write_text(tsv)
+    for ontology in test_ontologies:
+        nxo = ontology.ctor()  # type: ignore [misc]
+        tsv = get_similarity_tsv(nxo)
+        ontology.sim_path.write_text(tsv)
 
 
 if __name__ == "__main__":
     import fire
 
-    fire.Fire({"export_metal_similarity_tsv": export_metal_similarity_tsv})
+    fire.Fire({"export_similarity_tsvs": export_similarity_tsvs})

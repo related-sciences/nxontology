@@ -503,7 +503,9 @@ class SimilarityIC(Similarity):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def _resnik_mica(self) -> Tuple[float, Node]:
+    def _resnik_mica(self) -> Tuple[float, Optional[Node]]:
+        if not self.common_ancestors:
+            return 0.0, None
         resnik, mica = max(
             (getattr(self.nxo.node_info(n), self.ic_metric), n)
             for n in self.common_ancestors
@@ -512,8 +514,11 @@ class SimilarityIC(Similarity):
         return resnik, mica
 
     @property
-    def mica(self) -> Node:
-        """Most informative common ancestor."""
+    def mica(self) -> Optional[Node]:
+        """
+        Most informative common ancestor.
+        None if no common ancestors exist.
+        """
         return self._resnik_mica[1]
 
     @property
@@ -531,6 +536,8 @@ class SimilarityIC(Similarity):
     @property
     def resnik_scaled(self) -> float:
         """Scaled IC of the most informative common ancestor."""
+        if self.mica is None:
+            return 0.0
         resnik_scaled = getattr(self.nxo.node_info(self.mica), self.ic_metric_scaled)
         assert isinstance(resnik_scaled, float)
         return resnik_scaled
