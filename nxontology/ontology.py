@@ -228,6 +228,26 @@ class NXOntology(Freezable):
         """
         return len(self.graph)
 
+    def set_attribute_keys(
+        self,
+        *,
+        node_label_attribute: Optional[str] = None,
+        node_identifier_attribute: Optional[str] = None,
+        node_url_attribute: Optional[str] = None,
+    ) -> None:
+        """
+        Convenience method to set attributes on the graph that store
+        which node attributes provide certain pieces of information.
+        The keyword arguments for this method are all the special attributes used by nxontology.
+        Setting the value to '{node}' specifies using the node itself rather than an attribute.
+        """
+        if node_label_attribute:
+            self.graph.graph["node_label_attribute"] = node_label_attribute
+        if node_identifier_attribute:
+            self.graph.graph["node_identifier_attribute"] = node_identifier_attribute
+        if node_url_attribute:
+            self.graph.graph["node_url_attribute"] = node_url_attribute
+
 
 class Node_Info(Freezable):
     """
@@ -251,6 +271,36 @@ class Node_Info(Freezable):
             raise NodeNotFound(f"{node} not in graph.")
         self.nxo = nxo
         self.node = node
+
+    @property
+    def label(self) -> Optional[str]:
+        """Human readable name / label."""
+        value = self._get_node_attribute(
+            custom_field="node_label_attribute", default="label"
+        )
+        return None if value is None else str(value)
+
+    @property
+    def identifier(self) -> Optional[Any]:
+        """Database / machine identifier."""
+        return self._get_node_attribute(
+            custom_field="node_identifier_attribute", default="identifier"
+        )
+
+    @property
+    def url(self) -> Optional[str]:
+        """Uniform Resource Locator (URL)"""
+        value = self._get_node_attribute(
+            custom_field="node_url_attribute", default="url"
+        )
+        return None if value is None else str(value)
+
+    def _get_node_attribute(self, custom_field: str, default: str) -> Any:
+        """Get node attribute for the attribute set by custom_field or by default."""
+        key = self.nxo.graph.graph.get(custom_field, default)
+        if key == "{node}":
+            return self.node
+        return self.data.get(key)
 
     @property
     def frozen(self) -> bool:

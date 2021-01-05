@@ -91,10 +91,35 @@ def test_nxontology_leaves(metal_nxo_frozen: NXOntology) -> None:
 
 
 def test_node_info_gold(metal_nxo_frozen: NXOntology) -> None:
+    print(metal_nxo_frozen.graph.graph)
     gold_info = metal_nxo_frozen.node_info("gold")
     assert gold_info.node == "gold"
+    assert gold_info.label == "gold"
+    assert gold_info.identifier is None
+    assert gold_info.url is None
     assert gold_info.n_descendants == 1
     assert gold_info.n_ancestors == 4
+
+
+def test_set_attribute_keys(metal_nxo: NXOntology) -> None:
+    metal_nxo.graph.nodes["gold"]["metal_label"] = "test_label"
+    metal_nxo.graph.nodes["gold"]["metal_identifier"] = 1
+    metal_nxo.graph.nodes["gold"]["metal_url"] = "https://example.com"
+    metal_nxo.set_attribute_keys(
+        node_label_attribute="metal_label",
+        node_identifier_attribute="metal_identifier",
+        node_url_attribute="metal_url",
+    )
+    gold_info = metal_nxo.node_info("gold")
+    assert gold_info.node == "gold"
+    assert gold_info.label == "test_label"
+    assert gold_info.identifier == 1
+    assert gold_info.url == "https://example.com"
+    silver_info = metal_nxo.node_info("silver")
+    assert silver_info.node == "silver"
+    assert silver_info.label is None
+    assert silver_info.identifier is None
+    assert silver_info.url is None
 
 
 def test_node_info_not_found(metal_nxo_frozen: NXOntology) -> None:
