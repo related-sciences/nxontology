@@ -3,11 +3,10 @@ from typing import Dict, Iterable, Optional
 from networkx.drawing.nx_agraph import to_agraph
 from pygraphviz.agraph import AGraph
 
-from nxontology.ontology import Node, Node_Info, NXOntology, SimilarityIC
+from nxontology.ontology import Node, Node_Info, SimilarityIC
 
 
-def create_graphviz(
-    nxo: NXOntology,
+def create_similarity_graphviz(
     sim: SimilarityIC,
     nodes: Optional[Iterable[Node]] = None,
 ) -> "AGraph":
@@ -22,11 +21,11 @@ def create_graphviz(
         nodes = sim.union_ancestors
     nodes = set(nodes)
     # independent shallow copy: creates new independent attribute dicts
-    subgraph = nxo.graph.subgraph(nodes).copy()
+    subgraph = sim.nxo.graph.subgraph(nodes).copy()
     # node labels and fill/font colors
     for node, data in subgraph.nodes(data=True):
         data["style"] = "filled"
-        info = nxo.node_info(node)
+        info = sim.nxo.node_info(node)
         data["label"] = (
             f"<{info.label}<br/>"
             '<font point-size="9">'
@@ -43,17 +42,19 @@ def create_graphviz(
         data["fontcolor"] = "#ffffff" if scaled_ic > 0.7 else "#000000"
     # node styles
     for node in nodes - sim.union_ancestors:
-        subgraph.nodes[node]["style"] += ",invis"
+        # subgraph.nodes[node]["style"] += ",invis"
+        subgraph.nodes[node]["penwidth"] = 0.0
     # disjoint ancestors excluding source & target style
     for node in nodes & sim.union_ancestors - sim.common_ancestors - {source, target}:
         subgraph.nodes[node]["style"] += ",dotted"
     # common ancestors style
     for node in nodes & sim.common_ancestors:
         subgraph.nodes[node]["style"] += ",solid"
-    subgraph.nodes[sim.mica]["style"] += ",bold"
+    subgraph.nodes[sim.mica]["penwidth"] = 2.5
     # source and target style
     for node in nodes & {source, target}:
         subgraph.nodes[node]["style"] += ",dashed"
+        subgraph.nodes[node]["penwidth"] = 2.5
     # title
     ic_abbr = {"intrinsic_ic": "res", "intrinsic_ic_sanchez": "sán"}[sim.ic_metric]
     source_verbose_label = get_verbose_node_label(sim.info_0)
@@ -199,4 +200,4 @@ def get_hex_color(x: float) -> str:
     """Return a hex-encoded color like '#rrggbb' for a float between 0.0 and 1.0."""
     if not 0.0 <= x <= 1.0:
         raise ValueError(f"x must be between 0.0 and 1.0: got {x}")
-    return colormap[round(x)]
+    return colormap[round(100 * x)]
