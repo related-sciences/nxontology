@@ -14,7 +14,7 @@ Currently, the main area of functionality is computing similarity measures betwe
 
 Here, we'll use the example [metals ontology](https://jbiomedsem.biomedcentral.com/articles/10.1186/2041-1480-2-5/figures/1 "From Figure 1 of Disjunctive shared information between ontology concepts: application to Gene Ontology. Couto & Silva. 2011. Released under CC BY 2.0."):
 
-![Metals ontology from Couto & Silva (2011)](https://raw.githubusercontent.com/related-sciences/nxontology/3e5ad706dab65bfaa07f5bf57257deac9741195c/media/metals.svg?sanitize=true)
+![Metals ontology from Couto & Silva (2011)](https://raw.githubusercontent.com/related-sciences/nxontology/13de9d63ac9d08ffc1e25ee80e912c611b990473/media/metals.svg?sanitize=true)
 <!-- use absolute URL instead of media/metals.svg for PyPI long_description -->
 
 Note that `NXOntology` represents the ontology as a [`networkx.DiGraph`](https://networkx.org/documentation/stable/reference/classes/digraph.html), where edge direction goes from superterm to subterm.
@@ -75,7 +75,7 @@ gviz.draw("metals-sim-gold-silver-all.png"))
 Resulting in the following figure:
 <!-- from test output: cp nxontology/tests/viz_outputs/metals-sim-gold-silver-all.png media/ -->
 
-![Metals ontology from Couto & Silva (2011) showing similarity between gold and silver](https://raw.githubusercontent.com/related-sciences/nxontology/8543ec73b0b0e3484806e53318d0d92593c7f5dd/media/metals-sim-gold-silver-all.png)
+![Metals ontology from Couto & Silva (2011) showing similarity between gold and silver](https://raw.githubusercontent.com/related-sciences/nxontology/13de9d63ac9d08ffc1e25ee80e912c611b990473/media/metals-sim-gold-silver-all.png)
 
 The two query nodes (gold & silver) are outlined with a bold dashed line.
 Node fill color corresponds to the Sánchez information content, such that darker nodes have higher IC.
