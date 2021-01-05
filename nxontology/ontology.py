@@ -87,6 +87,7 @@ class NXOntology(Freezable):
 
     @property
     def name(self) -> Optional[str]:
+        """Short human-readable name for the ontology."""
         key = self.graph.graph.get("graph_name_attribute", "name")
         name = self.graph.graph.get(key)
         if name is not None:

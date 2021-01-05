@@ -73,6 +73,7 @@ gviz.draw("metals-sim-gold-silver-all.png"))
 ```
 
 Resulting in the following figure:
+<!-- from test output: cp nxontology/tests/viz_outputs/metals-sim-gold-silver-all.png media/ -->
 
 ![Metals ontology from Couto & Silva (2011) showing similarity between gold and silver](https://raw.githubusercontent.com/related-sciences/nxontology/8543ec73b0b0e3484806e53318d0d92593c7f5dd/media/metals-sim-gold-silver-all.png)
 
