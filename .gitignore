@@ -1,3 +1,6 @@
+# test data
+nxontology/tests/viz_outputs
+
 # Python
 __pycache__/
 *.egg-info/
