@@ -85,6 +85,14 @@ class NXOntology(Freezable):
         if not nx.is_directed_acyclic_graph(self.graph):
             raise ValueError("NXOntology requires a directed acyclic graph.")
 
+    @property
+    def name(self) -> Optional[str]:
+        key = self.graph.graph.get("graph_name_attribute", "name")
+        name = self.graph.graph.get(key)
+        if name is not None:
+            return str(name)
+        return None
+
     def write_node_link_json(self, path: str) -> None:
         """
         Serialize to node-link data.
@@ -228,19 +236,32 @@ class NXOntology(Freezable):
         """
         return len(self.graph)
 
-    def set_attribute_keys(
+    def set_graph_attributes(
         self,
         *,
+        graph_name_attribute: Optional[str] = None,
         node_label_attribute: Optional[str] = None,
         node_identifier_attribute: Optional[str] = None,
         node_url_attribute: Optional[str] = None,
     ) -> None:
         """
-        Convenience method to set attributes on the graph that store
-        which node attributes provide certain pieces of information.
-        The keyword arguments for this method are all the special attributes used by nxontology.
-        Setting the value to '{node}' specifies using the node itself rather than an attribute.
+        Convenience method to set attributes on the graph that are recognized by nxontology.
+        - graph_name_attribute: graph attribute for looking up the graph's name.
+          Example name of a graph are as 'Metal', 'EFO', 'MeSH'.
+          Defaults to "name" if not set.
+        - node_label_attribute: node attribute for looking up a node's label.
+          Defaults to "label" if not set.
+        - node_identifier_attribute: node attribute for looking up a node's identifier.
+          Defaults to "identifier" if not set.
+        - node_url_attribute: node attribute for looking up a node's URL.
+          Defaults to "url" if not set.
+        Setting the value of `node_*_attribute` arguments to '{node}' specifies using the
+        node itself rather than an attribute. This is helpful for example when nodes are
+        indexed by their identifiers, such that there is no need to include a duplicate
+        identifier node attribute.
         """
+        if graph_name_attribute:
+            self.graph.graph["graph_name_attribute"] = graph_name_attribute
         if node_label_attribute:
             self.graph.graph["node_label_attribute"] = node_label_attribute
         if node_identifier_attribute:

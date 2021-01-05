@@ -10,7 +10,8 @@ def create_metal_nxo() -> NXOntology:
     Edges go from general to specific.
     """
     nxo = NXOntology()
-    nxo.set_attribute_keys(node_label_attribute="{node}")
+    nxo.graph.graph["name"] = "Metals"
+    nxo.set_graph_attributes(node_label_attribute="{node}")
     edges = [
         ("metal", "precious"),
         ("metal", "coinage"),

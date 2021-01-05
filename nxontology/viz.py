@@ -64,8 +64,9 @@ def create_similarity_graphviz(
     ic_abbr = {"intrinsic_ic": "res", "intrinsic_ic_sanchez": "sán"}[sim.ic_metric]
     source_verbose_label = get_verbose_node_label(sim.info_0)
     target_verbose_label = get_verbose_node_label(sim.info_1)
+    subgraph_name = f"{sim.nxo.name} subgraph" if sim.nxo.name else "Subgraph"
     subgraph.graph["label"] = (
-        f"<Subgraph with ancestors of {source_verbose_label} and {target_verbose_label}. "
+        f"<{subgraph_name} with ancestors of {source_verbose_label} and {target_verbose_label}. "
         f"Similarity: common ancestors = {sim.n_common_ancestors}, union ancestors = {sim.n_union_ancestors}, Lin<sub>{ic_abbr}</sub> = {sim.lin:.2f}>"
     )
     subgraph.graph["labelloc"] = "t"
