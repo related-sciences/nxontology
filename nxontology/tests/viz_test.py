@@ -4,6 +4,8 @@ from typing import List, Optional
 
 import pytest
 
+pytest.importorskip("pygraphviz")
+
 from nxontology import NXOntology
 from nxontology.viz import create_similarity_graphviz
 
