@@ -12,24 +12,6 @@ from nxontology.exceptions import DuplicateError, NodeNotFound
 from nxontology.ontology import Node_Info, NXOntology, Similarity, SimilarityIC
 
 
-@pytest.fixture
-def metal_nxo() -> NXOntology:
-    """Returns a newly created metal ontology for each test."""
-    return create_metal_nxo()
-
-
-@pytest.fixture(scope="module")
-def metal_nxo_frozen() -> NXOntology:
-    """
-    Frozen metals ontology,
-    scoped such that all tests in this module will receive the same NXOntology instance.
-    Do not use for tests that edit the graph or graph/node/edge data.
-    """
-    metal_nxo = create_metal_nxo()
-    metal_nxo.freeze()
-    return metal_nxo
-
-
 def test_add_node(metal_nxo: NXOntology) -> None:
     assert "brass" not in metal_nxo.graph
     metal_nxo.add_node("brass", color="#b5a642")

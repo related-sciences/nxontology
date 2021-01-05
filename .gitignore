@@ -1,9 +1,13 @@
+# test data
+nxontology/tests/viz_outputs
+
 # Python
 __pycache__/
 *.egg-info/
 pip-wheel-metadata/
 .ipynb_checkpoints
 .cache
+.mypy_cache/
 .pytest_cache/
 .venv
 .eggs/
