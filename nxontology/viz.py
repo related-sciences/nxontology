@@ -11,9 +11,14 @@ def create_similarity_graphviz(
     nodes: Optional[Iterable[Node]] = None,
 ) -> "AGraph":
     """
-    nodes: if None, set to the union of ancestors.
-    Annotate subgraph to expose the proper keys to graphviz.
-    https://graphviz.org/doc/info/attrs.html
+    Create a pygraphviz AGraph to render the similarity subgraph with graphviz.
+    Works by creating a subgraph in networkx with the relevant nodes.
+    Then attributes are added to the subgraph to expose the proper metadata
+    and style information to graphviz. See https://graphviz.org/doc/info/attrs.html.
+
+    ## Parameters:
+    - sim: SimilarityIC instance, which also provides access to the underlying nxo/graph.
+    - nodes: Nodes to include in the subgraph. If None, set to the union of ancestors.
     """
     source = sim.node_0
     target = sim.node_1

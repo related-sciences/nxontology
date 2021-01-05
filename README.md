@@ -58,6 +58,44 @@ The final line outputs a dictionary like:
 }
 ```
 
+It's also possible to visualize the similarity between two nodes like:
+
+```python
+from nxontology.viz import create_similarity_graphviz
+gviz = create_similarity_graphviz(
+    # similarity instance from above
+    similarity,
+    # show all nodes (defaults to union of ancestors)
+    nodes=list(metals.graph),
+)
+# draw to PNG file
+gviz.draw("metals-sim-gold-silver-all.png"))
+```
+
+Resulting in the following figure:
+
+![Metals ontology from Couto & Silva (2011) showing similarity between gold and silver](https://raw.githubusercontent.com/related-sciences/nxontology/8543ec73b0b0e3484806e53318d0d92593c7f5dd/media/metals-sim-gold-silver-all.png)
+
+The two query nodes (gold & silver) are outlined with a bold dashed line.
+Node fill color corresponds to the Sánchez information content, such that darker nodes have higher IC.
+The most informative common ancestor (coinage) is outlined with a bold solid line.
+Nodes that are not an ancestor of gold or silver have an invisible outline.
+
+## Installation
+
+nxontology can be installed with `pip` from [[PyPI](https://pypi.org/project/nxontology/) like:
+
+```shell
+# standard installation
+pip install nxontology
+
+# installation with viz extras
+pip install nxontology[viz]
+```
+
+The extra `viz` dependencies are required for the `nxontology.viz` module.
+This includes [pygraphviz](https://pygraphviz.github.io/), which requires a pre-existing [graphviz](https://graphviz.org/) installation.
+
 ## Bibliography
 
 Here's a list of alternative projects with code for computing semantic similarity measures on ontologies:
