@@ -55,7 +55,8 @@ def create_similarity_graphviz(
     # common ancestors style
     for node in nodes & sim.common_ancestors:
         subgraph.nodes[node]["style"] += ",solid"
-    subgraph.nodes[sim.mica]["penwidth"] = 2.5
+    if sim.mica:
+        subgraph.nodes[sim.mica]["penwidth"] = 2.5
     # source and target style
     for node in nodes & {source, target}:
         subgraph.nodes[node]["style"] += ",dashed"
