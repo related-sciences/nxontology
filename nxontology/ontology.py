@@ -373,6 +373,17 @@ class Node_Info(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
+    def depth(self) -> int:
+        """Minimum shortest path distance from a root node to this node."""
+        depth = min(
+            nx.shortest_path_length(self.nxo.graph, root, self.node)
+            for root in self.ancestors & self.nxo.roots
+        )
+        assert isinstance(depth, int)
+        return depth
+
+    @property  # type: ignore [misc]
+    @cache_on_frozen
     def intrinsic_ic(self) -> float:
         """
         Intrinsic Information Content, as initially proposed by Resnik (1999) in Equation 5.

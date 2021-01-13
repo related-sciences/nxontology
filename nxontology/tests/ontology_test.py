@@ -72,6 +72,15 @@ def test_nxontology_leaves(metal_nxo_frozen: NXOntology) -> None:
     assert leaves == {"copper", "gold", "palladium", "platinum", "silver"}
 
 
+def test_node_info_root(metal_nxo_frozen: NXOntology) -> None:
+    """Test metal node_info. Metal is the only root node."""
+    info = metal_nxo_frozen.node_info("metal")
+    assert info.node == "metal"
+    assert info.n_descendants == metal_nxo_frozen.n_nodes
+    assert info.n_ancestors == 1
+    assert info.depth == 0
+
+
 def test_node_info_gold(metal_nxo_frozen: NXOntology) -> None:
     print(metal_nxo_frozen.graph.graph)
     gold_info = metal_nxo_frozen.node_info("gold")
@@ -81,6 +90,7 @@ def test_node_info_gold(metal_nxo_frozen: NXOntology) -> None:
     assert gold_info.url is None
     assert gold_info.n_descendants == 1
     assert gold_info.n_ancestors == 4
+    assert gold_info.depth == 2
 
 
 def test_set_graph_attributes(metal_nxo: NXOntology) -> None:
