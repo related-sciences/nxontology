@@ -1,6 +1,6 @@
 import logging
 from os import PathLike
-from typing import Any, BinaryIO, Union
+from typing import AnyStr, BinaryIO, Union
 
 from pronto import Ontology as Prontology  # type: ignore [attr-defined]
 
@@ -44,7 +44,7 @@ def from_obo_library(slug: str) -> NXOntology:
     return nxo
 
 
-def from_file(handle: Union[BinaryIO, str, PathLike[Any]]) -> NXOntology:
+def from_file(handle: Union[BinaryIO, str, "PathLike[AnyStr]"]) -> NXOntology:
     """
     Read ontology in OBO, OWL, or JSON (OBO Graphs) format via pronto.
 
