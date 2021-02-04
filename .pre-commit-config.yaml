@@ -26,3 +26,5 @@ repos:
     hooks:
       - id: mypy
         args: ["--strict", "--show-error-codes"]
+        additional_dependencies:
+          - pronto
