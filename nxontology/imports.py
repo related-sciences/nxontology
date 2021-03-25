@@ -9,12 +9,18 @@ from nxontology.exceptions import NodeNotFound
 
 
 def pronto_to_nxontology(onto: Prontology) -> NXOntology:
+    """
+    Create an `NXOntology` from an input `pronto.Ontology`.
+    Obsolete terms are omitted as nodes.
+    Only is_a / subClassOf relationships are used for edges.
+    """
     nxo = NXOntology()
     nxo.pronto = onto  # type: ignore [attr-defined]
     for term in onto.terms():
-        # obsolete is unreliable https://github.com/althonos/pronto/issues/122
-        # if term.obsolete:
-        #     continue
+        if term.obsolete:
+            # obsolete was unreliable in pronto < v2.4.0
+            # https://github.com/althonos/pronto/issues/122
+            continue
         nxo.add_node(
             term.id,
             identifier=term.id,
@@ -23,6 +29,7 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology:
         )
     for term in onto.terms():
         # add subClassOf / is_a relations
+        # https://github.com/althonos/pronto/issues/119
         for child in term.subclasses(distance=1, with_self=False):
             try:
                 nxo.add_edge(term.id, child.id)
@@ -37,6 +44,7 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology:
 def from_obo_library(slug: str) -> NXOntology:
     """
     Read ontology from <http://www.obofoundry.org/>.
+    Delegates to [`pronto.Ontology.from_obo_library`](https://pronto.readthedocs.io/en/stable/api/pronto.Ontology.html#pronto.Ontology.from_obo_library).
     """
     onto = Prontology.from_obo_library(slug=slug)
     nxo = pronto_to_nxontology(onto)
