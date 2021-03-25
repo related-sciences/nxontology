@@ -87,7 +87,7 @@ Pronto supports reading ontologies from the following file formats:
 
 1. [Open Biomedical Ontologies 1.4](http://owlcollab.github.io/oboformat/doc/GO.format.obo-1_4.html): `.obo` extension, uses the [fastobo](https://github.com/fastobo/fastobo-py) parser.
 2. [OBO Graphs JSON](https://github.com/geneontology/obographs): `.json` extension, uses the fastobo parser.
-3. [Ontology Web Language 2 RDF/XML](https://www.w3.org/TR/owl2-overview/%3E): `.owl` extension, uses the pronto `RdfXMLParser`.
+3. [Ontology Web Language 2 RDF/XML](https://www.w3.org/TR/owl2-overview/): `.owl` extension, uses the pronto `RdfXMLParser`.
 
 The files can be local or at a network location (URL starting with https, http, or ftp).
 Pronto detects and handles gzip, bzip2, and xz compression.
