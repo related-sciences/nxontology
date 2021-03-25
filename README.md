@@ -18,7 +18,6 @@ Here, we'll use the example [metals ontology](https://jbiomedsem.biomedcentral.c
 <!-- use absolute URL instead of media/metals.svg for PyPI long_description -->
 
 Note that `NXOntology` represents the ontology as a [`networkx.DiGraph`](https://networkx.org/documentation/stable/reference/classes/digraph.html), where edge direction goes from superterm to subterm.
-Currently, users must create their own `networkx.DiGraph` to use this package.
 
 Given an `NXOntology` instance, here how to compute intrinsic similarity metrics.
 
@@ -82,9 +81,42 @@ Node fill color corresponds to the Sánchez information content, such that darke
 The most informative common ancestor (coinage) is outlined with a bold solid line.
 Nodes that are not an ancestor of gold or silver have an invisible outline.
 
+### Loading ontologies
+
+Pronto supports reading ontologies from the following file formats:
+
+1. [Open Biomedical Ontologies 1.4](http://owlcollab.github.io/oboformat/doc/GO.format.obo-1_4.html): `.obo` extension, uses the [fastobo](https://github.com/fastobo/fastobo-py) parser.
+2. [OBO Graphs JSON](https://github.com/geneontology/obographs): `.json` extension, uses the fastobo parser.
+3. [Ontology Web Language 2 RDF/XML](https://www.w3.org/TR/owl2-overview/%3E): `.owl` extension, uses the pronto `RdfXMLParser`.
+
+The files can be local or at a network location (URL starting with https, http, or ftp).
+Pronto detects and handles gzip, bzip2, and xz compression.
+
+Here are examples operations on the Gene Ontology,
+using pronto to load the ontology:
+
+```python
+>>> from nxontology.imports import from_file
+>>> # versioned URL for the Gene Ontology
+>>> url = "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
+>>> nxo = from_file(url)
+>>> nxo.n_nodes
+44085
+>>> # similarity between "myelination" and "neurogenesis"
+>>> sim = nxo.similarity("GO:0042552", "GO:0022008")
+>>> round(sim.lin, 2)
+0.21
+>>> import networkx as nx
+>>> # Gene Ontology domains are disconnected, expect 3 components
+>>> nx.number_weakly_connected_components(nxo.graph)
+3
+```
+
+Users can also create their own `networkx.DiGraph` to use this package.
+
 ## Installation
 
-nxontology can be installed with `pip` from [[PyPI](https://pypi.org/project/nxontology/) like:
+nxontology can be installed with `pip` from [PyPI](https://pypi.org/project/nxontology/) like:
 
 ```shell
 # standard installation
