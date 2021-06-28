@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import abc
 import functools
 import itertools
@@ -7,6 +9,7 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Generic,
     Hashable,
     Iterable,
     List,
@@ -33,8 +36,7 @@ class Freezable(abc.ABC):
 
 # Type definitions. networkx does not declare types.
 # https://github.com/networkx/networkx/issues/3988#issuecomment-639969263
-Node = Hashable
-Node_Set = Set[Node]
+Node = TypeVar("Node", bound=Hashable)
 T = TypeVar("T")
 T_Freezable = TypeVar("T_Freezable", bound=Freezable)
 
@@ -69,7 +71,7 @@ def cache_on_frozen(func: Callable[[T_Freezable], T]) -> Callable[[T_Freezable],
     return wrapped
 
 
-class NXOntology(Freezable):
+class NXOntology(Freezable, Generic[Node]):
     """
     Encapsulate a networkx.DiGraph to represent an ontology.
     Regarding edge directionality, parent terms should point to child term.
@@ -79,7 +81,7 @@ class NXOntology(Freezable):
     def __init__(self, graph: Optional[nx.DiGraph] = None):
         self.graph = nx.DiGraph(graph)
         self.check_is_dag()
-        self._node_info_cache: Dict[Hashable, Node_Info] = {}
+        self._node_info_cache: Dict[Node, Node_Info[Node]] = {}
 
     def check_is_dag(self) -> None:
         if not nx.is_directed_acyclic_graph(self.graph):
@@ -103,7 +105,7 @@ class NXOntology(Freezable):
             json.dump(obj=nld, fp=write_file, indent=2, ensure_ascii=False)
 
     @classmethod
-    def read_node_link_json(cls, path: str) -> "NXOntology":
+    def read_node_link_json(cls, path: str) -> NXOntology[Node]:
         """
         Retrun a new graph from node-link format as written by `write_node_link_json`.
         """
@@ -141,7 +143,7 @@ class NXOntology(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def roots(self) -> "Node_Set":
+    def roots(self) -> Set[Node]:
         """
         Return all top-level nodes.
         """
@@ -155,7 +157,7 @@ class NXOntology(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def leaves(self) -> "Node_Set":
+    def leaves(self) -> Set[Node]:
         """
         Return all bottom-level nodes.
         """
@@ -185,7 +187,7 @@ class NXOntology(Freezable):
         node_0: Node,
         node_1: Node,
         ic_metric: str = "intrinsic_ic_sanchez",
-    ) -> "SimilarityIC":
+    ) -> SimilarityIC[Node]:
         """SimilarityIC instance for the specified nodes"""
         return SimilarityIC(self, node_0, node_1, ic_metric)
 
@@ -219,7 +221,7 @@ class NXOntology(Freezable):
             metrics = self.similarity_metrics(node_0, node_1, ic_metric=ic_metric)
             yield metrics
 
-    def node_info(self, node: Node) -> "Node_Info":
+    def node_info(self, node: Node) -> Node_Info[Node]:
         """
         Return Node_Info instance for `node`.
         If frozen, cache node info in `self._node_info_cache`.
@@ -271,7 +273,7 @@ class NXOntology(Freezable):
             self.graph.graph["node_url_attribute"] = node_url_attribute
 
 
-class Node_Info(Freezable):
+class Node_Info(Freezable, Generic[Node]):
     """
     Compute metrics and values for a node of an NXOntology.
     Includes intrinsic information content (IC) metrics.
@@ -288,7 +290,7 @@ class Node_Info(Freezable):
     Each ic_metric has a scaled version accessible by adding a _scaled suffix.
     """
 
-    def __init__(self, nxo: NXOntology, node: Node):
+    def __init__(self, nxo: NXOntology[Node], node: Node):
         if node not in nxo.graph:
             raise NodeNotFound(f"{node} not in graph.")
         self.nxo = nxo
@@ -337,7 +339,7 @@ class Node_Info(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def ancestors(self) -> Node_Set:
+    def ancestors(self) -> Set[Node]:
         """
         Get ancestors of node in graph, including the node itself.
         Ancestors refers to more general concepts in an ontology,
@@ -350,7 +352,7 @@ class Node_Info(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def descendants(self) -> Node_Set:
+    def descendants(self) -> Set[Node]:
         """
         Get descendants of node in graph, including the node itself.
         Descendants refers to more specific concepts in an ontology,
@@ -445,7 +447,7 @@ class Node_Info(Freezable):
         return self.intrinsic_ic_sanchez / math.log(len(self.nxo.leaves) + 1)
 
 
-class Similarity(Freezable):
+class Similarity(Freezable, Generic[Node]):
     """
     Compute intrinsic similarity metrics for a pair of nodes.
     """
@@ -461,7 +463,7 @@ class Similarity(Freezable):
         "batet_log",
     ]
 
-    def __init__(self, nxo: NXOntology, node_0: Node, node_1: Node):
+    def __init__(self, nxo: NXOntology[Node], node_0: Node, node_1: Node):
         self.nxo = nxo
         self.node_0 = node_0
         self.node_1 = node_1
@@ -484,12 +486,12 @@ class Similarity(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def common_ancestors(self) -> "Node_Set":
+    def common_ancestors(self) -> Set[Node]:
         return self.info_0.ancestors & self.info_1.ancestors
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def union_ancestors(self) -> "Node_Set":
+    def union_ancestors(self) -> Set[Node]:
         return self.info_0.ancestors | self.info_1.ancestors
 
     @property
@@ -531,7 +533,7 @@ class Similarity(Freezable):
         return {key: getattr(self, key) for key in keys}
 
 
-class SimilarityIC(Similarity):
+class SimilarityIC(Similarity[Node]):
     """
     Compute intrinsic similarity metrics for a pair of nodes,
     including Information Content (IC) derived metrics.
@@ -540,7 +542,7 @@ class SimilarityIC(Similarity):
 
     def __init__(
         self,
-        graph: NXOntology,
+        graph: NXOntology[Node],
         node_0: Node,
         node_1: Node,
         ic_metric: str = "intrinsic_ic_sanchez",
@@ -565,7 +567,7 @@ class SimilarityIC(Similarity):
         "jiang_seco",
     ]
 
-    def _get_ic(self, node_info: Node_Info, ic_metric: str) -> float:
+    def _get_ic(self, node_info: Node_Info[Node], ic_metric: str) -> float:
         ic = getattr(node_info, ic_metric)
         assert isinstance(ic, float)
         return ic

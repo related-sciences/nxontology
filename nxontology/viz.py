@@ -7,7 +7,7 @@ from nxontology.ontology import Node, Node_Info, SimilarityIC
 
 
 def create_similarity_graphviz(
-    sim: SimilarityIC,
+    sim: SimilarityIC[Node],
     nodes: Optional[Iterable[Node]] = None,
 ) -> "AGraph":
     """
@@ -78,7 +78,7 @@ def create_similarity_graphviz(
     return gviz
 
 
-def get_verbose_node_label(info: Node_Info) -> str:
+def get_verbose_node_label(info: Node_Info[Node]) -> str:
     """Return verbose label like 'label (identifier)'."""
     verbose_label = info.label
     assert isinstance(verbose_label, str)

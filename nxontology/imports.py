@@ -8,13 +8,13 @@ from nxontology import NXOntology
 from nxontology.exceptions import NodeNotFound
 
 
-def pronto_to_nxontology(onto: Prontology) -> NXOntology:
+def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
     """
     Create an `NXOntology` from an input `pronto.Ontology`.
     Obsolete terms are omitted as nodes.
     Only is_a / subClassOf relationships are used for edges.
     """
-    nxo = NXOntology()
+    nxo: NXOntology[str] = NXOntology()
     nxo.pronto = onto  # type: ignore [attr-defined]
     for term in onto.terms():
         if term.obsolete:
@@ -41,7 +41,7 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology:
     return nxo
 
 
-def from_obo_library(slug: str) -> NXOntology:
+def from_obo_library(slug: str) -> NXOntology[str]:
     """
     Read ontology from <http://www.obofoundry.org/>.
     Delegates to [`pronto.Ontology.from_obo_library`](https://pronto.readthedocs.io/en/stable/api/pronto.Ontology.html#pronto.Ontology.from_obo_library).
@@ -52,7 +52,7 @@ def from_obo_library(slug: str) -> NXOntology:
     return nxo
 
 
-def from_file(handle: Union[BinaryIO, str, "PathLike[AnyStr]"]) -> NXOntology:
+def from_file(handle: Union[BinaryIO, str, "PathLike[AnyStr]"]) -> NXOntology[str]:
     """
     Read ontology in OBO, OWL, or JSON (OBO Graphs) format via pronto.
 

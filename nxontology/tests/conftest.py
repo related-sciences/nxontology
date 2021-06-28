@@ -5,13 +5,13 @@ from nxontology.examples import create_metal_nxo
 
 
 @pytest.fixture
-def metal_nxo() -> NXOntology:
+def metal_nxo() -> NXOntology[str]:
     """Returns a newly created metal ontology for each test."""
     return create_metal_nxo()
 
 
 @pytest.fixture(scope="module")
-def metal_nxo_frozen() -> NXOntology:
+def metal_nxo_frozen() -> NXOntology[str]:
     """
     Frozen metals ontology,
     scoped such that all tests in this module will receive the same NXOntology instance.
