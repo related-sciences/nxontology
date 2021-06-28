@@ -13,6 +13,7 @@ pip-wheel-metadata/
 .eggs/
 build/
 dist/
+.tox
 
 # System specific files
 

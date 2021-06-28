@@ -149,9 +149,14 @@ pre-commit install
 
 # Run all pre-commit checks (CI will also run this).
 pre-commit run --all
+```
 
-# run tests
-pytest
+Tests can be run with `tox`, which creats self-contained environments
+for all commands, by using:
+
+```shell
+pip install tox
+tox
 ```
 
 Releases are created on [GitHub](https://github.com/related-sciences/nxontology/releases).
