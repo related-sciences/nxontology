@@ -1,6 +1,6 @@
 # NetworkX-based Python library for representing ontologies
 
-[![GitHub Actions CI Build Status](https://img.shields.io/github/workflow/status/related-sciences/nxontology/Build?label=actions&style=for-the-badge&logo=github&logoColor=white)](https://github.com/related-sciences/nxontology/actions)  
+[![GitHub Actions CI Build Status](https://img.shields.io/github/workflow/status/related-sciences/nxontology/Build/main?label=actions&style=for-the-badge&logo=github&logoColor=white)](https://github.com/related-sciences/nxontology/actions)  
 [![Software License](https://img.shields.io/github/license/related-sciences/nxontology?style=for-the-badge&logo=Apache&logoColor=white)](https://github.com/related-sciences/nxontology/blob/main/LICENSE)  
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge&logo=Python&logoColor=white)](https://github.com/psf/black)  
 [![PyPI](https://img.shields.io/pypi/v/nxontology.svg?style=for-the-badge&logo=PyPI&logoColor=white)](https://pypi.org/project/nxontology/)  
@@ -128,6 +128,35 @@ pip install nxontology[viz]
 
 The extra `viz` dependencies are required for the `nxontology.viz` module.
 This includes [pygraphviz](https://pygraphviz.github.io/), which requires a pre-existing [graphviz](https://graphviz.org/) installation.
+
+## Development
+
+Some helpful development commands:
+
+```shell
+# create a virtual environment for development
+python3 -m venv .venv
+
+# activate virtual environment
+source .venv/bin/activate
+
+# install package for development
+pip install --editable ".[dev,viz]"
+
+# Set up the git pre-commit hooks.
+# `git commit` will now trigger automatic checks including linting.
+pre-commit install
+
+# Run all pre-commit checks (CI will also run this).
+pre-commit run --all
+
+# run tests
+pytest
+```
+
+Releases are created on [GitHub](https://github.com/related-sciences/nxontology/releases).
+The [release action](https://github.com/related-sciences/nxontology/actions/workflows/release.yaml) defined by [`release.yaml`](https://github.com/related-sciences/nxontology/blob/main/.github/workflows/release.yaml) will build the distribution and upload to [PyPI](https://pypi.org/project/nxontology/).
+The package version is automatically generated from the git tag by [`setuptools_scm`](https://github.com/pypa/setuptools_scm).
 
 ## Bibliography
 
