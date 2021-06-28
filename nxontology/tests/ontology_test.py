@@ -168,14 +168,13 @@ def test_similarity_batet(
     ],
 )
 def test_similarity_mica(
-    metal_nxo_frozen: NXOntology[str], node_0: str, node_1: str, expected: float
+    metal_nxo_frozen: NXOntology[str], node_0: str, node_1: str, expected: str
 ) -> None:
     sim = SimilarityIC(
         metal_nxo_frozen, node_0, node_1, ic_metric="intrinsic_ic_sanchez"
     )
     assert sim.mica is not None
-    # FIXME the type annotations here were wrong before this PR
-    assert sim.mica == expected  # type: ignore
+    assert sim.mica == expected
 
 
 def test_similarity_unsupported_metric(metal_nxo_frozen: NXOntology[str]) -> None:
