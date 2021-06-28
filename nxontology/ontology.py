@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import abc
 import functools
 import itertools
@@ -79,7 +81,7 @@ class NXOntology(Freezable, Generic[Node]):
     def __init__(self, graph: Optional[nx.DiGraph] = None):
         self.graph = nx.DiGraph(graph)
         self.check_is_dag()
-        self._node_info_cache: Dict[Hashable, Node_Info] = {}
+        self._node_info_cache: Dict[Node, Node_Info[Node]] = {}
 
     def check_is_dag(self) -> None:
         if not nx.is_directed_acyclic_graph(self.graph):
@@ -103,7 +105,7 @@ class NXOntology(Freezable, Generic[Node]):
             json.dump(obj=nld, fp=write_file, indent=2, ensure_ascii=False)
 
     @classmethod
-    def read_node_link_json(cls, path: str) -> "NXOntology":
+    def read_node_link_json(cls, path: str) -> NXOntology[Node]:
         """
         Retrun a new graph from node-link format as written by `write_node_link_json`.
         """
@@ -185,7 +187,7 @@ class NXOntology(Freezable, Generic[Node]):
         node_0: Node,
         node_1: Node,
         ic_metric: str = "intrinsic_ic_sanchez",
-    ) -> "SimilarityIC":
+    ) -> SimilarityIC[Node]:
         """SimilarityIC instance for the specified nodes"""
         return SimilarityIC(self, node_0, node_1, ic_metric)
 
@@ -219,7 +221,7 @@ class NXOntology(Freezable, Generic[Node]):
             metrics = self.similarity_metrics(node_0, node_1, ic_metric=ic_metric)
             yield metrics
 
-    def node_info(self, node: Node) -> "Node_Info":
+    def node_info(self, node: Node) -> Node_Info[Node]:
         """
         Return Node_Info instance for `node`.
         If frozen, cache node info in `self._node_info_cache`.
@@ -288,7 +290,7 @@ class Node_Info(Freezable, Generic[Node]):
     Each ic_metric has a scaled version accessible by adding a _scaled suffix.
     """
 
-    def __init__(self, nxo: NXOntology, node: Node):
+    def __init__(self, nxo: NXOntology[Node], node: Node):
         if node not in nxo.graph:
             raise NodeNotFound(f"{node} not in graph.")
         self.nxo = nxo
@@ -445,7 +447,7 @@ class Node_Info(Freezable, Generic[Node]):
         return self.intrinsic_ic_sanchez / math.log(len(self.nxo.leaves) + 1)
 
 
-class Similarity(Freezable):
+class Similarity(Freezable, Generic[Node]):
     """
     Compute intrinsic similarity metrics for a pair of nodes.
     """
@@ -461,7 +463,7 @@ class Similarity(Freezable):
         "batet_log",
     ]
 
-    def __init__(self, nxo: NXOntology, node_0: Node, node_1: Node):
+    def __init__(self, nxo: NXOntology[Node], node_0: Node, node_1: Node):
         self.nxo = nxo
         self.node_0 = node_0
         self.node_1 = node_1
@@ -531,7 +533,7 @@ class Similarity(Freezable):
         return {key: getattr(self, key) for key in keys}
 
 
-class SimilarityIC(Similarity):
+class SimilarityIC(Similarity[Node]):
     """
     Compute intrinsic similarity metrics for a pair of nodes,
     including Information Content (IC) derived metrics.
@@ -540,7 +542,7 @@ class SimilarityIC(Similarity):
 
     def __init__(
         self,
-        graph: NXOntology,
+        graph: NXOntology[Node],
         node_0: Node,
         node_1: Node,
         ic_metric: str = "intrinsic_ic_sanchez",
@@ -565,7 +567,7 @@ class SimilarityIC(Similarity):
         "jiang_seco",
     ]
 
-    def _get_ic(self, node_info: Node_Info, ic_metric: str) -> float:
+    def _get_ic(self, node_info: Node_Info[Node], ic_metric: str) -> float:
         ic = getattr(node_info, ic_metric)
         assert isinstance(ic, float)
         return ic

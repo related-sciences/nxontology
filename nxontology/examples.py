@@ -1,7 +1,7 @@
 from nxontology import NXOntology
 
 
-def create_metal_nxo() -> NXOntology:
+def create_metal_nxo() -> NXOntology[str]:
     """
     Metals ontology from Fig 1 of "Semantic Similarity Definition" at
     https://doi.org/10.1016/B978-0-12-809633-8.20401-9.
@@ -9,7 +9,7 @@ def create_metal_nxo() -> NXOntology:
     Note edge direction is opposite of the drawing.
     Edges go from general to specific.
     """
-    nxo = NXOntology()
+    nxo: NXOntology[str] = NXOntology()
     nxo.graph.graph["name"] = "Metals"
     nxo.set_graph_attributes(node_label_attribute="{node}")
     edges = [
@@ -27,13 +27,13 @@ def create_metal_nxo() -> NXOntology:
     return nxo
 
 
-def create_disconnected_nxo() -> NXOntology:
+def create_disconnected_nxo() -> NXOntology[str]:
     """
     Fictitious ontology with disjoint / disconnected components.
     Has multiple root nodes. Helpful for testing.
     https://github.com/related-sciences/nxontology/issues/4
     """
-    nxo = NXOntology()
+    nxo: NXOntology[str] = NXOntology()
     nxo.add_node("water")
     edges = [
         ("metal", "precious"),

@@ -22,7 +22,7 @@ def setup_module():
 @pytest.mark.parametrize("source,target", [("gold", "silver"), ("palladium", "metal")])
 @pytest.mark.parametrize("nodes_str", ["all", "union_ancestors"])
 def test_create_graphviz(
-    metal_nxo_frozen: NXOntology,
+    metal_nxo_frozen: NXOntology[str],
     source: str,
     target: str,
     nodes_str: str,

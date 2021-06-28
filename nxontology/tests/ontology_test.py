@@ -12,41 +12,41 @@ from nxontology.exceptions import DuplicateError, NodeNotFound
 from nxontology.ontology import Node_Info, NXOntology, Similarity, SimilarityIC
 
 
-def test_add_node(metal_nxo: NXOntology) -> None:
+def test_add_node(metal_nxo: NXOntology[str]) -> None:
     assert "brass" not in metal_nxo.graph
     metal_nxo.add_node("brass", color="#b5a642")
     assert "brass" in metal_nxo.graph
     assert metal_nxo.graph.nodes["brass"]["color"] == "#b5a642"
 
 
-def test_add_node_duplicate(metal_nxo: NXOntology) -> None:
+def test_add_node_duplicate(metal_nxo: NXOntology[str]) -> None:
     with pytest.raises(DuplicateError):
         metal_nxo.add_node("gold")
 
 
-def test_add_edge(metal_nxo: NXOntology) -> None:
+def test_add_edge(metal_nxo: NXOntology[str]) -> None:
     metal_nxo.add_edge("metal", "gold", note="already implied")
     assert metal_nxo.graph.has_edge("metal", "gold")
     assert metal_nxo.graph.edges["metal", "gold"]["note"] == "already implied"
 
 
-def test_add_edge_missing_node(metal_nxo: NXOntology) -> None:
+def test_add_edge_missing_node(metal_nxo: NXOntology[str]) -> None:
     assert "brass" not in metal_nxo.graph
     with pytest.raises(NodeNotFound):
         metal_nxo.add_edge("coinage", "brass")
 
 
-def test_add_edge_duplicate(metal_nxo: NXOntology) -> None:
+def test_add_edge_duplicate(metal_nxo: NXOntology[str]) -> None:
     with pytest.raises(DuplicateError):
         metal_nxo.add_edge("coinage", "gold")
 
 
 def test_nxontology_read_write_node_link_json(
-    metal_nxo: NXOntology, tmp_path: pathlib.Path
+    metal_nxo: NXOntology[str], tmp_path: pathlib.Path
 ) -> None:
     path = str(tmp_path.joinpath("node-link.json"))
     metal_nxo.write_node_link_json(path)
-    metal_nxo_roundtrip = NXOntology.read_node_link_json(path)
+    metal_nxo_roundtrip: NXOntology[str] = NXOntology.read_node_link_json(path)
     assert metal_nxo is not metal_nxo_roundtrip
     assert isinstance(metal_nxo_roundtrip, NXOntology)
     assert networkx.is_isomorphic(metal_nxo.graph, metal_nxo_roundtrip.graph)
@@ -54,7 +54,7 @@ def test_nxontology_read_write_node_link_json(
     assert list(metal_nxo.graph.nodes) == list(metal_nxo_roundtrip.graph.nodes)
 
 
-def test_nxontology_check_is_dag(metal_nxo: NXOntology) -> None:
+def test_nxontology_check_is_dag(metal_nxo: NXOntology[str]) -> None:
     metal_nxo.check_is_dag()
     # add an edge that makes the graph cyclic
     metal_nxo.graph.add_edge("copper", "metal")
@@ -62,17 +62,17 @@ def test_nxontology_check_is_dag(metal_nxo: NXOntology) -> None:
         metal_nxo.check_is_dag()
 
 
-def test_nxontology_roots(metal_nxo_frozen: NXOntology) -> None:
+def test_nxontology_roots(metal_nxo_frozen: NXOntology[str]) -> None:
     roots = metal_nxo_frozen.roots
     assert roots == {"metal"}
 
 
-def test_nxontology_leaves(metal_nxo_frozen: NXOntology) -> None:
+def test_nxontology_leaves(metal_nxo_frozen: NXOntology[str]) -> None:
     leaves = metal_nxo_frozen.leaves
     assert leaves == {"copper", "gold", "palladium", "platinum", "silver"}
 
 
-def test_node_info_root(metal_nxo_frozen: NXOntology) -> None:
+def test_node_info_root(metal_nxo_frozen: NXOntology[str]) -> None:
     """Test metal node_info. Metal is the only root node."""
     info = metal_nxo_frozen.node_info("metal")
     assert info.node == "metal"
@@ -81,7 +81,7 @@ def test_node_info_root(metal_nxo_frozen: NXOntology) -> None:
     assert info.depth == 0
 
 
-def test_node_info_gold(metal_nxo_frozen: NXOntology) -> None:
+def test_node_info_gold(metal_nxo_frozen: NXOntology[str]) -> None:
     print(metal_nxo_frozen.graph.graph)
     gold_info = metal_nxo_frozen.node_info("gold")
     assert gold_info.node == "gold"
@@ -93,7 +93,7 @@ def test_node_info_gold(metal_nxo_frozen: NXOntology) -> None:
     assert gold_info.depth == 2
 
 
-def test_set_graph_attributes(metal_nxo: NXOntology) -> None:
+def test_set_graph_attributes(metal_nxo: NXOntology[str]) -> None:
     assert metal_nxo.name == "Metals"
     metal_nxo.graph.nodes["gold"]["metal_label"] = "test_label"
     metal_nxo.graph.nodes["gold"]["metal_identifier"] = 1
@@ -117,12 +117,12 @@ def test_set_graph_attributes(metal_nxo: NXOntology) -> None:
     assert silver_info.url is None
 
 
-def test_node_info_not_found(metal_nxo_frozen: NXOntology) -> None:
+def test_node_info_not_found(metal_nxo_frozen: NXOntology[str]) -> None:
     with pytest.raises(NodeNotFound, match="not-a-metal not in graph"):
         metal_nxo_frozen.node_info("not-a-metal")
 
 
-def test_intrinsic_ic_unscaled(metal_nxo_frozen: NXOntology) -> None:
+def test_intrinsic_ic_unscaled(metal_nxo_frozen: NXOntology[str]) -> None:
     assert metal_nxo_frozen.n_nodes == 8
     # number of descendants per node including self
     n_descendants = [
@@ -151,7 +151,7 @@ def test_intrinsic_ic_unscaled(metal_nxo_frozen: NXOntology) -> None:
     ],
 )
 def test_similarity_batet(
-    metal_nxo_frozen: NXOntology, node_0: str, node_1: str, expected: float
+    metal_nxo_frozen: NXOntology[str], node_0: str, node_1: str, expected: float
 ) -> None:
     sim = Similarity(metal_nxo_frozen, node_0, node_1)
     assert sim.batet == expected
@@ -168,20 +168,22 @@ def test_similarity_batet(
     ],
 )
 def test_similarity_mica(
-    metal_nxo_frozen: NXOntology, node_0: str, node_1: str, expected: float
+    metal_nxo_frozen: NXOntology[str], node_0: str, node_1: str, expected: float
 ) -> None:
     sim = SimilarityIC(
         metal_nxo_frozen, node_0, node_1, ic_metric="intrinsic_ic_sanchez"
     )
-    assert sim.mica == expected
+    assert sim.mica is not None
+    # FIXME the type annotations here were wrong before this PR
+    assert sim.mica == expected  # type: ignore
 
 
-def test_similarity_unsupported_metric(metal_nxo_frozen: NXOntology) -> None:
+def test_similarity_unsupported_metric(metal_nxo_frozen: NXOntology[str]) -> None:
     with pytest.raises(ValueError, match="not a supported ic_metric"):
         SimilarityIC(metal_nxo_frozen, "gold", "silver", ic_metric="ic_unsupported")
 
 
-def test_cache_on_frozen_leaves(metal_nxo: NXOntology) -> None:
+def test_cache_on_frozen_leaves(metal_nxo: NXOntology[str]) -> None:
     # cache disabled
     leaves = metal_nxo.leaves
     assert "leaves" not in getattr(metal_nxo, "__method_cache", {})
@@ -195,7 +197,7 @@ def test_cache_on_frozen_leaves(metal_nxo: NXOntology) -> None:
     assert metal_nxo.leaves is cached_leaves
 
 
-def test_cache_on_node_info(metal_nxo: NXOntology) -> None:
+def test_cache_on_node_info(metal_nxo: NXOntology[str]) -> None:
     # cache disabled
     assert not metal_nxo.frozen
     gold = metal_nxo.node_info("gold")
@@ -209,7 +211,7 @@ def test_cache_on_node_info(metal_nxo: NXOntology) -> None:
     assert metal_nxo.node_info("gold") is cached_gold
 
 
-def get_similarity_tsv(nxo: NXOntology) -> str:
+def get_similarity_tsv(nxo: NXOntology[str]) -> str:
     """
     Returns TSV text for all similarity metrics on the provided ontology.
     """
@@ -231,7 +233,7 @@ def get_similarity_tsv(nxo: NXOntology) -> str:
 class Ontology:
     name: str
     sim_path: pathlib.Path
-    ctor: Callable[[], NXOntology]
+    ctor: Callable[[], NXOntology[str]]
 
 
 directory: pathlib.Path = pathlib.Path(__file__).parent
