@@ -7,6 +7,7 @@ from typing import (
     Any,
     Callable,
     Dict,
+    Generic,
     Hashable,
     Iterable,
     List,
@@ -33,7 +34,7 @@ class Freezable(abc.ABC):
 
 # Type definitions. networkx does not declare types.
 # https://github.com/networkx/networkx/issues/3988#issuecomment-639969263
-Node = Hashable
+Node = TypeVar('Node', bound=Hashable)
 Node_Set = Set[Node]
 T = TypeVar("T")
 T_Freezable = TypeVar("T_Freezable", bound=Freezable)
@@ -69,7 +70,7 @@ def cache_on_frozen(func: Callable[[T_Freezable], T]) -> Callable[[T_Freezable],
     return wrapped
 
 
-class NXOntology(Freezable):
+class NXOntology(Freezable, Generic[Node]):
     """
     Encapsulate a networkx.DiGraph to represent an ontology.
     Regarding edge directionality, parent terms should point to child term.
@@ -141,7 +142,7 @@ class NXOntology(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def roots(self) -> "Node_Set":
+    def roots(self) -> Set[Node]:
         """
         Return all top-level nodes.
         """
@@ -155,7 +156,7 @@ class NXOntology(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def leaves(self) -> "Node_Set":
+    def leaves(self) -> Set[Node]:
         """
         Return all bottom-level nodes.
         """
@@ -271,7 +272,7 @@ class NXOntology(Freezable):
             self.graph.graph["node_url_attribute"] = node_url_attribute
 
 
-class Node_Info(Freezable):
+class Node_Info(Freezable, Generic[Node]):
     """
     Compute metrics and values for a node of an NXOntology.
     Includes intrinsic information content (IC) metrics.
@@ -337,7 +338,7 @@ class Node_Info(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def ancestors(self) -> Node_Set:
+    def ancestors(self) -> Set[Node]:
         """
         Get ancestors of node in graph, including the node itself.
         Ancestors refers to more general concepts in an ontology,
@@ -350,7 +351,7 @@ class Node_Info(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def descendants(self) -> Node_Set:
+    def descendants(self) -> Set[Node]:
         """
         Get descendants of node in graph, including the node itself.
         Descendants refers to more specific concepts in an ontology,
@@ -484,12 +485,12 @@ class Similarity(Freezable):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def common_ancestors(self) -> "Node_Set":
+    def common_ancestors(self) -> Set[Node]:
         return self.info_0.ancestors & self.info_1.ancestors
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def union_ancestors(self) -> "Node_Set":
+    def union_ancestors(self) -> Set[Node]:
         return self.info_0.ancestors | self.info_1.ancestors
 
     @property
