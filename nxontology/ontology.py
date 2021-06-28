@@ -35,7 +35,6 @@ class Freezable(abc.ABC):
 # Type definitions. networkx does not declare types.
 # https://github.com/networkx/networkx/issues/3988#issuecomment-639969263
 Node = TypeVar('Node', bound=Hashable)
-Node_Set = Set[Node]
 T = TypeVar("T")
 T_Freezable = TypeVar("T_Freezable", bound=Freezable)
 
