@@ -58,7 +58,9 @@ def test_nxontology_check_is_dag(metal_nxo: NXOntology[str]) -> None:
     metal_nxo.check_is_dag()
     # add an edge that makes the graph cyclic
     metal_nxo.graph.add_edge("copper", "metal")
-    with pytest.raises(ValueError):
+    # cannot match whole error message because starting node of loop is non-deterministic
+    error = r"NXOntology requires a directed acyclic graph. Cycles found:\n"
+    with pytest.raises(ValueError, match=error):
         metal_nxo.check_is_dag()
 
 

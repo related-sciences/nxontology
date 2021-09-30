@@ -22,6 +22,7 @@ from typing import (
 
 import fsspec
 import networkx as nx
+from networkx.algorithms.cycles import simple_cycles
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
 
 from .exceptions import DuplicateError, NodeNotFound
@@ -84,8 +85,16 @@ class NXOntology(Freezable, Generic[Node]):
         self._node_info_cache: Dict[Node, Node_Info[Node]] = {}
 
     def check_is_dag(self) -> None:
-        if not nx.is_directed_acyclic_graph(self.graph):
-            raise ValueError("NXOntology requires a directed acyclic graph.")
+        if nx.is_directed_acyclic_graph(self.graph):
+            return
+        # show at most 5 cycles to keep stderr manageable
+        cycles = itertools.islice(simple_cycles(self.graph), 5)
+        cycles_str = "\n".join(
+            " --> ".join(str(n) for n in [*cycle, cycle[0]]) for cycle in cycles
+        )
+        raise ValueError(
+            f"NXOntology requires a directed acyclic graph. Cycles found:\n{cycles_str}"
+        )
 
     @property
     def name(self) -> Optional[str]:
