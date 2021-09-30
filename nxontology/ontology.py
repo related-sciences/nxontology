@@ -246,7 +246,16 @@ class NXOntology(Freezable, Generic[Node]):
         """
         Total number of nodes in the graph.
         """
-        return len(self.graph)
+        # int wrapper is solely to satisfy mypy
+        return int(self.graph.number_of_nodes())
+
+    @property
+    def n_edges(self) -> int:
+        """
+        Total number of edges in the graph.
+        """
+        # int wrapper is solely to satisfy mypy
+        return int(self.graph.number_of_edges())
 
     def set_graph_attributes(
         self,

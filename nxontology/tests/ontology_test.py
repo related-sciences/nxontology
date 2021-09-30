@@ -12,6 +12,14 @@ from nxontology.exceptions import DuplicateError, NodeNotFound
 from nxontology.ontology import Node_Info, NXOntology, Similarity, SimilarityIC
 
 
+def test_n_nodes(metal_nxo: NXOntology[str]) -> None:
+    assert metal_nxo.n_nodes == 8
+
+
+def test_n_edges(metal_nxo: NXOntology[str]) -> None:
+    assert metal_nxo.n_edges == 9
+
+
 def test_add_node(metal_nxo: NXOntology[str]) -> None:
     assert "brass" not in metal_nxo.graph
     metal_nxo.add_node("brass", color="#b5a642")
