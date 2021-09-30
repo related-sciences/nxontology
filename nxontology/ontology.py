@@ -455,7 +455,7 @@ class Node_Info(Freezable, Generic[Node]):
         # ic_sanchez: Definition 4 / Equation 10 from https://doi.org/10.1016/j.knosys.2010.10.001
         all_leaves = self.nxo.leaves
         leaves = all_leaves & self.descendants
-        # replace negative sign with math.abs to avoid returning -0.0.
+        # replace negative sign with abs to avoid returning -0.0.
         return abs(
             math.log((len(leaves) / self.n_ancestors + 1) / (len(all_leaves) + 1))
         )
@@ -548,7 +548,8 @@ class Similarity(Freezable, Generic[Node]):
         """
         if self.batet == 1.0:
             return 1.0
-        return -math.log(1 - self.batet) / math.log(self.n_union_ancestors)
+        # replace negative sign with abs to avoid returning -0.0.
+        return abs(math.log(1 - self.batet) / math.log(self.n_union_ancestors))
 
     def results(self, keys: Optional[List[str]] = None) -> Dict[str, Any]:
         if keys is None:
