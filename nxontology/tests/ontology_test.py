@@ -82,6 +82,18 @@ def test_nxontology_leaves(metal_nxo_frozen: NXOntology[str]) -> None:
     assert leaves == {"copper", "gold", "palladium", "platinum", "silver"}
 
 
+def test_nxontology_isolates_empty(metal_nxo_frozen: NXOntology[str]) -> None:
+    isolates = metal_nxo_frozen.isolates
+    assert isolates == set()
+
+
+def test_nxontology_isolates() -> None:
+    nxo: NXOntology[str] = NXOntology()
+    nxo.add_node("a")
+    nxo.add_node("b")
+    assert {"a", "b"} == nxo.isolates
+
+
 def test_node_info_root(metal_nxo_frozen: NXOntology[str]) -> None:
     """Test metal node_info. Metal is the only root node."""
     info = metal_nxo_frozen.node_info("metal")

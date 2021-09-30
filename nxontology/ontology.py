@@ -23,6 +23,7 @@ from typing import (
 import fsspec
 import networkx as nx
 from networkx.algorithms.cycles import simple_cycles
+from networkx.algorithms.isolate import isolates
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
 
 from .exceptions import DuplicateError, NodeNotFound
@@ -154,12 +155,10 @@ class NXOntology(Freezable, Generic[Node]):
     @cache_on_frozen
     def roots(self) -> Set[Node]:
         """
-        Return all top-level nodes.
+        Return all top-level nodes, including isolates.
         """
         roots = set()
         for node in self.graph.nodes():
-            if self.graph.out_degree(node) == 0:
-                continue
             if self.graph.in_degree(node) == 0:
                 roots.add(node)
         return roots
@@ -168,15 +167,21 @@ class NXOntology(Freezable, Generic[Node]):
     @cache_on_frozen
     def leaves(self) -> Set[Node]:
         """
-        Return all bottom-level nodes.
+        Return all bottom-level nodes, including isolates.
         """
         leaves = set()
         for node in self.graph.nodes():
-            if self.graph.in_degree(node) == 0:
-                continue
             if self.graph.out_degree(node) == 0:
                 leaves.add(node)
         return leaves
+
+    @property  # type: ignore [misc]
+    @cache_on_frozen
+    def isolates(self) -> Set[Node]:
+        """
+        Return disconnected nodes.
+        """
+        return set(isolates(self.graph))
 
     def freeze(self) -> None:
         """
