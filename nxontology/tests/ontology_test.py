@@ -277,8 +277,7 @@ def test_similarities(ontology: Ontology) -> None:
     ```
     Confirm the changes to ontology_utils_test_metal_sim.tsv are desired before committing.
     """
-    # type ignored due to https://github.com/python/mypy/issues/6910
-    nxo = ontology.ctor()  # type: ignore [misc]
+    nxo = ontology.ctor()
     nxo.freeze()
     tsv = get_similarity_tsv(nxo)
     expect_tsv = ontology.sim_path.read_text()
@@ -290,7 +289,7 @@ def export_similarity_tsvs() -> None:
     Regenerate ontology_utils_test_metal_sim.tsv
     """
     for ontology in test_ontologies:
-        nxo = ontology.ctor()  # type: ignore [misc]
+        nxo = ontology.ctor()
         tsv = get_similarity_tsv(nxo)
         ontology.sim_path.write_text(tsv)
 

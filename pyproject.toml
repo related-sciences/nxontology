@@ -4,3 +4,36 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 # including this section enables version inference
+
+# https://pycqa.github.io/isort/docs/configuration/config_files.html
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+line_length = 88
+
+# https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
+[tool.mypy]
+python_version = "3.7"
+
+[[tool.mypy.overrides]]
+module = [
+    "*.tests.*",
+]
+disallow_untyped_defs = false
+disallow_untyped_decorators = false
+
+[[tool.mypy.overrides]]
+module = [
+    "fire.*",
+    "fsspec.*",
+    "networkx.*",
+    "setuptools.*",
+    "pandas.*",
+    "pytest.*",
+    "_pytest.*",
+    "pygraphviz.*",
+]
+ignore_missing_imports = true
