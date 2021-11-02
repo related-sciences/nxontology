@@ -1,15 +1,23 @@
+import networkx as nx
 import pytest
 from pronto import Ontology  # type: ignore [attr-defined]
 
-from nxontology.imports import from_file, from_obo_library, pronto_to_multidigraph
+from nxontology.imports import (
+    from_file,
+    from_obo_library,
+    multidigraph_to_digraph,
+    pronto_to_multidigraph,
+)
+
+taxrank_formats = [
+    "owl",
+    "obo",
+]
 
 
 @pytest.mark.parametrize(
     "format",
-    [
-        "owl",
-        "obo",
-    ],
+    taxrank_formats,
 )
 def test_from_obo_library_taxrank(format: str) -> None:
     """
@@ -42,10 +50,7 @@ def test_from_file_go() -> None:
 
 @pytest.mark.parametrize(
     "format",
-    [
-        "owl",
-        "obo",
-    ],
+    taxrank_formats,
 )
 def test_pronto_to_multidigraph(format: str) -> None:
     """
@@ -53,6 +58,25 @@ def test_pronto_to_multidigraph(format: str) -> None:
     """
     slug = f"taxrank.{format}"
     onto = Ontology.from_obo_library(slug)
-    graph = pronto_to_multidigraph(onto)
+    graph = pronto_to_multidigraph(onto, default_rel_type="is_a")
     # subterm --> superterm: opposite of NXOntology
-    assert graph.has_edge(u="TAXRANK:0000034", v="TAXRANK:0000000", key="is a")
+    assert graph.has_edge(u="TAXRANK:0000034", v="TAXRANK:0000000", key="is_a")
+
+
+def test_multigraph_to_digraph():
+    mdg = nx.MultiDiGraph()
+    mdg.add_edge("a", "b", key="rel_type 1")
+    mdg.add_edge("a", "b", key="rel_type 2")
+    mdg.add_edge("b", "c", key="rel_type 1")
+    dg = multidigraph_to_digraph(mdg)
+    assert dg.number_of_nodes() == 3
+    assert dg.number_of_edges() == 2
+    assert dg["b"]["a"]["rel_types"] == ["rel_type 1", "rel_type 2"]
+    assert dg["c"]["b"]["rel_types"] == ["rel_type 1"]
+    dg = multidigraph_to_digraph(mdg, reverse=False)
+    assert dg.has_edge("a", "b")
+    assert not dg.has_edge("b", "a")
+    dg = multidigraph_to_digraph(mdg, rel_types=["rel_type 2"])
+    assert dg.number_of_nodes() == 3
+    assert dg.number_of_edges() == 1
+    assert dg.has_edge("b", "a")

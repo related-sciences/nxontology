@@ -154,13 +154,15 @@ def multidigraph_to_digraph(
     """
     if rel_types is not None:
         graph.remove_edges_from(
-            (u, v, key)
-            for u, v, key in graph.edges(keys=True, data=False)
-            if key not in rel_types
+            [
+                (u, v, key)
+                for u, v, key in graph.edges(keys=True, data=False)
+                if key not in rel_types
+            ]
         )
     if reverse:
         graph = graph.reverse(copy=True)
     digraph = nx.DiGraph(graph)
-    for source, target, data in digraph.edges(data=True):
+    for source, target in digraph.edges(data=False):
         digraph[source][target]["rel_types"] = sorted(graph[source][target])
     return digraph
