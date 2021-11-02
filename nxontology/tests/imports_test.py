@@ -7,6 +7,7 @@ from nxontology.imports import (
     from_obo_library,
     multidigraph_to_digraph,
     pronto_to_multidigraph,
+    read_gene_ontology,
 )
 
 taxrank_formats = [
@@ -80,3 +81,12 @@ def test_multigraph_to_digraph():
     assert dg.number_of_nodes() == 3
     assert dg.number_of_edges() == 1
     assert dg.has_edge("b", "a")
+
+
+def test_read_gene_ontology():
+    nxo = read_gene_ontology(release="2021-02-01")
+    assert (
+        nxo.graph.graph["source_url"]
+        == "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
+    )
+    assert "regulates" in nxo.graph["GO:0006310"]["GO:0000018"]["rel_types"]

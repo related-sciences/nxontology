@@ -1,4 +1,5 @@
 import logging
+from datetime import date
 from os import PathLike
 from typing import AnyStr, BinaryIO, Counter, List, Optional, Tuple, Union, cast
 
@@ -166,3 +167,42 @@ def multidigraph_to_digraph(
     for source, target in digraph.edges(data=False):
         digraph[source][target]["rel_types"] = sorted(graph[source][target])
     return digraph
+
+
+def read_gene_ontology(
+    release: str = "current",
+    source_file: str = "go-basic.json.gz",
+    rel_types: Optional[List[str]] = [
+        "is a",
+        "part of",
+        "regulates",
+        "negatively regulates",
+        "positively regulates",
+    ],
+) -> NXOntology[str]:
+    """
+    Load the Gene Ontology into NXOntology,
+    keeping the relationship types from the basic release.
+    GO Basic is [described as](http://geneontology.org/docs/download-ontology/):
+
+    > This is the basic version of the GO,
+    > filtered such that the graph is guaranteed to be acyclic
+    > and annotations can be propagated up the graph.
+    > The relations included are
+    > is a, part of, regulates, negatively regulates and positively regulates.
+    > This version excludes relationships that cross the 3 GO hierarchies.
+    > This version should be used with most GO-based annotation tools.
+    """
+    if release == "current":
+        url = f"http://current.geneontology.org/ontology/{source_file}"
+    else:
+        date.fromisoformat(release)  # check that release is a valid date
+        url = f"http://release.geneontology.org/{release}/ontology/{source_file}"
+    go_pronto = Prontology(handle=url)
+    go_multidigraph = pronto_to_multidigraph(go_pronto, default_rel_type="is a")
+    go_digraph = multidigraph_to_digraph(
+        go_multidigraph, rel_types=rel_types, reverse=True
+    )
+    go_nxo: NXOntology[str] = NXOntology(go_digraph)
+    go_nxo.graph.graph["source_url"] = url
+    return go_nxo

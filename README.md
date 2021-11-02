@@ -117,7 +117,7 @@ using pronto to load the ontology:
 >>> from nxontology import NXOntology
 >>> from nxontology.imports import pronto_to_multidigraph, multidigraph_to_digraph
 >>> go_pronto = pronto.Ontology(handle=url)
->>> go_multidigraph = pronto_to_multidigraph(onto)
+>>> go_multidigraph = pronto_to_multidigraph(go_pronto)
 >>> Counter(key for _, _, key in go_multidigraph.edges(keys=True))
 Counter({'is a': 71509,
          'part of': 7187,
@@ -129,6 +129,9 @@ Counter({'is a': 71509,
 >>> # Notice the similarity increases due to the full set of edges
 >>> round(go_nxo.similarity("GO:0042552", "GO:0022008").lin, 3)
 0.699
+>>> # Note that there is also a dedicated reader for the Gene Ontology
+>>> from nxontology.imports import read_gene_ontology
+>>> read_gene_ontology(release="2021-02-01")
 ```
 
 Users can also create their own `networkx.DiGraph` to use this package.
