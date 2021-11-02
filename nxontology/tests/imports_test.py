@@ -1,6 +1,7 @@
 import pytest
+from pronto import Ontology  # type: ignore [attr-defined]
 
-from nxontology.imports import from_file, from_obo_library
+from nxontology.imports import from_file, from_obo_library, pronto_to_multidigraph
 
 
 @pytest.mark.parametrize(
@@ -37,3 +38,21 @@ def test_from_file_go() -> None:
     assert info.data["namespace"] == "biological_process"
     # has edge from "axon ensheathment" to "myelination"
     assert nxo.graph.has_edge("GO:0008366", "GO:0042552")
+
+
+@pytest.mark.parametrize(
+    "format",
+    [
+        "owl",
+        "obo",
+    ],
+)
+def test_pronto_to_multidigraph(format: str) -> None:
+    """
+    http://www.obofoundry.org/ontology/taxrank.html
+    """
+    slug = f"taxrank.{format}"
+    onto = Ontology.from_obo_library(slug)
+    graph = pronto_to_multidigraph(onto)
+    # subterm --> superterm: opposite of NXOntology
+    assert graph.has_edge(u="TAXRANK:0000034", v="TAXRANK:0000000", key="is a")
