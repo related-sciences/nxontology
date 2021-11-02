@@ -1,14 +1,24 @@
+import networkx as nx
 import pytest
+from pronto import Ontology  # type: ignore [attr-defined]
 
-from nxontology.imports import from_file, from_obo_library
+from nxontology.imports import (
+    from_file,
+    from_obo_library,
+    multidigraph_to_digraph,
+    pronto_to_multidigraph,
+    read_gene_ontology,
+)
+
+taxrank_formats = [
+    "owl",
+    "obo",
+]
 
 
 @pytest.mark.parametrize(
     "format",
-    [
-        "owl",
-        "obo",
-    ],
+    taxrank_formats,
 )
 def test_from_obo_library_taxrank(format: str) -> None:
     """
@@ -37,3 +47,46 @@ def test_from_file_go() -> None:
     assert info.data["namespace"] == "biological_process"
     # has edge from "axon ensheathment" to "myelination"
     assert nxo.graph.has_edge("GO:0008366", "GO:0042552")
+
+
+@pytest.mark.parametrize(
+    "format",
+    taxrank_formats,
+)
+def test_pronto_to_multidigraph(format: str) -> None:
+    """
+    http://www.obofoundry.org/ontology/taxrank.html
+    """
+    slug = f"taxrank.{format}"
+    onto = Ontology.from_obo_library(slug)
+    graph = pronto_to_multidigraph(onto, default_rel_type="is_a")
+    # subterm --> superterm: opposite of NXOntology
+    assert graph.has_edge(u="TAXRANK:0000034", v="TAXRANK:0000000", key="is_a")
+
+
+def test_multigraph_to_digraph():
+    mdg = nx.MultiDiGraph()
+    mdg.add_edge("a", "b", key="rel_type 1")
+    mdg.add_edge("a", "b", key="rel_type 2")
+    mdg.add_edge("b", "c", key="rel_type 1")
+    dg = multidigraph_to_digraph(mdg)
+    assert dg.number_of_nodes() == 3
+    assert dg.number_of_edges() == 2
+    assert dg["b"]["a"]["rel_types"] == ["rel_type 1", "rel_type 2"]
+    assert dg["c"]["b"]["rel_types"] == ["rel_type 1"]
+    dg = multidigraph_to_digraph(mdg, reverse=False)
+    assert dg.has_edge("a", "b")
+    assert not dg.has_edge("b", "a")
+    dg = multidigraph_to_digraph(mdg, rel_types=["rel_type 2"])
+    assert dg.number_of_nodes() == 3
+    assert dg.number_of_edges() == 1
+    assert dg.has_edge("b", "a")
+
+
+def test_read_gene_ontology():
+    nxo = read_gene_ontology(release="2021-02-01")
+    assert (
+        nxo.graph.graph["source_url"]
+        == "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
+    )
+    assert "regulates" in nxo.graph["GO:0006310"]["GO:0000018"]["rel_types"]
