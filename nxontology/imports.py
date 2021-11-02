@@ -1,11 +1,14 @@
 import logging
 from os import PathLike
-from typing import AnyStr, BinaryIO, Union
+from typing import AnyStr, BinaryIO, Counter, List, Optional, Tuple, Union, cast
 
+import networkx as nx
 from pronto import Ontology as Prontology  # type: ignore [attr-defined]
+from pronto.term import Term
 
 from nxontology import NXOntology
 from nxontology.exceptions import NodeNotFound
+from nxontology.ontology import Node
 
 
 def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
@@ -62,3 +65,102 @@ def from_file(handle: Union[BinaryIO, str, "PathLike[AnyStr]"]) -> NXOntology[st
     """
     onto = Prontology(handle=handle)
     return pronto_to_nxontology(onto)
+
+
+def _pronto_edges_for_term(
+    term: Term, default_rel_type: str = "is a"
+) -> List[Tuple[Node, Node, str]]:
+    """
+    Extract edges including "is a" relationships for a Pronto term.
+    https://github.com/althonos/pronto/issues/119#issuecomment-956541286
+    """
+    rels = list()
+    source_id = cast(Node, term.id)
+    for target in term.superclasses(distance=1, with_self=False):
+        rels.append((source_id, cast(Node, target.id), default_rel_type))
+    for rel_type, targets in term.relationships.items():
+        for target in sorted(targets):
+            rels.append(
+                (
+                    cast(Node, term.id),
+                    cast(Node, target.id),
+                    rel_type.name or rel_type.id,
+                )
+            )
+    return rels
+
+
+def pronto_to_multidigraph(
+    onto: Prontology, default_rel_type: str = "is a"
+) -> nx.MultiDiGraph:
+    """
+    Convert a `pronto.Ontology` to a `networkx.MultiDiGraph`,
+    including all relationship types including "is a".
+    The output MultiDiGraph is not directly compatable with NXOntology,
+    since NXOntology assumes a DiGraph (without parallel edges) and likely
+    encodes edges in the reverse direction, such that edges go from
+    superterm to subterm.
+
+    ## References
+
+    - https://github.com/althonos/pronto/issues/119
+    - https://github.com/related-sciences/nxontology/issues/14
+    """
+    graph = nx.MultiDiGraph()
+    for term in onto.terms():
+        if term.obsolete:
+            # obsolete was unreliable in pronto < v2.4.0
+            # https://github.com/althonos/pronto/issues/122
+            continue
+        if term.id in graph:
+            logging.warning(f"Skipping node already in graph: {term}")
+            continue
+        graph.add_node(
+            term.id,
+            identifier=term.id,
+            label=term.name,
+            namespace=term.namespace,
+        )
+    for term in onto.terms():
+        for source, target, key in _pronto_edges_for_term(  # type: ignore [var-annotated]
+            term, default_rel_type
+        ):
+            for node in source, target:
+                if node not in graph:
+                    logging.warning(
+                        f"Skipping edge: node does not exist in graph: {node}"
+                    )
+            if graph.has_edge(source, target, key):
+                logging.warning(
+                    f"Skipping edge already in graph: {source} --> {target} (key={key!r})"
+                )
+            graph.add_edge(source, target, key=key)
+    rel_counts = Counter(key for _, _, key in graph.edges(keys=True))
+    logging.info(f"MultiDiGraph relationship counts:\n{rel_counts}")
+    return graph
+
+
+def multidigraph_to_digraph(
+    graph: nx.MultiDiGraph, rel_types: Optional[List[str]] = None, reverse: bool = True
+) -> nx.DiGraph:
+    """
+    Convert a networkx MultiDiGraph to a DiGraph by aggregating edges accross relationship types.
+    Can be used to convert the output of `pronto_to_multidigraph` or the obonet package to a DiGraph
+    suitable for input to NXOntology. In such cases, you will likely want to set reverse=True to reverse
+    edges directions such that edges point from superterms to subterms.
+
+    When rel_types is None, all relationship types are preserved. If rel_types is defined,
+    then the MultiDiGraph is first filtered for edges with that key (relationship type).
+    """
+    if rel_types is not None:
+        graph.remove_edges_from(
+            (u, v, key)
+            for u, v, key in graph.edges(keys=True, data=False)
+            if key not in rel_types
+        )
+    if reverse:
+        graph = graph.reverse(copy=True)
+    digraph = nx.DiGraph(graph)
+    for source, target, data in digraph.edges(data=True):
+        digraph[source][target]["rel_types"] = sorted(graph[source][target])
+    return digraph
