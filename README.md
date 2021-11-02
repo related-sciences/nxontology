@@ -110,6 +110,25 @@ using pronto to load the ontology:
 >>> # Gene Ontology domains are disconnected, expect 3 components
 >>> nx.number_weakly_connected_components(nxo.graph)
 3
+>>> # Note however that the default from_file reader only uses "is a" relationships.
+>>> # We can preserve all GO relationship types as follows
+>>> from collections import Counter
+>>> import pronto
+>>> from nxontology import NXOntology
+>>> from nxontology.imports import pronto_to_multidigraph, multidigraph_to_digraph
+>>> go_pronto = pronto.Ontology(handle=url)
+>>> go_multidigraph = pronto_to_multidigraph(onto)
+>>> Counter(key for _, _, key in go_multidigraph.edges(keys=True))
+Counter({'is a': 71509,
+         'part of': 7187,
+         'regulates': 3216,
+         'negatively regulates': 2768,
+         'positively regulates': 2756})
+>>> go_digraph = multidigraph_to_digraph(go_multidigraph)
+>>> go_nxo = NXOntology(go_digraph)
+>>> # Notice the similarity increases due to the full set of edges
+>>> round(go_nxo.similarity("GO:0042552", "GO:0022008").lin, 3)
+0.699
 ```
 
 Users can also create their own `networkx.DiGraph` to use this package.
