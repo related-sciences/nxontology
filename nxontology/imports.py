@@ -156,10 +156,11 @@ def multidigraph_to_digraph(
     When rel_types is None, all relationship types are preserved. If rel_types is defined,
     then the MultiDiGraph is first filtered for edges with that key (relationship type).
 
-    If reduce is True, perform a transitive reduction on DiGraph to remove relationships
-    that are already captured by more specific relationships. The default is False since
-    this can be a computationally expensive step.
+    If reduce is True, perform a transitive reduction on DiGraph to remove redundant relationships
+    --- i.e. those that are already captured by a more specific relationship.
+    The default is reduce=False since the reduction can be a computationally expensive step.
     """
+    logging.info(f"Received MultiDiGraph with {graph.number_of_edges():,} edges.")
     if rel_types is not None:
         graph.remove_edges_from(
             [
@@ -168,13 +169,23 @@ def multidigraph_to_digraph(
                 if key not in rel_types
             ]
         )
+        logging.info(
+            f"Filtered MultiDiGraph to {graph.number_of_edges():,} edges of the following types: {rel_types}."
+        )
     if reverse:
         graph = graph.reverse(copy=True)
     digraph = nx.DiGraph(graph)
     if reduce:
+        n_edges_before = digraph.number_of_edges()
         digraph = nx.transitive_reduction(digraph)
+        logging.info(
+            f"Reduced DiGraph by removing {n_edges_before - digraph.number_of_edges():,} redundant edges."
+        )
     for source, target in digraph.edges(data=False):
         digraph[source][target]["rel_types"] = sorted(graph[source][target])
+    logging.info(
+        f"Converted MultiDiGraph to DiGraph with {digraph.number_of_nodes():,} nodes and {digraph.number_of_edges():,} edges."
+    )
     return digraph
 
 
@@ -208,6 +219,7 @@ def read_gene_ontology(
     else:
         date.fromisoformat(release)  # check that release is a valid date
         url = f"http://release.geneontology.org/{release}/ontology/{source_file}"
+    logging.info(f"Loading Gene Ontology into Pronto from <{url}>.")
     go_pronto = Prontology(handle=url)
     go_multidigraph = pronto_to_multidigraph(go_pronto, default_rel_type="is a")
     go_digraph = multidigraph_to_digraph(
