@@ -124,7 +124,7 @@ Counter({'is a': 71509,
          'regulates': 3216,
          'negatively regulates': 2768,
          'positively regulates': 2756})
->>> go_digraph = multidigraph_to_digraph(go_multidigraph)
+>>> go_digraph = multidigraph_to_digraph(go_multidigraph, reduce=True)
 >>> go_nxo = NXOntology(go_digraph)
 >>> # Notice the similarity increases due to the full set of edges
 >>> round(go_nxo.similarity("GO:0042552", "GO:0022008").lin, 3)
