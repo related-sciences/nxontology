@@ -142,7 +142,10 @@ def pronto_to_multidigraph(
 
 
 def multidigraph_to_digraph(
-    graph: nx.MultiDiGraph, rel_types: Optional[List[str]] = None, reverse: bool = True
+    graph: nx.MultiDiGraph,
+    rel_types: Optional[List[str]] = None,
+    reverse: bool = True,
+    reduce: bool = False,
 ) -> nx.DiGraph:
     """
     Convert a networkx MultiDiGraph to a DiGraph by aggregating edges accross relationship types.
@@ -152,6 +155,10 @@ def multidigraph_to_digraph(
 
     When rel_types is None, all relationship types are preserved. If rel_types is defined,
     then the MultiDiGraph is first filtered for edges with that key (relationship type).
+
+    If reduce is True, perform a transitive reduction on DiGraph to remove relationships
+    that are already captured by more specific relationships. The default is False since
+    this can be a computationally expensive step.
     """
     if rel_types is not None:
         graph.remove_edges_from(
@@ -164,6 +171,8 @@ def multidigraph_to_digraph(
     if reverse:
         graph = graph.reverse(copy=True)
     digraph = nx.DiGraph(graph)
+    if reduce:
+        digraph = nx.transitive_reduction(digraph)
     for source, target in digraph.edges(data=False):
         digraph[source][target]["rel_types"] = sorted(graph[source][target])
     return digraph
@@ -179,6 +188,7 @@ def read_gene_ontology(
         "negatively regulates",
         "positively regulates",
     ],
+    reduce: bool = True,
 ) -> NXOntology[str]:
     """
     Load the Gene Ontology into NXOntology,
@@ -201,7 +211,10 @@ def read_gene_ontology(
     go_pronto = Prontology(handle=url)
     go_multidigraph = pronto_to_multidigraph(go_pronto, default_rel_type="is a")
     go_digraph = multidigraph_to_digraph(
-        go_multidigraph, rel_types=rel_types, reverse=True
+        go_multidigraph,
+        rel_types=rel_types,
+        reverse=True,
+        reduce=reduce,
     )
     go_nxo: NXOntology[str] = NXOntology(go_digraph)
     go_nxo.graph.graph["source_url"] = url
