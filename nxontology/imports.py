@@ -157,7 +157,7 @@ def multidigraph_to_digraph(
     then the MultiDiGraph is first filtered for edges with that key (relationship type).
 
     If reduce is True, perform a transitive reduction on DiGraph to remove redundant relationships
-    --- i.e. those that are already captured by a more specific relationship.
+    --- i.e. those that are already captured by a more specific ancestral path.
     The default is reduce=False since the reduction can be a computationally expensive step.
     """
     logging.info(f"Received MultiDiGraph with {graph.number_of_edges():,} edges.")

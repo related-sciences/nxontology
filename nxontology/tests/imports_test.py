@@ -90,3 +90,11 @@ def test_read_gene_ontology():
         == "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
     )
     assert "regulates" in nxo.graph["GO:0006310"]["GO:0000018"]["rel_types"]
+    # Transitive reduction should remove this edge
+    # from "defense response to insect" to "negative regulation of defense response to insect"
+    # since it is redundant with a more specific ancestral path.
+    # https://github.com/related-sciences/nxontology/pull/16
+    assert not nxo.graph.has_edge("GO:0002213", "GO:1900366")
+    # GO:0002213 --> GO:2000068 --> GO:1900366 is more specific
+    assert nxo.graph.has_edge("GO:0002213", "GO:2000068")
+    assert nxo.graph.has_edge("GO:2000068", "GO:1900366")
