@@ -163,6 +163,7 @@ def multidigraph_to_digraph(
     """
     logging.info(f"Received MultiDiGraph with {graph.number_of_edges():,} edges.")
     if rel_types is not None:
+        graph = graph.copy()
         graph.remove_edges_from(
             [
                 (u, v, key)
@@ -178,7 +179,14 @@ def multidigraph_to_digraph(
     digraph = nx.DiGraph(graph)
     if reduce:
         n_edges_before = digraph.number_of_edges()
-        digraph = nx.transitive_reduction(digraph)
+        no_data_digraph = nx.transitive_reduction(digraph)
+        # restore data https://github.com/networkx/networkx/issues/3392
+        no_data_digraph.add_nodes_from(digraph.nodes.items())
+        no_data_digraph.add_edges_from(
+            (u, v, digraph[u][v]) for (u, v) in no_data_digraph.edges()
+        )
+        no_data_digraph.update(digraph.graph)
+        digraph = no_data_digraph
         logging.info(
             f"Reduced DiGraph by removing {n_edges_before - digraph.number_of_edges():,} redundant edges."
         )
