@@ -69,18 +69,24 @@ def test_multigraph_to_digraph():
     mdg.add_edge("a", "b", key="rel_type 1")
     mdg.add_edge("a", "b", key="rel_type 2")
     mdg.add_edge("b", "c", key="rel_type 1")
+    mdg.nodes["a"]["attribute"] = "preserve me"
     dg = multidigraph_to_digraph(mdg)
     assert dg.number_of_nodes() == 3
     assert dg.number_of_edges() == 2
     assert dg["b"]["a"]["rel_types"] == ["rel_type 1", "rel_type 2"]
     assert dg["c"]["b"]["rel_types"] == ["rel_type 1"]
+    # make sure node data is preserved
+    # https://github.com/networkx/networkx/issues/3392
+    assert dg.nodes["a"]["attribute"] == "preserve me"
     dg = multidigraph_to_digraph(mdg, reverse=False)
     assert dg.has_edge("a", "b")
     assert not dg.has_edge("b", "a")
+    assert dg.nodes["a"]["attribute"] == "preserve me"
     dg = multidigraph_to_digraph(mdg, rel_types=["rel_type 2"])
     assert dg.number_of_nodes() == 3
     assert dg.number_of_edges() == 1
     assert dg.has_edge("b", "a")
+    assert dg.nodes["a"]["attribute"] == "preserve me"
 
 
 def test_read_gene_ontology():
@@ -89,6 +95,9 @@ def test_read_gene_ontology():
         nxo.graph.graph["source_url"]
         == "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
     )
+    bp_info = nxo.node_info("GO:0008150")
+    assert bp_info.label == "biological_process"
+    assert bp_info.data["namespace"] == "biological_process"
     assert "regulates" in nxo.graph["GO:0006310"]["GO:0000018"]["rel_types"]
     # Transitive reduction should remove this edge
     # from "defense response to insect" to "negative regulation of defense response to insect"
