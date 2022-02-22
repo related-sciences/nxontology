@@ -185,7 +185,7 @@ def multidigraph_to_digraph(
         no_data_digraph.add_edges_from(
             (u, v, digraph[u][v]) for (u, v) in no_data_digraph.edges()
         )
-        no_data_digraph.update(digraph.graph)
+        no_data_digraph.graph.update(digraph.graph)
         digraph = no_data_digraph
         logging.info(
             f"Reduced DiGraph by removing {n_edges_before - digraph.number_of_edges():,} redundant edges."
