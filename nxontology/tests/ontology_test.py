@@ -121,6 +121,18 @@ def test_set_graph_attributes(metal_nxo: NXOntology[str]) -> None:
     assert silver_info.url is None
 
 
+def test_node_info_by_name() -> None:
+    nxo: NXOntology[str] = NXOntology()
+    nxo.set_graph_attributes(node_label_attribute="name")
+    nxo.add_node("a", name="a_name")
+    nxo.add_node("b", name="b_name")
+    nxo.add_node("c")
+    assert nxo.node_info_by_name("a_name").node == "a"
+    assert nxo.node_info_by_name("b_name").node == "b"
+    with pytest.raises(NodeNotFound, match="No node found named"):
+        nxo.node_info_by_name("missing_name")
+
+
 def test_node_info_not_found(metal_nxo_frozen: NXOntology[str]) -> None:
     with pytest.raises(NodeNotFound, match="not-a-metal not in graph"):
         metal_nxo_frozen.node_info("not-a-metal")

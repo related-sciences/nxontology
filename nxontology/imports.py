@@ -11,6 +11,8 @@ from nxontology import NXOntology
 from nxontology.exceptions import NodeNotFound
 from nxontology.node import Node
 
+logger = logging.getLogger(__name__)
+
 
 def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
     """
@@ -38,7 +40,7 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
             try:
                 nxo.add_edge(term.id, child.id)
             except NodeNotFound as e:
-                logging.warning(
+                logger.warning(
                     f"Cannot add edge: {term.id} --> {child.id} "
                     f"({term.name} --> {child.name}): {e}"
                 )
@@ -114,7 +116,7 @@ def pronto_to_multidigraph(
             # https://github.com/althonos/pronto/issues/122
             continue
         if term.id in graph:
-            logging.warning(f"Skipping node already in graph: {term}")
+            logger.warning(f"Skipping node already in graph: {term}")
             continue
         graph.add_node(
             term.id,
@@ -128,16 +130,16 @@ def pronto_to_multidigraph(
         ):
             for node in source, target:
                 if node not in graph:
-                    logging.warning(
+                    logger.warning(
                         f"Skipping edge: node does not exist in graph: {node}"
                     )
             if graph.has_edge(source, target, key):
-                logging.warning(
+                logger.warning(
                     f"Skipping edge already in graph: {source} --> {target} (key={key!r})"
                 )
             graph.add_edge(source, target, key=key)
     rel_counts = Counter(key for _, _, key in graph.edges(keys=True))
-    logging.info(f"MultiDiGraph relationship counts:\n{rel_counts}")
+    logger.info(f"MultiDiGraph relationship counts:\n{rel_counts}")
     return graph
 
 
@@ -161,7 +163,7 @@ def multidigraph_to_digraph(
     — i.e. those that are already captured by a more specific ancestral path.
     The default is reduce=False since the reduction can be a computationally expensive step.
     """
-    logging.info(f"Received MultiDiGraph with {graph.number_of_edges():,} edges.")
+    logger.info(f"Received MultiDiGraph with {graph.number_of_edges():,} edges.")
     if rel_types is not None:
         graph = graph.copy()
         graph.remove_edges_from(
@@ -171,7 +173,7 @@ def multidigraph_to_digraph(
                 if key not in rel_types
             ]
         )
-        logging.info(
+        logger.info(
             f"Filtered MultiDiGraph to {graph.number_of_edges():,} edges of the following types: {rel_types}."
         )
     if reverse:
@@ -187,12 +189,12 @@ def multidigraph_to_digraph(
         )
         no_data_digraph.graph.update(digraph.graph)
         digraph = no_data_digraph
-        logging.info(
+        logger.info(
             f"Reduced DiGraph by removing {n_edges_before - digraph.number_of_edges():,} redundant edges."
         )
     for source, target in digraph.edges(data=False):
         digraph[source][target]["rel_types"] = sorted(graph[source][target])
-    logging.info(
+    logger.info(
         f"Converted MultiDiGraph to DiGraph with {digraph.number_of_nodes():,} nodes and {digraph.number_of_edges():,} edges."
     )
     return digraph
@@ -228,7 +230,7 @@ def read_gene_ontology(
     else:
         date.fromisoformat(release)  # check that release is a valid date
         url = f"http://release.geneontology.org/{release}/ontology/{source_file}"
-    logging.info(f"Loading Gene Ontology into Pronto from <{url}>.")
+    logger.info(f"Loading Gene Ontology into Pronto from <{url}>.")
     go_pronto = Prontology(handle=url)
     go_multidigraph = pronto_to_multidigraph(go_pronto, default_rel_type="is a")
     go_digraph = multidigraph_to_digraph(
