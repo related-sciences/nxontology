@@ -104,26 +104,25 @@ def test_set_graph_attributes(metal_nxo: NXOntology[str]) -> None:
     metal_nxo.graph.nodes["gold"]["metal_url"] = "https://example.com"
     metal_nxo.set_graph_attributes(
         graph_name_attribute="missing_attribute",
-        node_label_attribute="metal_label",
+        node_name_attribute="metal_label",
         node_identifier_attribute="metal_identifier",
         node_url_attribute="metal_url",
     )
     assert metal_nxo.name is None
     gold_info = metal_nxo.node_info("gold")
     assert gold_info.node == "gold"
-    assert gold_info.label == "test_label"
+    assert gold_info.name == "test_label"
     assert gold_info.identifier == 1
     assert gold_info.url == "https://example.com"
     silver_info = metal_nxo.node_info("silver")
     assert silver_info.node == "silver"
-    assert silver_info.label is None
+    assert silver_info.name is None
     assert silver_info.identifier is None
     assert silver_info.url is None
 
 
 def test_node_info_by_name() -> None:
     nxo: NXOntology[str] = NXOntology()
-    nxo.set_graph_attributes(node_label_attribute="name")
     nxo.add_node("a", name="a_name")
     nxo.add_node("b", name="b_name")
     nxo.add_node("c")

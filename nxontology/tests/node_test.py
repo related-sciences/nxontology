@@ -26,7 +26,7 @@ def test_node_info_gold(metal_nxo_frozen: NXOntology[str]) -> None:
     print(metal_nxo_frozen.graph.graph)
     gold_info = metal_nxo_frozen.node_info("gold")
     assert gold_info.node == "gold"
-    assert gold_info.label == "gold"
+    assert gold_info.name == "gold"
     assert gold_info.identifier is None
     assert gold_info.url is None
     assert gold_info.parents == {"precious", "coinage"}
@@ -87,3 +87,10 @@ def test_cache_on_node_info(metal_nxo: NXOntology[str]) -> None:
     assert cached_gold is not gold
     # with warm cache
     assert metal_nxo.node_info("gold") is cached_gold
+
+
+def test_node_name(metal_nxo: NXOntology[str]) -> None:
+    gold = metal_nxo.node_info("gold")
+    assert gold.name == "gold"
+    with pytest.deprecated_call():
+        assert gold.label == "gold"

@@ -213,7 +213,7 @@ class NXOntology(Freezable, Generic[Node]):
         name_to_node_info: dict[str, Node_Info[Node]] = dict()
         for node in self.graph:
             info = self.node_info(node)
-            name = info.label
+            name = info.name
             if not name:
                 continue
             if name in name_to_node_info:
@@ -252,7 +252,7 @@ class NXOntology(Freezable, Generic[Node]):
         self,
         *,
         graph_name_attribute: Optional[str] = None,
-        node_label_attribute: Optional[str] = None,
+        node_name_attribute: Optional[str] = None,
         node_identifier_attribute: Optional[str] = None,
         node_url_attribute: Optional[str] = None,
     ) -> None:
@@ -261,8 +261,8 @@ class NXOntology(Freezable, Generic[Node]):
         - graph_name_attribute: graph attribute for looking up the graph's name.
           Example name of a graph are as 'Metal', 'EFO', 'MeSH'.
           Defaults to "name" if not set.
-        - node_label_attribute: node attribute for looking up a node's label.
-          Defaults to "label" if not set.
+        - node_name_attribute: node attribute for looking up a node's name.
+          Defaults to "name" if not set.
         - node_identifier_attribute: node attribute for looking up a node's identifier.
           Defaults to "identifier" if not set.
         - node_url_attribute: node attribute for looking up a node's URL.
@@ -274,8 +274,8 @@ class NXOntology(Freezable, Generic[Node]):
         """
         if graph_name_attribute:
             self.graph.graph["graph_name_attribute"] = graph_name_attribute
-        if node_label_attribute:
-            self.graph.graph["node_label_attribute"] = node_label_attribute
+        if node_name_attribute:
+            self.graph.graph["node_name_attribute"] = node_name_attribute
         if node_identifier_attribute:
             self.graph.graph["node_identifier_attribute"] = node_identifier_attribute
         if node_url_attribute:

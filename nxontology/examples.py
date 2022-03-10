@@ -11,7 +11,7 @@ def create_metal_nxo() -> NXOntology[str]:
     """
     nxo: NXOntology[str] = NXOntology()
     nxo.graph.graph["name"] = "Metals"
-    nxo.set_graph_attributes(node_label_attribute="{node}")
+    nxo.set_graph_attributes(node_name_attribute="{node}")
     edges = [
         ("metal", "precious"),
         ("metal", "coinage"),

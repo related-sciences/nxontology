@@ -33,7 +33,7 @@ def create_similarity_graphviz(
         data["style"] = "filled"
         info = sim.nxo.node_info(node)
         data["label"] = (
-            f"<{info.label}<br/>"
+            f"<{info.name}<br/>"
             '<font point-size="9">'
             f"IC<sub>res</sub> {info.intrinsic_ic_scaled:.2f} · "
             f"IC<sub>sán</sub> {info.intrinsic_ic_sanchez_scaled:.2f}"
@@ -80,8 +80,8 @@ def create_similarity_graphviz(
 
 
 def get_verbose_node_label(info: Node_Info[Node]) -> str:
-    """Return verbose label like 'label (identifier)'."""
-    verbose_label = info.label
+    """Return verbose label like 'name (identifier)'."""
+    verbose_label = info.name
     assert isinstance(verbose_label, str)
     if info.identifier:
         verbose_label += f" ({info.identifier})"
