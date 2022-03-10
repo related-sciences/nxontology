@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import itertools
 import json
+import logging
 from typing import Any, Dict, Generic, Iterable, List, Optional, Set, cast
 
 import fsspec
@@ -16,6 +17,8 @@ from .exceptions import DuplicateError, NodeNotFound
 from .node import Node_Info
 from .similarity import SimilarityIC
 from .utils import Freezable, cache_on_frozen
+
+logger = logging.getLogger(__name__)
 
 
 class NXOntology(Freezable, Generic[Node]):
@@ -204,6 +207,30 @@ class NXOntology(Freezable, Generic[Node]):
         if node not in self._node_info_cache:
             self._node_info_cache[node] = Node_Info(self, node)
         return self._node_info_cache[node]
+
+    @cache_on_frozen
+    def _get_name_to_node_info(self) -> dict[str, Node_Info[Node]]:
+        name_to_node_info: dict[str, Node_Info[Node]] = dict()
+        for node in self.graph:
+            info = self.node_info(node)
+            name = info.label
+            if not name:
+                continue
+            if name in name_to_node_info:
+                logger.warning(
+                    f"Node name duplicated for nodes {name_to_node_info[name].node!r} & {node!r}: {name!r}"
+                )
+            name_to_node_info[name] = info
+        return name_to_node_info
+
+    def node_info_by_name(self, name: str) -> Node_Info[Node]:
+        """
+        Return Node_Info instance using a lookup by name.
+        """
+        name_to_node_info = self._get_name_to_node_info()
+        if name not in name_to_node_info:
+            raise NodeNotFound(f"No node found named {name!r}.")
+        return name_to_node_info[name]
 
     @property
     def n_nodes(self) -> int:
