@@ -3,7 +3,7 @@ from __future__ import annotations
 import itertools
 import json
 import logging
-from typing import Any, Dict, Generic, Iterable, List, Optional, Set, cast
+from typing import Any, Generic, Iterable, cast
 
 import fsspec
 import networkx as nx
@@ -28,10 +28,10 @@ class NXOntology(Freezable, Generic[Node]):
     Edges should go from general to more specific.
     """
 
-    def __init__(self, graph: Optional[nx.DiGraph] = None):
+    def __init__(self, graph: nx.DiGraph | None = None):
         self.graph = nx.DiGraph(graph)
         self.check_is_dag()
-        self._node_info_cache: Dict[Node, Node_Info[Node]] = {}
+        self._node_info_cache: dict[Node, Node_Info[Node]] = {}
 
     def check_is_dag(self) -> None:
         if nx.is_directed_acyclic_graph(self.graph):
@@ -46,7 +46,7 @@ class NXOntology(Freezable, Generic[Node]):
         )
 
     @property
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         """Short human-readable name for the ontology."""
         key = self.graph.graph.get("graph_name_attribute", "name")
         name = self.graph.graph.get(key)
@@ -101,7 +101,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def roots(self) -> Set[Node]:
+    def roots(self) -> set[Node]:
         """
         Return all top-level nodes, including isolates.
         """
@@ -127,7 +127,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def leaves(self) -> Set[Node]:
+    def leaves(self) -> set[Node]:
         """
         Return all bottom-level nodes, including isolates.
         """
@@ -139,7 +139,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def isolates(self) -> Set[Node]:
+    def isolates(self) -> set[Node]:
         """
         Return disconnected nodes.
         """
@@ -172,8 +172,8 @@ class NXOntology(Freezable, Generic[Node]):
         node_0: Node,
         node_1: Node,
         ic_metric: str = "intrinsic_ic_sanchez",
-        keys: Optional[List[str]] = None,
-    ) -> Dict[str, Any]:
+        keys: list[str] | None = None,
+    ) -> dict[str, Any]:
         """
         Compute intrinsic similarity metrics for two nodes.
         """
@@ -184,8 +184,8 @@ class NXOntology(Freezable, Generic[Node]):
         self,
         source_nodes: Iterable[Node],
         target_nodes: Iterable[Node],
-        ic_metrics: List[str] = ["intrinsic_ic_sanchez"],
-    ) -> Iterable[Dict[str, Any]]:
+        ic_metrics: list[str] = ["intrinsic_ic_sanchez"],
+    ) -> Iterable[dict[str, Any]]:
         """
         Yield similarity metric dictionaries for all combinations of
         source_node-target_node-ic_metric.
@@ -251,10 +251,10 @@ class NXOntology(Freezable, Generic[Node]):
     def set_graph_attributes(
         self,
         *,
-        graph_name_attribute: Optional[str] = None,
-        node_name_attribute: Optional[str] = None,
-        node_identifier_attribute: Optional[str] = None,
-        node_url_attribute: Optional[str] = None,
+        graph_name_attribute: str | None = None,
+        node_name_attribute: str | None = None,
+        node_identifier_attribute: str | None = None,
+        node_url_attribute: str | None = None,
     ) -> None:
         """
         Convenience method to set attributes on the graph that are recognized by nxontology.

@@ -1,4 +1,6 @@
-from typing import Dict, Iterable, Optional
+from __future__ import annotations
+
+from typing import Iterable
 
 from networkx.drawing.nx_agraph import to_agraph
 from pygraphviz.agraph import AGraph
@@ -9,8 +11,8 @@ from nxontology.similarity import SimilarityIC
 
 def create_similarity_graphviz(
     sim: SimilarityIC[Node],
-    nodes: Optional[Iterable[Node]] = None,
-) -> "AGraph":
+    nodes: Iterable[Node] | None = None,
+) -> AGraph:
     """
     Create a pygraphviz AGraph to render the similarity subgraph with graphviz.
     Works by creating a subgraph in networkx with the relevant nodes.
@@ -88,7 +90,7 @@ def get_verbose_node_label(info: Node_Info[Node]) -> str:
     return verbose_label
 
 
-colormap: Dict[int, str] = {
+colormap: dict[int, str] = {
     0: "#f7fcf5",
     1: "#f6fcf4",
     2: "#f4fbf2",

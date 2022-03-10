@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import math
-from typing import TYPE_CHECKING, Any, Dict, Generic, List, Optional, Set, Tuple
+from typing import TYPE_CHECKING, Any, Generic
 
 if TYPE_CHECKING:
     from nxontology.ontology import NXOntology
@@ -49,12 +49,12 @@ class Similarity(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def common_ancestors(self) -> Set[Node]:
+    def common_ancestors(self) -> set[Node]:
         return self.info_0.ancestors & self.info_1.ancestors
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def union_ancestors(self) -> Set[Node]:
+    def union_ancestors(self) -> set[Node]:
         return self.info_0.ancestors | self.info_1.ancestors
 
     @property
@@ -91,7 +91,7 @@ class Similarity(Freezable, Generic[Node]):
         # replace negative sign with abs to avoid returning -0.0.
         return abs(math.log(1 - self.batet) / math.log(self.n_union_ancestors))
 
-    def results(self, keys: Optional[List[str]] = None) -> Dict[str, Any]:
+    def results(self, keys: list[str] | None = None) -> dict[str, Any]:
         if keys is None:
             keys = self.default_results
         return {key: getattr(self, key) for key in keys}
@@ -155,7 +155,7 @@ class SimilarityIC(Similarity[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def _resnik_mica(self) -> Tuple[float, Optional[Node]]:
+    def _resnik_mica(self) -> tuple[float, Node | None]:
         if not self.common_ancestors:
             return 0.0, None
         resnik, mica = max(
@@ -166,7 +166,7 @@ class SimilarityIC(Similarity[Node]):
         return resnik, mica
 
     @property
-    def mica(self) -> Optional[Node]:
+    def mica(self) -> Node | None:
         """
         Most informative common ancestor.
         None if no common ancestors exist.

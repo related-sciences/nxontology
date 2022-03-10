@@ -1,7 +1,9 @@
+from __future__ import annotations
+
 import logging
 from datetime import date
 from os import PathLike
-from typing import AnyStr, BinaryIO, Counter, List, Optional, Tuple, Union, cast
+from typing import AnyStr, BinaryIO, Counter, cast
 
 import networkx as nx
 from pronto import Ontology as Prontology  # type: ignore [attr-defined]
@@ -70,7 +72,7 @@ def from_obo_library(slug: str) -> NXOntology[str]:
     return nxo
 
 
-def from_file(handle: Union[BinaryIO, str, "PathLike[AnyStr]"]) -> NXOntology[str]:
+def from_file(handle: BinaryIO | str | PathLike[AnyStr]) -> NXOntology[str]:
     """
     Read ontology in OBO, OWL, or JSON (OBO Graphs) format via pronto.
 
@@ -84,7 +86,7 @@ def from_file(handle: Union[BinaryIO, str, "PathLike[AnyStr]"]) -> NXOntology[st
 
 def _pronto_edges_for_term(
     term: Term, default_rel_type: str = "is a"
-) -> List[Tuple[Node, Node, str]]:
+) -> list[tuple[Node, Node, str]]:
     """
     Extract edges including "is a" relationships for a Pronto term.
     https://github.com/althonos/pronto/issues/119#issuecomment-956541286
@@ -158,7 +160,7 @@ def pronto_to_multidigraph(
 
 def multidigraph_to_digraph(
     graph: nx.MultiDiGraph,
-    rel_types: Optional[List[str]] = None,
+    rel_types: list[str] | None = None,
     reverse: bool = True,
     reduce: bool = False,
 ) -> nx.DiGraph:
@@ -216,7 +218,8 @@ def multidigraph_to_digraph(
 def read_gene_ontology(
     release: str = "current",
     source_file: str = "go-basic.json.gz",
-    rel_types: Optional[List[str]] = [
+    rel_types: list[str]
+    | None = [
         "is a",
         "part of",
         "regulates",

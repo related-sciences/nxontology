@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import abc
 import functools
-from typing import Callable, Dict, TypeVar
+from typing import Callable, TypeVar
 
 
 class Freezable(abc.ABC):
@@ -30,9 +32,9 @@ def cache_on_frozen(func: Callable[[T_Freezable], T]) -> Callable[[T_Freezable],
         if not self.frozen:
             return func(self)
         try:
-            method_cache: Dict[str, T] = getattr(self, "__method_cache")
+            method_cache: dict[str, T] = getattr(self, "__method_cache")
         except AttributeError:
-            method_cache: Dict[str, T] = {}  # type: ignore [no-redef]
+            method_cache: dict[str, T] = {}  # type: ignore [no-redef]
             setattr(self, "__method_cache", method_cache)
         if fname not in method_cache:
             method_cache[fname] = func(self)
