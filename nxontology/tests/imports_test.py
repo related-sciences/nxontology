@@ -30,7 +30,7 @@ def test_from_obo_library_taxrank(format: str) -> None:
     assert root == "TAXRANK:0000000"
     cultivar = nxo.node_info("TAXRANK:0000034")
     assert cultivar.identifier == "TAXRANK:0000034"
-    assert cultivar.label == "cultivar"
+    assert cultivar.name == "cultivar"
     assert "TAXRANK:0000000" in cultivar.ancestors
 
 
@@ -43,7 +43,7 @@ def test_from_file_go() -> None:
     assert "GO:0000003" in nxo.graph
     info = nxo.node_info("GO:0042552")
     assert info.identifier == "GO:0042552"
-    assert info.label == "myelination"
+    assert info.name == "myelination"
     assert info.data["namespace"] == "biological_process"
     # has edge from "axon ensheathment" to "myelination"
     assert nxo.graph.has_edge("GO:0008366", "GO:0042552")
@@ -96,7 +96,7 @@ def test_read_gene_ontology():
         == "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
     )
     bp_info = nxo.node_info("GO:0008150")
-    assert bp_info.label == "biological_process"
+    assert bp_info.name == "biological_process"
     assert bp_info.data["namespace"] == "biological_process"
     assert "regulates" in nxo.graph["GO:0006310"]["GO:0000018"]["rel_types"]
     # Transitive reduction should remove this edge

@@ -30,7 +30,7 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
         nxo.add_node(
             term.id,
             identifier=term.id,
-            label=term.name,
+            name=term.name,
             namespace=term.namespace,
         )
     for term in onto.terms():
@@ -121,7 +121,7 @@ def pronto_to_multidigraph(
         graph.add_node(
             term.id,
             identifier=term.id,
-            label=term.name,
+            name=term.name,
             namespace=term.namespace,
         )
     for term in onto.terms():

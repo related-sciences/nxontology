@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import warnings
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -52,12 +53,27 @@ class Node_Info(Freezable, Generic[Node]):
         self.node = node
 
     @property
-    def label(self) -> Optional[str]:
+    def name(self) -> Optional[str]:
         """Human readable name / label."""
         value = self._get_node_attribute(
-            custom_field="node_label_attribute", default="label"
+            custom_field="node_name_attribute", default="name"
         )
+        if value is None:
+            # if name is none, try lookup by label for backwards compatability
+            value = self._get_node_attribute(
+                custom_field="node_label_attribute", default="label"
+            )
         return None if value is None else str(value)
+
+    @property
+    def label(self) -> Optional[str]:
+        """Human readable node name / label."""
+        warnings.warn(
+            "Node_Info.label is deprecated and will be removed. Use Node_Info.name instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.name
 
     @property
     def identifier(self) -> Optional[Any]:
