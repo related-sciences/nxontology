@@ -22,6 +22,7 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
     """
     nxo: NXOntology[str] = NXOntology()
     nxo.pronto = onto  # type: ignore [attr-defined]
+    _apply_pronto_metadata(nxo.graph, onto)
     for term in onto.terms():
         if term.obsolete:
             # obsolete was unreliable in pronto < v2.4.0
@@ -45,6 +46,17 @@ def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:
                     f"({term.name} --> {child.name}): {e}"
                 )
     return nxo
+
+
+def _apply_pronto_metadata(graph: nx.Graph, onto: Prontology) -> None:
+    """Apply metadata from a pronto.Ontology to the networkx graph data."""
+    metadata_fields = [
+        ("ontology", onto.metadata.ontology),
+        ("data_version", onto.metadata.data_version),
+    ]
+    for nx_field, pronto_field in metadata_fields:
+        if pronto_field:
+            graph.graph[nx_field] = pronto_field
 
 
 def from_obo_library(slug: str) -> NXOntology[str]:
@@ -110,6 +122,7 @@ def pronto_to_multidigraph(
     - https://github.com/related-sciences/nxontology/issues/14
     """
     graph = nx.MultiDiGraph()
+    _apply_pronto_metadata(graph, onto)
     for term in onto.terms():
         if term.obsolete:
             # obsolete was unreliable in pronto < v2.4.0
@@ -240,5 +253,7 @@ def read_gene_ontology(
         reduce=reduce,
     )
     go_nxo: NXOntology[str] = NXOntology(go_digraph)
+    go_nxo.pronto = go_pronto  # type: ignore [attr-defined]
+    go_nxo.graph.graph["name"] = "Gene Ontology"
     go_nxo.graph.graph["source_url"] = url
     return go_nxo
