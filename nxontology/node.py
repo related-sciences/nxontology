@@ -2,18 +2,7 @@ from __future__ import annotations
 
 import math
 import warnings
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Dict,
-    Generic,
-    Hashable,
-    Iterator,
-    List,
-    Optional,
-    Set,
-    TypeVar,
-)
+from typing import TYPE_CHECKING, Any, Generic, Hashable, Iterator, TypeVar
 
 import networkx as nx
 
@@ -37,7 +26,7 @@ class Node_Info(Freezable, Generic[Node]):
     without requiring an external corpus to ascertain term frequency.
     """
 
-    ic_metrics: List[str] = [
+    ic_metrics: list[str] = [
         "intrinsic_ic",
         "intrinsic_ic_sanchez",
     ]
@@ -53,7 +42,7 @@ class Node_Info(Freezable, Generic[Node]):
         self.node = node
 
     @property
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         """Human readable name / label."""
         value = self._get_node_attribute(
             custom_field="node_name_attribute", default="name"
@@ -66,7 +55,7 @@ class Node_Info(Freezable, Generic[Node]):
         return None if value is None else str(value)
 
     @property
-    def label(self) -> Optional[str]:
+    def label(self) -> str | None:
         """Human readable node name / label."""
         warnings.warn(
             "Node_Info.label is deprecated and will be removed. Use Node_Info.name instead.",
@@ -76,14 +65,14 @@ class Node_Info(Freezable, Generic[Node]):
         return self.name
 
     @property
-    def identifier(self) -> Optional[Any]:
+    def identifier(self) -> Any | None:
         """Database / machine identifier."""
         return self._get_node_attribute(
             custom_field="node_identifier_attribute", default="identifier"
         )
 
     @property
-    def url(self) -> Optional[str]:
+    def url(self) -> str | None:
         """Uniform Resource Locator (URL)"""
         value = self._get_node_attribute(
             custom_field="node_url_attribute", default="url"
@@ -102,19 +91,19 @@ class Node_Info(Freezable, Generic[Node]):
         return self.nxo.frozen
 
     @property
-    def data(self) -> Dict[Any, Any]:
+    def data(self) -> dict[Any, Any]:
         """Dictionary of node data (properties) for `self.node` in the networkx graph."""
         data = self.nxo.graph.nodes[self.node]
         assert isinstance(data, dict)
         return data
 
     @property
-    def parents(self) -> Set[Node]:
+    def parents(self) -> set[Node]:
         """Direct parent nodes of this node."""
         return set(self.nxo.graph.predecessors(self.node))
 
     @property
-    def parent(self) -> Optional[Node]:
+    def parent(self) -> Node | None:
         """
         Sole parent of this node, or None if this node is a root.
         If this node has multiple parents, raise ValueError.
@@ -129,13 +118,13 @@ class Node_Info(Freezable, Generic[Node]):
         raise ValueError(f"Node {self!r} has multiple parents.")
 
     @property
-    def children(self) -> Set[Node]:
+    def children(self) -> set[Node]:
         """Direct child nodes of this node."""
         return set(self.nxo.graph.successors(self.node))
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def ancestors(self) -> Set[Node]:
+    def ancestors(self) -> set[Node]:
         """
         Get ancestors of node in graph, including the node itself.
         Ancestors refers to more general concepts in an ontology,
@@ -148,7 +137,7 @@ class Node_Info(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def descendants(self) -> Set[Node]:
+    def descendants(self) -> set[Node]:
         """
         Get descendants of node in graph, including the node itself.
         Descendants refers to more specific concepts in an ontology,
@@ -171,12 +160,12 @@ class Node_Info(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
-    def roots(self) -> Set[Node]:
+    def roots(self) -> set[Node]:
         """Ancestors of this node that are roots (top-level)."""
         return self.ancestors & self.nxo.roots
 
     @property
-    def leaves(self) -> Set[Node]:
+    def leaves(self) -> set[Node]:
         """Descendents of this node that are leaves."""
         return self.descendants & self.nxo.leaves
 
