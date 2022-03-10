@@ -129,11 +129,22 @@ class Node_Info(Freezable, Generic[Node]):
 
     @property  # type: ignore [misc]
     @cache_on_frozen
+    def roots(self) -> Set[Node]:
+        """Ancestors of this node that are roots (top-level)."""
+        return self.ancestors & self.nxo.roots
+
+    @property
+    def leaves(self) -> Set[Node]:
+        """Descendents of this node that are leaves."""
+        return self.descendants & self.nxo.leaves
+
+    @property  # type: ignore [misc]
+    @cache_on_frozen
     def depth(self) -> int:
         """Minimum shortest path distance from a root node to this node."""
         depth = min(
             nx.shortest_path_length(self.nxo.graph, root, self.node)
-            for root in self.ancestors & self.nxo.roots
+            for root in self.roots
         )
         assert isinstance(depth, int)
         return depth

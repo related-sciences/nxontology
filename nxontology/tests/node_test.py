@@ -11,6 +11,8 @@ def test_node_info_root(metal_nxo_frozen: NXOntology[str]) -> None:
     assert info.node == "metal"
     assert info.n_descendants == metal_nxo_frozen.n_nodes
     assert info.n_ancestors == 1
+    assert info.roots == {"metal"}
+    assert info.leaves == {"copper", "gold", "palladium", "platinum", "silver"}
     assert info.depth == 0
 
 
@@ -23,6 +25,8 @@ def test_node_info_gold(metal_nxo_frozen: NXOntology[str]) -> None:
     assert gold_info.url is None
     assert gold_info.n_descendants == 1
     assert gold_info.n_ancestors == 4
+    assert gold_info.roots == {"metal"}
+    assert gold_info.leaves == {"gold"}
     assert gold_info.depth == 2
 
 
