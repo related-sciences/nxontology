@@ -14,6 +14,12 @@ def test_node_info_root(metal_nxo_frozen: NXOntology[str]) -> None:
     assert info.roots == {"metal"}
     assert info.leaves == {"copper", "gold", "palladium", "platinum", "silver"}
     assert info.depth == 0
+    assert info.parents == set()
+    assert info.parent is None
+    assert info.children == {"precious", "coinage"}
+    paths_to_leaves = list(info.paths_to_leaves)
+    assert len(paths_to_leaves) == 7
+    assert ["metal", "coinage", "silver"] in paths_to_leaves
 
 
 def test_node_info_gold(metal_nxo_frozen: NXOntology[str]) -> None:
@@ -23,11 +29,31 @@ def test_node_info_gold(metal_nxo_frozen: NXOntology[str]) -> None:
     assert gold_info.label == "gold"
     assert gold_info.identifier is None
     assert gold_info.url is None
+    assert gold_info.parents == {"precious", "coinage"}
+    assert gold_info.children == set()
     assert gold_info.n_descendants == 1
     assert gold_info.n_ancestors == 4
     assert gold_info.roots == {"metal"}
     assert gold_info.leaves == {"gold"}
     assert gold_info.depth == 2
+
+
+def test_node_info_single_parent(metal_nxo_frozen: NXOntology[str]) -> None:
+    copper = metal_nxo_frozen.node_info("copper")
+    assert copper.parents == {"coinage"}
+    assert copper.parent == "coinage"
+    paths_from_roots = list(copper.paths_from_roots)
+    assert len(paths_from_roots) == 1
+    assert paths_from_roots[0] == ["metal", "coinage", "copper"]
+
+
+def test_node_info_multiple_parents(metal_nxo_frozen: NXOntology[str]) -> None:
+    silver = metal_nxo_frozen.node_info("silver")
+    assert silver.parents == {"precious", "coinage"}
+    with pytest.raises(ValueError, match="has multiple parents"):
+        silver.parent
+    paths_from_roots = list(silver.paths_from_roots)
+    assert len(paths_from_roots) == 2
 
 
 def test_intrinsic_ic_unscaled(metal_nxo_frozen: NXOntology[str]) -> None:
