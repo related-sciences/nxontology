@@ -60,6 +60,7 @@ def test_pronto_to_multidigraph(format: str) -> None:
     slug = f"taxrank.{format}"
     onto = Ontology.from_obo_library(slug)
     graph = pronto_to_multidigraph(onto, default_rel_type="is_a")
+    assert graph.graph["ontology"] == "taxrank"
     # subterm --> superterm: opposite of NXOntology
     assert graph.has_edge(u="TAXRANK:0000034", v="TAXRANK:0000000", key="is_a")
 
@@ -91,6 +92,9 @@ def test_multigraph_to_digraph():
 
 def test_read_gene_ontology():
     nxo = read_gene_ontology(release="2021-02-01")
+    assert nxo.graph.graph["name"] == "Gene Ontology"
+    assert nxo.graph.graph["ontology"] == "go"
+    assert nxo.graph.graph["data_version"] == "releases/2021-02-01"
     assert (
         nxo.graph.graph["source_url"]
         == "http://release.geneontology.org/2021-02-01/ontology/go-basic.json.gz"
@@ -107,3 +111,4 @@ def test_read_gene_ontology():
     # GO:0002213 --> GO:2000068 --> GO:1900366 is more specific
     assert nxo.graph.has_edge("GO:0002213", "GO:2000068")
     assert nxo.graph.has_edge("GO:2000068", "GO:1900366")
+    assert nxo.node_info_by_name("biological_process").n_ancestors == 1
