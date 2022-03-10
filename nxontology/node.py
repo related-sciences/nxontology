@@ -7,6 +7,7 @@ from typing import (
     Dict,
     Generic,
     Hashable,
+    Iterator,
     List,
     Optional,
     Set,
@@ -91,6 +92,31 @@ class Node_Info(Freezable, Generic[Node]):
         assert isinstance(data, dict)
         return data
 
+    @property
+    def parents(self) -> Set[Node]:
+        """Direct parent nodes of this node."""
+        return set(self.nxo.graph.predecessors(self.node))
+
+    @property
+    def parent(self) -> Optional[Node]:
+        """
+        Sole parent of this node, or None if this node is a root.
+        If this node has multiple parents, raise ValueError.
+        This function is intended as a convenience function for ontologies without multiple inheritance.
+        """
+        parents = self.parents
+        if len(parents) == 0:
+            return None
+        if len(parents) == 1:
+            (parent,) = parents
+            return parent
+        raise ValueError(f"Node {self!r} has multiple parents.")
+
+    @property
+    def children(self) -> Set[Node]:
+        """Direct child nodes of this node."""
+        return set(self.nxo.graph.successors(self.node))
+
     @property  # type: ignore [misc]
     @cache_on_frozen
     def ancestors(self) -> Set[Node]:
@@ -148,6 +174,19 @@ class Node_Info(Freezable, Generic[Node]):
         )
         assert isinstance(depth, int)
         return depth
+
+    @property
+    def paths_from_roots(self) -> Iterator[list[Node]]:
+        for root in self.roots:
+            yield from nx.all_simple_paths(
+                self.nxo.graph, source=root, target=self.node
+            )
+
+    @property
+    def paths_to_leaves(self) -> Iterator[list[Node]]:
+        yield from nx.all_simple_paths(
+            self.nxo.graph, source=self.node, target=self.leaves
+        )
 
     @property  # type: ignore [misc]
     @cache_on_frozen
