@@ -108,6 +108,20 @@ class NXOntology(Freezable, Generic[Node]):
                 roots.add(node)
         return roots
 
+    @property
+    def root(self) -> Node:
+        """
+        Sole root of this directed acyclic graph.
+        If this ontology has multiple roots, raise ValueError.
+        This function is intended as a convenience function for ontologies that are weakly connected,
+        meaning all nodes derive from a single root.
+        """
+        roots = self.roots
+        if len(roots) == 1:
+            (root,) = roots
+            return root
+        raise ValueError("Ontology has multiple roots.")
+
     @property  # type: ignore [misc]
     @cache_on_frozen
     def leaves(self) -> Set[Node]:

@@ -70,6 +70,7 @@ def test_nxontology_check_is_dag(metal_nxo: NXOntology[str]) -> None:
 def test_nxontology_roots(metal_nxo_frozen: NXOntology[str]) -> None:
     roots = metal_nxo_frozen.roots
     assert roots == {"metal"}
+    assert metal_nxo_frozen.root == "metal"
 
 
 def test_nxontology_leaves(metal_nxo_frozen: NXOntology[str]) -> None:
@@ -87,6 +88,13 @@ def test_nxontology_isolates() -> None:
     nxo.add_node("a")
     nxo.add_node("b")
     assert {"a", "b"} == nxo.isolates
+
+
+def test_nxontology_disconnected(disconnected_nxo: NXOntology[str]) -> None:
+    assert disconnected_nxo.roots == {"metal", "tree", "water"}
+    assert not networkx.is_weakly_connected(disconnected_nxo.graph)
+    with pytest.raises(ValueError, match="has multiple roots"):
+        disconnected_nxo.root
 
 
 def test_set_graph_attributes(metal_nxo: NXOntology[str]) -> None:

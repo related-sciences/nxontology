@@ -1,7 +1,7 @@
 import pytest
 
 from nxontology import NXOntology
-from nxontology.examples import create_metal_nxo
+from nxontology.examples import create_disconnected_nxo, create_metal_nxo
 
 
 @pytest.fixture
@@ -20,3 +20,9 @@ def metal_nxo_frozen() -> NXOntology[str]:
     metal_nxo = create_metal_nxo()
     metal_nxo.freeze()
     return metal_nxo
+
+
+@pytest.fixture
+def disconnected_nxo() -> NXOntology[str]:
+    """Returns a newly created disconnected ontology for each test."""
+    return create_disconnected_nxo()
