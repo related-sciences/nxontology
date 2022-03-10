@@ -9,7 +9,7 @@ from pronto.term import Term
 
 from nxontology import NXOntology
 from nxontology.exceptions import NodeNotFound
-from nxontology.ontology import Node
+from nxontology.node import Node
 
 
 def pronto_to_nxontology(onto: Prontology) -> NXOntology[str]:

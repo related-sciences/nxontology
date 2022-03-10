@@ -3,7 +3,8 @@ from typing import Dict, Iterable, Optional
 from networkx.drawing.nx_agraph import to_agraph
 from pygraphviz.agraph import AGraph
 
-from nxontology.ontology import Node, Node_Info, SimilarityIC
+from nxontology.node import Node, Node_Info
+from nxontology.similarity import SimilarityIC
 
 
 def create_similarity_graphviz(
