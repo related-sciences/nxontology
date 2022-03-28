@@ -1,10 +1,26 @@
 import pathlib
+from datetime import date
 
 import networkx
 import pytest
 
 from nxontology.exceptions import DuplicateError, NodeNotFound
 from nxontology.ontology import NXOntology
+
+
+def test_add_nxontology_metadata() -> None:
+    nxo: NXOntology[str] = NXOntology()
+    assert "nxontology_version" in nxo.graph.graph
+    assert nxo.graph.graph["nxontology_created"].startswith(str(date.today().year))
+
+
+def test_add_nxontology_no_metadata() -> None:
+    graph = networkx.DiGraph()
+    nxo: NXOntology[str] = NXOntology(graph)
+    # When providing an existing graph, we do not update metadata,
+    # although this is not a firm decision that this is the right behavior.
+    assert "nxontology_created" not in nxo.graph.graph
+    assert "nxontology_version" not in nxo.graph.graph
 
 
 def test_n_nodes(metal_nxo: NXOntology[str]) -> None:

@@ -16,7 +16,7 @@ from nxontology.node import Node
 from .exceptions import DuplicateError, NodeNotFound
 from .node import Node_Info
 from .similarity import SimilarityIC
-from .utils import Freezable, cache_on_frozen
+from .utils import Freezable, cache_on_frozen, get_datetime_now, get_nxontology_version
 
 logger = logging.getLogger(__name__)
 
@@ -30,8 +30,16 @@ class NXOntology(Freezable, Generic[Node]):
 
     def __init__(self, graph: nx.DiGraph | None = None):
         self.graph = nx.DiGraph(graph)
+        if graph is None:
+            # Store the nxontology version that created the graph as metadata,
+            # in case there are compatability issues in the future.
+            self._add_nxontology_metadata()
         self.check_is_dag()
         self._node_info_cache: dict[Node, Node_Info[Node]] = {}
+
+    def _add_nxontology_metadata(self) -> None:
+        self.graph.graph["nxontology_version"] = get_nxontology_version()
+        self.graph.graph["nxontology_created"] = get_datetime_now()
 
     def check_is_dag(self) -> None:
         if nx.is_directed_acyclic_graph(self.graph):
