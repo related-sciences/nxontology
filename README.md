@@ -136,6 +136,10 @@ Counter({'is a': 71509,
 
 Users can also create their own `networkx.DiGraph` to use this package.
 
+### Prebuilt Ontologies
+
+The [nxontology-data](https://github.com/related-sciences/nxontology-data) repository creates NXOntology objects for many popular ontologies / taxonomies.
+
 ## Installation
 
 nxontology can be installed with `pip` from [PyPI](https://pypi.org/project/nxontology/) like:
