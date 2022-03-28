@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import abc
 import functools
+import importlib.metadata
+from datetime import datetime, timezone
 from typing import Callable, TypeVar
 
 
@@ -44,3 +46,15 @@ def cache_on_frozen(func: Callable[[T_Freezable], T]) -> Callable[[T_Freezable],
     # But mypy looses track of the return type.
     # https://github.com/python/mypy/issues/8083
     return wrapped
+
+
+def get_nxontology_version() -> str | None:
+    # https://github.com/pypa/setuptools_scm/#retrieving-package-version-at-runtime
+    try:
+        return importlib.metadata.version("nxontology")
+    except importlib.metadata.PackageNotFoundError:
+        return None
+
+
+def get_datetime_now() -> str:
+    return datetime.utcnow().replace(microsecond=0, tzinfo=timezone.utc).isoformat()
