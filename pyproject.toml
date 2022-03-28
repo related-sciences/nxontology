@@ -15,7 +15,7 @@ use_parentheses = true
 line_length = 88
 
 [tool.black]
-target-version = ['py37', 'py38', 'py39', 'py310']
+target-version = ['py38', 'py39', 'py310']
 
 # https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
 [tool.mypy]
@@ -36,7 +36,6 @@ module = [
     "setuptools.*",
     "pandas.*",
     "pytest.*",
-    "_pytest.*",
     "pygraphviz.*",
 ]
 ignore_missing_imports = true
