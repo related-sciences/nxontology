@@ -1,99 +1,99 @@
-node_0	node_1	node_0_subsumes_1	node_1_subsumes_0	n_common_ancestors	n_union_ancestors	batet	batet_log	ic_metric	mica	resnik	resnik_scaled	lin	jiang	jiang_seco
-coinage	coinage	True	True	2	2	1	1	intrinsic_ic	coinage	1.95	1	1	1	1
-coinage	coinage	True	True	2	2	1	1	intrinsic_ic_sanchez	coinage	1.2	0.748	1	1	1
-coinage	conifer	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
-coinage	conifer	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
-coinage	metal	False	True	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
-coinage	metal	False	True	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
-coinage	pine	False	False	0	5	0	0	intrinsic_ic		0	0	0	0.204	0
-coinage	pine	False	False	0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
-coinage	precious	False	False	1	3	0.333	0.369	intrinsic_ic	metal	0.847	0.435	0.435	0.313	0.435
-coinage	precious	False	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0.511	0.317	0.424	0.419	0.569
-coinage	tree	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
-coinage	tree	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-coinage	water	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.204	0
-coinage	water	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-conifer	coinage	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
-conifer	coinage	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
-conifer	conifer	True	True	2	2	1	1	intrinsic_ic	conifer	1.25	0.644	1	1	1
-conifer	conifer	True	True	2	2	1	1	intrinsic_ic_sanchez	conifer	1.2	0.748	1	1	1
-conifer	metal	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.323	0.46
-conifer	metal	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.368	0.467
-conifer	pine	True	False	2	3	0.667	1	intrinsic_ic	conifer	1.25	0.644	0.783	0.591	0.822
-conifer	pine	True	False	2	3	0.667	1	intrinsic_ic_sanchez	conifer	1.2	0.748	0.953	0.895	0.963
-conifer	precious	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
-conifer	precious	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
-conifer	tree	False	True	1	2	0.5	1	intrinsic_ic	tree	0.847	0.435	0.807	0.712	0.896
-conifer	tree	False	True	1	2	0.5	1	intrinsic_ic_sanchez	tree	0.916	0.569	0.864	0.777	0.911
-conifer	water	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.238	0.178
-conifer	water	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-metal	coinage	True	False	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
-metal	coinage	True	False	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
-metal	conifer	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.323	0.46
-metal	conifer	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.368	0.467
-metal	metal	True	True	1	1	1	1	intrinsic_ic	metal	0.847	0.435	1	1	1
-metal	metal	True	True	1	1	1	1	intrinsic_ic_sanchez	metal	0.511	0.317	1	1	1
-metal	pine	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.264	0.282
-metal	pine	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
-metal	precious	True	False	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
-metal	precious	True	False	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
-metal	tree	False	False	0	2	0	0	intrinsic_ic		0	0	0	0.371	0.565
-metal	tree	False	False	0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
-metal	water	False	False	0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
-metal	water	False	False	0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
-pine	coinage	False	False	0	5	0	0	intrinsic_ic		0	0	0	0.204	0
-pine	coinage	False	False	0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
-pine	conifer	False	True	2	3	0.667	1	intrinsic_ic	conifer	1.25	0.644	0.783	0.591	0.822
-pine	conifer	False	True	2	3	0.667	1	intrinsic_ic_sanchez	conifer	1.2	0.748	0.953	0.895	0.963
-pine	metal	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.264	0.282
-pine	metal	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
-pine	pine	True	True	3	3	1	1	intrinsic_ic	pine	1.95	1	1	1	1
-pine	pine	True	True	3	3	1	1	intrinsic_ic_sanchez	pine	1.32	0.821	1	1	1
-pine	precious	False	False	0	5	0	0	intrinsic_ic		0	0	0	0.204	0
-pine	precious	False	False	0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
-pine	tree	False	True	1	3	0.333	0.369	intrinsic_ic	tree	0.847	0.435	0.607	0.477	0.718
-pine	tree	False	True	1	3	0.333	0.369	intrinsic_ic_sanchez	tree	0.916	0.569	0.819	0.712	0.874
-pine	water	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.204	0
-pine	water	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.309	0.305
-precious	coinage	False	False	1	3	0.333	0.369	intrinsic_ic	metal	0.847	0.435	0.435	0.313	0.435
-precious	coinage	False	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0.511	0.317	0.424	0.419	0.569
-precious	conifer	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
-precious	conifer	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
-precious	metal	False	True	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
-precious	metal	False	True	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
-precious	pine	False	False	0	5	0	0	intrinsic_ic		0	0	0	0.204	0
-precious	pine	False	False	0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
-precious	precious	True	True	2	2	1	1	intrinsic_ic	precious	1.95	1	1	1	1
-precious	precious	True	True	2	2	1	1	intrinsic_ic_sanchez	precious	1.2	0.748	1	1	1
-precious	tree	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
-precious	tree	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-precious	water	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.204	0
-precious	water	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-tree	coinage	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
-tree	coinage	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-tree	conifer	True	False	1	2	0.5	1	intrinsic_ic	tree	0.847	0.435	0.807	0.712	0.896
-tree	conifer	True	False	1	2	0.5	1	intrinsic_ic_sanchez	tree	0.916	0.569	0.864	0.777	0.911
-tree	metal	False	False	0	2	0	0	intrinsic_ic		0	0	0	0.371	0.565
-tree	metal	False	False	0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
-tree	pine	True	False	1	3	0.333	0.369	intrinsic_ic	tree	0.847	0.435	0.607	0.477	0.718
-tree	pine	True	False	1	3	0.333	0.369	intrinsic_ic_sanchez	tree	0.916	0.569	0.819	0.712	0.874
-tree	precious	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
-tree	precious	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-tree	tree	True	True	1	1	1	1	intrinsic_ic	tree	0.847	0.435	1	1	1
-tree	tree	True	True	1	1	1	1	intrinsic_ic_sanchez	tree	0.916	0.569	1	1	1
-tree	water	False	False	0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
-tree	water	False	False	0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
-water	coinage	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.204	0
-water	coinage	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-water	conifer	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.238	0.178
-water	conifer	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-water	metal	False	False	0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
-water	metal	False	False	0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
-water	pine	False	False	0	4	0	0	intrinsic_ic		0	0	0	0.204	0
-water	pine	False	False	0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.309	0.305
-water	precious	False	False	0	3	0	0	intrinsic_ic		0	0	0	0.204	0
-water	precious	False	False	0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
-water	tree	False	False	0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
-water	tree	False	False	0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
-water	water	True	True	1	1	1	1	intrinsic_ic	water	1.95	1	1	1	1
-water	water	True	True	1	1	1	1	intrinsic_ic_sanchez	water	0.916	0.569	1	1	1
+node_0	node_1	node_0_subsumes_1	node_1_subsumes_0	depth	n_common_ancestors	n_union_ancestors	batet	batet_log	ic_metric	mica	resnik	resnik_scaled	lin	jiang	jiang_seco
+coinage	coinage	True	True	0	2	2	1	1	intrinsic_ic	coinage	1.95	1	1	1	1
+coinage	coinage	True	True	0	2	2	1	1	intrinsic_ic_sanchez	coinage	1.2	0.748	1	1	1
+coinage	conifer	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
+coinage	conifer	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
+coinage	metal	False	True	-1	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
+coinage	metal	False	True	-1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
+coinage	pine	False	False		0	5	0	0	intrinsic_ic		0	0	0	0.204	0
+coinage	pine	False	False		0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
+coinage	precious	False	False		1	3	0.333	0.369	intrinsic_ic	metal	0.847	0.435	0.435	0.313	0.435
+coinage	precious	False	False		1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0.511	0.317	0.424	0.419	0.569
+coinage	tree	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
+coinage	tree	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+coinage	water	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.204	0
+coinage	water	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+conifer	coinage	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
+conifer	coinage	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
+conifer	conifer	True	True	0	2	2	1	1	intrinsic_ic	conifer	1.25	0.644	1	1	1
+conifer	conifer	True	True	0	2	2	1	1	intrinsic_ic_sanchez	conifer	1.2	0.748	1	1	1
+conifer	metal	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.323	0.46
+conifer	metal	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.368	0.467
+conifer	pine	True	False	1	2	3	0.667	1	intrinsic_ic	conifer	1.25	0.644	0.783	0.591	0.822
+conifer	pine	True	False	1	2	3	0.667	1	intrinsic_ic_sanchez	conifer	1.2	0.748	0.953	0.895	0.963
+conifer	precious	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
+conifer	precious	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
+conifer	tree	False	True	-1	1	2	0.5	1	intrinsic_ic	tree	0.847	0.435	0.807	0.712	0.896
+conifer	tree	False	True	-1	1	2	0.5	1	intrinsic_ic_sanchez	tree	0.916	0.569	0.864	0.777	0.911
+conifer	water	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.238	0.178
+conifer	water	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+metal	coinage	True	False	1	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
+metal	coinage	True	False	1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
+metal	conifer	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.323	0.46
+metal	conifer	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.368	0.467
+metal	metal	True	True	0	1	1	1	1	intrinsic_ic	metal	0.847	0.435	1	1	1
+metal	metal	True	True	0	1	1	1	1	intrinsic_ic_sanchez	metal	0.511	0.317	1	1	1
+metal	pine	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.264	0.282
+metal	pine	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
+metal	precious	True	False	1	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
+metal	precious	True	False	1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
+metal	tree	False	False		0	2	0	0	intrinsic_ic		0	0	0	0.371	0.565
+metal	tree	False	False		0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
+metal	water	False	False		0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
+metal	water	False	False		0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
+pine	coinage	False	False		0	5	0	0	intrinsic_ic		0	0	0	0.204	0
+pine	coinage	False	False		0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
+pine	conifer	False	True	-1	2	3	0.667	1	intrinsic_ic	conifer	1.25	0.644	0.783	0.591	0.822
+pine	conifer	False	True	-1	2	3	0.667	1	intrinsic_ic_sanchez	conifer	1.2	0.748	0.953	0.895	0.963
+pine	metal	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.264	0.282
+pine	metal	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
+pine	pine	True	True	0	3	3	1	1	intrinsic_ic	pine	1.95	1	1	1	1
+pine	pine	True	True	0	3	3	1	1	intrinsic_ic_sanchez	pine	1.32	0.821	1	1	1
+pine	precious	False	False		0	5	0	0	intrinsic_ic		0	0	0	0.204	0
+pine	precious	False	False		0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
+pine	tree	False	True	-2	1	3	0.333	0.369	intrinsic_ic	tree	0.847	0.435	0.607	0.477	0.718
+pine	tree	False	True	-2	1	3	0.333	0.369	intrinsic_ic_sanchez	tree	0.916	0.569	0.819	0.712	0.874
+pine	water	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.204	0
+pine	water	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.309	0.305
+precious	coinage	False	False		1	3	0.333	0.369	intrinsic_ic	metal	0.847	0.435	0.435	0.313	0.435
+precious	coinage	False	False		1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0.511	0.317	0.424	0.419	0.569
+precious	conifer	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.238	0.178
+precious	conifer	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.293	0.252
+precious	metal	False	True	-1	1	2	0.5	1	intrinsic_ic	metal	0.847	0.435	0.607	0.477	0.718
+precious	metal	False	True	-1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0.511	0.317	0.596	0.591	0.785
+precious	pine	False	False		0	5	0	0	intrinsic_ic		0	0	0	0.204	0
+precious	pine	False	False		0	5	0	0	intrinsic_ic_sanchez		0	0	0	0.284	0.215
+precious	precious	True	True	0	2	2	1	1	intrinsic_ic	precious	1.95	1	1	1	1
+precious	precious	True	True	0	2	2	1	1	intrinsic_ic_sanchez	precious	1.2	0.748	1	1	1
+precious	tree	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
+precious	tree	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+precious	water	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.204	0
+precious	water	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+tree	coinage	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
+tree	coinage	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+tree	conifer	True	False	1	1	2	0.5	1	intrinsic_ic	tree	0.847	0.435	0.807	0.712	0.896
+tree	conifer	True	False	1	1	2	0.5	1	intrinsic_ic_sanchez	tree	0.916	0.569	0.864	0.777	0.911
+tree	metal	False	False		0	2	0	0	intrinsic_ic		0	0	0	0.371	0.565
+tree	metal	False	False		0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
+tree	pine	True	False	2	1	3	0.333	0.369	intrinsic_ic	tree	0.847	0.435	0.607	0.477	0.718
+tree	pine	True	False	2	1	3	0.333	0.369	intrinsic_ic_sanchez	tree	0.916	0.569	0.819	0.712	0.874
+tree	precious	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.264	0.282
+tree	precious	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+tree	tree	True	True	0	1	1	1	1	intrinsic_ic	tree	0.847	0.435	1	1	1
+tree	tree	True	True	0	1	1	1	1	intrinsic_ic_sanchez	tree	0.916	0.569	1	1	1
+tree	water	False	False		0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
+tree	water	False	False		0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
+water	coinage	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.204	0
+water	coinage	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+water	conifer	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.238	0.178
+water	conifer	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+water	metal	False	False		0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
+water	metal	False	False		0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.412	0.557
+water	pine	False	False		0	4	0	0	intrinsic_ic		0	0	0	0.204	0
+water	pine	False	False		0	4	0	0	intrinsic_ic_sanchez		0	0	0	0.309	0.305
+water	precious	False	False		0	3	0	0	intrinsic_ic		0	0	0	0.204	0
+water	precious	False	False		0	3	0	0	intrinsic_ic_sanchez		0	0	0	0.32	0.341
+water	tree	False	False		0	2	0	0	intrinsic_ic		0	0	0	0.264	0.282
+water	tree	False	False		0	2	0	0	intrinsic_ic_sanchez		0	0	0	0.353	0.431
+water	water	True	True	0	1	1	1	1	intrinsic_ic	water	1.95	1	1	1	1
+water	water	True	True	0	1	1	1	1	intrinsic_ic_sanchez	water	0.916	0.569	1	1	1

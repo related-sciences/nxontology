@@ -1,129 +1,129 @@
-node_0	node_1	node_0_subsumes_1	node_1_subsumes_0	n_common_ancestors	n_union_ancestors	batet	batet_log	ic_metric	mica	resnik	resnik_scaled	lin	jiang	jiang_seco
-coinage	coinage	True	True	2	2	1	1	intrinsic_ic	coinage	0.693	0.333	1	1	1
-coinage	coinage	True	True	2	2	1	1	intrinsic_ic_sanchez	coinage	0.875	0.489	1	1	1
-coinage	copper	True	False	2	3	0.667	1	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
-coinage	copper	True	False	2	3	0.667	1	intrinsic_ic_sanchez	coinage	0.875	0.489	0.736	0.614	0.825
-coinage	gold	True	False	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
-coinage	gold	True	False	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
-coinage	metal	False	True	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.591	0.833
-coinage	metal	False	True	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.533	0.756
-coinage	palladium	False	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
-coinage	palladium	False	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
-coinage	platinum	False	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
-coinage	platinum	False	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
-coinage	precious	False	False	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.462	0.72
-coinage	precious	False	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
-coinage	silver	True	False	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
-coinage	silver	True	False	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
-copper	coinage	False	True	2	3	0.667	1	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
-copper	coinage	False	True	2	3	0.667	1	intrinsic_ic_sanchez	coinage	0.875	0.489	0.736	0.614	0.825
-copper	copper	True	True	3	3	1	1	intrinsic_ic	copper	2.08	1	1	1	1
-copper	copper	True	True	3	3	1	1	intrinsic_ic_sanchez	copper	1.5	0.839	1	1	1
-copper	gold	False	False	2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
-copper	gold	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
-copper	metal	False	True	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
-copper	metal	False	True	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
-copper	palladium	False	False	1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
-copper	palladium	False	False	1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
-copper	platinum	False	False	1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
-copper	platinum	False	False	1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
-copper	precious	False	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.282	0.387
-copper	precious	False	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.313	0.387
-copper	silver	False	False	2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
-copper	silver	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
-gold	coinage	False	True	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
-gold	coinage	False	True	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
-gold	copper	False	False	2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
-gold	copper	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
-gold	gold	True	True	4	4	1	1	intrinsic_ic	gold	2.08	1	1	1	1
-gold	gold	True	True	4	4	1	1	intrinsic_ic_sanchez	gold	1.57	0.875	1	1	1
-gold	metal	False	True	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
-gold	metal	False	True	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
-gold	palladium	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-gold	palladium	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-gold	platinum	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-gold	platinum	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-gold	precious	False	True	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-gold	precious	False	True	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
-gold	silver	False	False	3	5	0.6	0.569	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
-gold	silver	False	False	3	5	0.6	0.569	intrinsic_ic_sanchez	coinage	0.875	0.489	0.558	0.419	0.613
-metal	coinage	True	False	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.591	0.833
-metal	coinage	True	False	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.533	0.756
-metal	copper	True	False	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
-metal	copper	True	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
-metal	gold	True	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
-metal	gold	True	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
-metal	metal	True	True	1	1	1	1	intrinsic_ic	metal	0	0	1	1	1
-metal	metal	True	True	1	1	1	1	intrinsic_ic_sanchez	metal	0	0	1	1	1
-metal	palladium	True	False	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
-metal	palladium	True	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
-metal	platinum	True	False	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
-metal	platinum	True	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
-metal	precious	True	False	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.68	0.887
-metal	precious	True	False	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.591	0.807
-metal	silver	True	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
-metal	silver	True	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
-palladium	coinage	False	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
-palladium	coinage	False	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
-palladium	copper	False	False	1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
-palladium	copper	False	False	1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
-palladium	gold	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-palladium	gold	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-palladium	metal	False	True	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
-palladium	metal	False	True	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
-palladium	palladium	True	True	3	3	1	1	intrinsic_ic	palladium	2.08	1	1	1	1
-palladium	palladium	True	True	3	3	1	1	intrinsic_ic_sanchez	palladium	1.5	0.839	1	1	1
-palladium	platinum	False	False	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-palladium	platinum	False	False	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.461	0.381	0.547
-palladium	precious	False	True	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-palladium	precious	False	True	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
-palladium	silver	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-palladium	silver	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-platinum	coinage	False	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
-platinum	coinage	False	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
-platinum	copper	False	False	1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
-platinum	copper	False	False	1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
-platinum	gold	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-platinum	gold	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-platinum	metal	False	True	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
-platinum	metal	False	True	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
-platinum	palladium	False	False	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-platinum	palladium	False	False	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.461	0.381	0.547
-platinum	platinum	True	True	3	3	1	1	intrinsic_ic	platinum	2.08	1	1	1	1
-platinum	platinum	True	True	3	3	1	1	intrinsic_ic_sanchez	platinum	1.5	0.839	1	1	1
-platinum	precious	False	True	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-platinum	precious	False	True	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
-platinum	silver	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-platinum	silver	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-precious	coinage	False	False	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.462	0.72
-precious	coinage	False	False	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
-precious	copper	False	False	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.282	0.387
-precious	copper	False	False	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.313	0.387
-precious	gold	True	False	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-precious	gold	True	False	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
-precious	metal	False	True	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.68	0.887
-precious	metal	False	True	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.591	0.807
-precious	palladium	True	False	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-precious	palladium	True	False	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
-precious	platinum	True	False	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-precious	platinum	True	False	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
-precious	precious	True	True	2	2	1	1	intrinsic_ic	precious	0.47	0.226	1	1	1
-precious	precious	True	True	2	2	1	1	intrinsic_ic_sanchez	precious	0.693	0.387	1	1	1
-precious	silver	True	False	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-precious	silver	True	False	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
-silver	coinage	False	True	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
-silver	coinage	False	True	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
-silver	copper	False	False	2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
-silver	copper	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
-silver	gold	False	False	3	5	0.6	0.569	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
-silver	gold	False	False	3	5	0.6	0.569	intrinsic_ic_sanchez	coinage	0.875	0.489	0.558	0.419	0.613
-silver	metal	False	True	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
-silver	metal	False	True	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
-silver	palladium	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-silver	palladium	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-silver	platinum	False	False	2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
-silver	platinum	False	False	2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
-silver	precious	False	True	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
-silver	precious	False	True	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
-silver	silver	True	True	4	4	1	1	intrinsic_ic	silver	2.08	1	1	1	1
-silver	silver	True	True	4	4	1	1	intrinsic_ic_sanchez	silver	1.57	0.875	1	1	1
+node_0	node_1	node_0_subsumes_1	node_1_subsumes_0	depth	n_common_ancestors	n_union_ancestors	batet	batet_log	ic_metric	mica	resnik	resnik_scaled	lin	jiang	jiang_seco
+coinage	coinage	True	True	0	2	2	1	1	intrinsic_ic	coinage	0.693	0.333	1	1	1
+coinage	coinage	True	True	0	2	2	1	1	intrinsic_ic_sanchez	coinage	0.875	0.489	1	1	1
+coinage	copper	True	False	1	2	3	0.667	1	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
+coinage	copper	True	False	1	2	3	0.667	1	intrinsic_ic_sanchez	coinage	0.875	0.489	0.736	0.614	0.825
+coinage	gold	True	False	1	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
+coinage	gold	True	False	1	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
+coinage	metal	False	True	-1	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.591	0.833
+coinage	metal	False	True	-1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.533	0.756
+coinage	palladium	False	False		1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
+coinage	palladium	False	False		1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
+coinage	platinum	False	False		1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
+coinage	platinum	False	False		1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
+coinage	precious	False	False		1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.462	0.72
+coinage	precious	False	False		1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
+coinage	silver	True	False	1	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
+coinage	silver	True	False	1	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
+copper	coinage	False	True	-1	2	3	0.667	1	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
+copper	coinage	False	True	-1	2	3	0.667	1	intrinsic_ic_sanchez	coinage	0.875	0.489	0.736	0.614	0.825
+copper	copper	True	True	0	3	3	1	1	intrinsic_ic	copper	2.08	1	1	1	1
+copper	copper	True	True	0	3	3	1	1	intrinsic_ic_sanchez	copper	1.5	0.839	1	1	1
+copper	gold	False	False		2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
+copper	gold	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
+copper	metal	False	True	-2	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
+copper	metal	False	True	-2	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
+copper	palladium	False	False		1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
+copper	palladium	False	False		1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
+copper	platinum	False	False		1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
+copper	platinum	False	False		1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
+copper	precious	False	False		1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.282	0.387
+copper	precious	False	False		1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.313	0.387
+copper	silver	False	False		2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
+copper	silver	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
+gold	coinage	False	True	-1	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
+gold	coinage	False	True	-1	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
+gold	copper	False	False		2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
+gold	copper	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
+gold	gold	True	True	0	4	4	1	1	intrinsic_ic	gold	2.08	1	1	1	1
+gold	gold	True	True	0	4	4	1	1	intrinsic_ic_sanchez	gold	1.57	0.875	1	1	1
+gold	metal	False	True	-2	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
+gold	metal	False	True	-2	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
+gold	palladium	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+gold	palladium	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+gold	platinum	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+gold	platinum	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+gold	precious	False	True	-1	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+gold	precious	False	True	-1	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
+gold	silver	False	False		3	5	0.6	0.569	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
+gold	silver	False	False		3	5	0.6	0.569	intrinsic_ic_sanchez	coinage	0.875	0.489	0.558	0.419	0.613
+metal	coinage	True	False	1	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.591	0.833
+metal	coinage	True	False	1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.533	0.756
+metal	copper	True	False	2	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
+metal	copper	True	False	2	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
+metal	gold	True	False	2	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
+metal	gold	True	False	2	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
+metal	metal	True	True	0	1	1	1	1	intrinsic_ic	metal	0	0	1	1	1
+metal	metal	True	True	0	1	1	1	1	intrinsic_ic_sanchez	metal	0	0	1	1	1
+metal	palladium	True	False	2	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
+metal	palladium	True	False	2	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
+metal	platinum	True	False	2	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
+metal	platinum	True	False	2	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
+metal	precious	True	False	1	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.68	0.887
+metal	precious	True	False	1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.591	0.807
+metal	silver	True	False	2	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
+metal	silver	True	False	2	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
+palladium	coinage	False	False		1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
+palladium	coinage	False	False		1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
+palladium	copper	False	False		1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
+palladium	copper	False	False		1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
+palladium	gold	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+palladium	gold	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+palladium	metal	False	True	-2	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
+palladium	metal	False	True	-2	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
+palladium	palladium	True	True	0	3	3	1	1	intrinsic_ic	palladium	2.08	1	1	1	1
+palladium	palladium	True	True	0	3	3	1	1	intrinsic_ic_sanchez	palladium	1.5	0.839	1	1	1
+palladium	platinum	False	False		2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+palladium	platinum	False	False		2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.461	0.381	0.547
+palladium	precious	False	True	-1	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+palladium	precious	False	True	-1	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
+palladium	silver	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+palladium	silver	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+platinum	coinage	False	False		1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.265	0.333
+platinum	coinage	False	False		1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.296	0.336
+platinum	copper	False	False		1	5	0.2	0.139	intrinsic_ic	metal	0	0	0	0.194	0
+platinum	copper	False	False		1	5	0.2	0.139	intrinsic_ic_sanchez	metal	0	0	0	0.249	0.161
+platinum	gold	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+platinum	gold	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+platinum	metal	False	True	-2	1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.325	0.5
+platinum	metal	False	True	-2	1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.399	0.58
+platinum	palladium	False	False		2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+platinum	palladium	False	False		2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.461	0.381	0.547
+platinum	platinum	True	True	0	3	3	1	1	intrinsic_ic	platinum	2.08	1	1	1	1
+platinum	platinum	True	True	0	3	3	1	1	intrinsic_ic_sanchez	platinum	1.5	0.839	1	1	1
+platinum	precious	False	True	-1	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+platinum	precious	False	True	-1	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
+platinum	silver	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+platinum	silver	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+precious	coinage	False	False		1	3	0.333	0.369	intrinsic_ic	metal	0	0	0	0.462	0.72
+precious	coinage	False	False		1	3	0.333	0.369	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
+precious	copper	False	False		1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.282	0.387
+precious	copper	False	False		1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.313	0.387
+precious	gold	True	False	1	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+precious	gold	True	False	1	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
+precious	metal	False	True	-1	1	2	0.5	1	intrinsic_ic	metal	0	0	0	0.68	0.887
+precious	metal	False	True	-1	1	2	0.5	1	intrinsic_ic_sanchez	metal	0	0	0	0.591	0.807
+precious	palladium	True	False	1	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+precious	palladium	True	False	1	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
+precious	platinum	True	False	1	2	3	0.667	1	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+precious	platinum	True	False	1	2	3	0.667	1	intrinsic_ic_sanchez	precious	0.693	0.387	0.631	0.552	0.774
+precious	precious	True	True	0	2	2	1	1	intrinsic_ic	precious	0.47	0.226	1	1	1
+precious	precious	True	True	0	2	2	1	1	intrinsic_ic_sanchez	precious	0.693	0.387	1	1	1
+precious	silver	True	False	1	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+precious	silver	True	False	1	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
+silver	coinage	False	True	-1	2	4	0.5	0.5	intrinsic_ic	coinage	0.693	0.333	0.5	0.419	0.667
+silver	coinage	False	True	-1	2	4	0.5	0.5	intrinsic_ic_sanchez	coinage	0.875	0.489	0.716	0.591	0.807
+silver	copper	False	False		2	5	0.4	0.317	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
+silver	copper	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	coinage	0.875	0.489	0.57	0.431	0.631
+silver	gold	False	False		3	5	0.6	0.569	intrinsic_ic	coinage	0.693	0.333	0.333	0.265	0.333
+silver	gold	False	False		3	5	0.6	0.569	intrinsic_ic_sanchez	coinage	0.875	0.489	0.558	0.419	0.613
+silver	metal	False	True	-2	1	4	0.25	0.208	intrinsic_ic	metal	0	0	0	0.325	0.5
+silver	metal	False	True	-2	1	4	0.25	0.208	intrinsic_ic_sanchez	metal	0	0	0	0.389	0.562
+silver	palladium	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+silver	palladium	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+silver	platinum	False	False		2	5	0.4	0.317	intrinsic_ic	precious	0.47	0.226	0.226	0.237	0.226
+silver	platinum	False	False		2	5	0.4	0.317	intrinsic_ic_sanchez	precious	0.693	0.387	0.451	0.372	0.529
+silver	precious	False	True	-1	2	4	0.5	0.5	intrinsic_ic	precious	0.47	0.226	0.369	0.383	0.613
+silver	precious	False	True	-1	2	4	0.5	0.5	intrinsic_ic_sanchez	precious	0.693	0.387	0.613	0.533	0.756
+silver	silver	True	True	0	4	4	1	1	intrinsic_ic	silver	2.08	1	1	1	1
+silver	silver	True	True	0	4	4	1	1	intrinsic_ic_sanchez	silver	1.57	0.875	1	1	1

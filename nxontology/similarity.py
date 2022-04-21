@@ -6,6 +6,8 @@ from typing import TYPE_CHECKING, Any, Generic
 if TYPE_CHECKING:
     from nxontology.ontology import NXOntology
 
+from networkx import shortest_path_length
+
 from nxontology.node import Node, Node_Info
 from nxontology.utils import Freezable, cache_on_frozen
 
@@ -20,6 +22,7 @@ class Similarity(Freezable, Generic[Node]):
         "node_1",
         "node_0_subsumes_1",
         "node_1_subsumes_0",
+        "depth",
         "n_common_ancestors",
         "n_union_ancestors",
         "batet",
@@ -46,6 +49,22 @@ class Similarity(Freezable, Generic[Node]):
     @cache_on_frozen
     def node_1_subsumes_0(self) -> bool:
         return self.node_1 in self.info_0.ancestors
+
+    @property  # type: ignore [misc]
+    @cache_on_frozen
+    def depth(self) -> int | None:
+        """
+        Get the depth of node_1 beneath node_0 as a positive int, when node_0 is an ancestor of node_1.
+        Get the depth of node_0 beneath node_1 as a negative int, when node_1 is an ancestor of node_0.
+        Returns None if neither node is an ancestor of the other.
+        """
+        if self.node_0 == self.node_1:
+            return 0
+        if self.node_0_subsumes_1:
+            return int(shortest_path_length(self.nxo.graph, self.node_0, self.node_1))
+        if self.node_1_subsumes_0:
+            return -int(shortest_path_length(self.nxo.graph, self.node_1, self.node_0))
+        return None
 
     @property  # type: ignore [misc]
     @cache_on_frozen
