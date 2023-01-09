@@ -40,17 +40,17 @@ class Similarity(Freezable, Generic[Node]):
     def frozen(self) -> bool:
         return self.nxo.frozen
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def node_0_subsumes_1(self) -> bool:
         return self.node_0 in self.info_1.ancestors
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def node_1_subsumes_0(self) -> bool:
         return self.node_1 in self.info_0.ancestors
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def depth(self) -> int | None:
         """
@@ -66,12 +66,12 @@ class Similarity(Freezable, Generic[Node]):
             return -int(shortest_path_length(self.nxo.graph, self.node_1, self.node_0))
         return None
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def common_ancestors(self) -> set[Node]:
         return self.info_0.ancestors & self.info_1.ancestors
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def union_ancestors(self) -> set[Node]:
         return self.info_0.ancestors | self.info_1.ancestors
@@ -172,7 +172,7 @@ class SimilarityIC(Similarity[Node]):
     def node_1_ic_scaled(self) -> float:
         return self._get_ic(self.info_1, self.ic_metric_scaled)
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def _resnik_mica(self) -> tuple[float, Node | None]:
         if not self.common_ancestors:

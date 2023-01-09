@@ -107,7 +107,7 @@ class NXOntology(Freezable, Generic[Node]):
             raise DuplicateError(f"edge already in graph: {u_of_edge} --> {v_of_edge}")
         self.graph.add_edge(u_of_edge, v_of_edge, **attr)
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def roots(self) -> set[Node]:
         """
@@ -133,7 +133,7 @@ class NXOntology(Freezable, Generic[Node]):
             return root
         raise ValueError("Ontology has multiple roots.")
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def leaves(self) -> set[Node]:
         """
@@ -145,7 +145,7 @@ class NXOntology(Freezable, Generic[Node]):
                 leaves.add(node)
         return leaves
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def isolates(self) -> set[Node]:
         """

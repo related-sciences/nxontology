@@ -122,7 +122,7 @@ class Node_Info(Freezable, Generic[Node]):
         """Direct child nodes of this node."""
         return set(self.nxo.graph.successors(self.node))
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def ancestors(self) -> set[Node]:
         """
@@ -135,7 +135,7 @@ class Node_Info(Freezable, Generic[Node]):
         ancestors.add(self.node)
         return ancestors
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def descendants(self) -> set[Node]:
         """
@@ -158,7 +158,7 @@ class Node_Info(Freezable, Generic[Node]):
         """Number of descendants of node in graph, including itself."""
         return len(self.descendants)
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def roots(self) -> set[Node]:
         """Ancestors of this node that are roots (top-level)."""
@@ -169,7 +169,7 @@ class Node_Info(Freezable, Generic[Node]):
         """Descendents of this node that are leaves."""
         return self.descendants & self.nxo.leaves
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def depth(self) -> int:
         """Minimum shortest path distance from a root node to this node."""
@@ -193,7 +193,7 @@ class Node_Info(Freezable, Generic[Node]):
             self.nxo.graph, source=self.node, target=self.leaves
         )
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def intrinsic_ic(self) -> float:
         """
@@ -208,7 +208,7 @@ class Node_Info(Freezable, Generic[Node]):
         # - math.log(self.n_descendants / self.nxo.n_nodes)
         return math.log(self.nxo.n_nodes) - math.log(self.n_descendants)
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def intrinsic_ic_scaled(self) -> float:
         """
@@ -227,7 +227,7 @@ class Node_Info(Freezable, Generic[Node]):
         # 1.0 - math.log(self.n_descendants) / math.log(self.nxo.n_nodes)
         return self.intrinsic_ic / math.log(self.nxo.n_nodes)
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def intrinsic_ic_sanchez(self) -> float:
         """
@@ -246,7 +246,7 @@ class Node_Info(Freezable, Generic[Node]):
             math.log((len(leaves) / self.n_ancestors + 1) / (len(all_leaves) + 1))
         )
 
-    @property  # type: ignore [misc]
+    @property
     @cache_on_frozen
     def intrinsic_ic_sanchez_scaled(self) -> float:
         """
