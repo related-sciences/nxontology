@@ -1,6 +1,6 @@
 # NetworkX-based Python library for representing ontologies
 
-[![GitHub Actions CI Build Status](https://img.shields.io/github/workflow/status/related-sciences/nxontology/Build/main?label=actions&style=for-the-badge&logo=github&logoColor=white)](https://github.com/related-sciences/nxontology/actions)  
+[![GitHub Actions CI Build Status](https://img.shields.io/github/actions/workflow/status/related-sciences/nxontology/build.yaml?branch=main&label=actions&style=for-the-badge&logo=github&logoColor=white)](https://github.com/related-sciences/nxontology/actions)  
 [![Software License](https://img.shields.io/github/license/related-sciences/nxontology?style=for-the-badge&logo=Apache&logoColor=white)](https://github.com/related-sciences/nxontology/blob/main/LICENSE)  
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?style=for-the-badge&logo=Python&logoColor=white)](https://github.com/psf/black)  
 [![PyPI](https://img.shields.io/pypi/v/nxontology.svg?style=for-the-badge&logo=PyPI&logoColor=white)](https://pypi.org/project/nxontology/)  
