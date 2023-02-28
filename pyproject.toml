@@ -1,9 +1,62 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "setuptools_scm[toml]>=3.4"]
+requires = ["setuptools>=61.2", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools_scm]
 # including this section enables version inference
+
+[project]
+name = "nxontology"
+maintainers = [{name = "Daniel Himmelstein", email = "dhimmel@related.vc"}]
+license = {text = "Apache"}
+description = "NetworkX for ontologies"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+]
+keywords = [
+    "networkx",
+    "ontologies",
+    "similarity",
+    "graphs",
+    "networks",
+    "digraph",
+    "information-content",
+    "semantic-similarity",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "fsspec[http]",
+    "networkx>=2",
+    "pronto>=2.4.0",
+]
+dynamic = ["version"]
+
+[project.readme]
+file = "README.md"
+content-type = "text/markdown; charset=UTF-8"
+
+[project.urls]
+Homepage = "https://github.com/related-sciences/nxontology"
+
+[project.optional-dependencies]
+dev = [
+    "fire",
+    "pandas",
+    "pre-commit",
+    "pytest",
+]
+viz = ["pygraphviz"]
+
+[tool.setuptools]
+packages = ["nxontology"]
+zip-safe = false
+include-package-data = true
+license-files = ["LICENSE"]
 
 [tool.black]
 target-version = ['py38', 'py39', 'py310', 'py311']
