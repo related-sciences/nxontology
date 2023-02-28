@@ -20,6 +20,9 @@ target-version = ['py38', 'py39', 'py310', 'py311']
 # https://mypy.readthedocs.io/en/stable/config_file.html#using-a-pyproject-toml-file
 [tool.mypy]
 python_version = "3.8"
+strict = true
+pretty = true
+show_error_context = true
 
 [[tool.mypy.overrides]]
 module = [
