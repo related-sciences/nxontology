@@ -91,7 +91,7 @@ def _pronto_edges_for_term(
     Extract edges including "is a" relationships for a Pronto term.
     https://github.com/althonos/pronto/issues/119#issuecomment-956541286
     """
-    rels = list()
+    rels = []
     source_id = cast(Node, term.id)
     for target in term.superclasses(distance=1, with_self=False):
         rels.append((source_id, cast(Node, target.id), default_rel_type))
@@ -160,7 +160,7 @@ def pronto_to_multidigraph(
 
 def multidigraph_to_digraph(
     graph: nx.MultiDiGraph,
-    rel_types: list[str] | None = None,
+    rel_types: list[str] | tuple[str, ...] | None = None,
     reverse: bool = True,
     reduce: bool = False,
 ) -> nx.DiGraph:
@@ -219,13 +219,14 @@ def read_gene_ontology(
     release: str = "current",
     source_file: str = "go-basic.json.gz",
     rel_types: list[str]
-    | None = [
+    | tuple[str, ...]
+    | None = (
         "is a",
         "part of",
         "regulates",
         "negatively regulates",
         "positively regulates",
-    ],
+    ),
     reduce: bool = True,
 ) -> NXOntology[str]:
     """

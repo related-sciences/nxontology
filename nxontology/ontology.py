@@ -192,7 +192,7 @@ class NXOntology(Freezable, Generic[Node]):
         self,
         source_nodes: Iterable[Node],
         target_nodes: Iterable[Node],
-        ic_metrics: list[str] = ["intrinsic_ic_sanchez"],
+        ic_metrics: list[str] | tuple[str, ...] = ("intrinsic_ic_sanchez",),
     ) -> Iterable[dict[str, Any]]:
         """
         Yield similarity metric dictionaries for all combinations of
@@ -218,7 +218,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @cache_on_frozen
     def _get_name_to_node_info(self) -> dict[str, Node_Info[Node]]:
-        name_to_node_info: dict[str, Node_Info[Node]] = dict()
+        name_to_node_info: dict[str, Node_Info[Node]] = {}
         for node in self.graph:
             info = self.node_info(node)
             name = info.name
