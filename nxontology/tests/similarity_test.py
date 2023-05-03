@@ -77,9 +77,7 @@ def get_similarity_tsv(nxo: NXOntology[str]) -> str:
         ic_metrics=Node_Info.ic_metrics,
     )
     sim_df = pd.DataFrame(sims)
-    tsv = sim_df.to_csv(
-        sep="\t", index=False, float_format="%.3g", line_terminator="\n"
-    )
+    tsv = sim_df.to_csv(sep="\t", index=False, float_format="%.3g", lineterminator="\n")
     assert isinstance(tsv, str)
     return tsv
 
