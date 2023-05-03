@@ -63,7 +63,7 @@ def test_add_edge_duplicate(metal_nxo: NXOntology[str]) -> None:
 def test_nxontology_read_write_node_link_json(
     metal_nxo: NXOntology[str], tmp_path: pathlib.Path
 ) -> None:
-    path = str(tmp_path.joinpath("node-link.json"))
+    path = tmp_path.joinpath("node-link.json")
     metal_nxo.write_node_link_json(path)
     metal_nxo_roundtrip: NXOntology[str] = NXOntology.read_node_link_json(path)
     assert metal_nxo is not metal_nxo_roundtrip

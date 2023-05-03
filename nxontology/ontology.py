@@ -3,6 +3,7 @@ from __future__ import annotations
 import itertools
 import json
 import logging
+from os import PathLike, fspath
 from typing import Any, Generic, Iterable, cast
 
 import fsspec
@@ -62,19 +63,21 @@ class NXOntology(Freezable, Generic[Node]):
             return str(name)
         return None
 
-    def write_node_link_json(self, path: str) -> None:
+    def write_node_link_json(self, path: str | PathLike[str]) -> None:
         """
         Serialize to node-link data.
         """
+        path = fspath(path)
         nld = node_link_data(self.graph)
         with fsspec.open(path, "wt", compression="infer") as write_file:
             json.dump(obj=nld, fp=write_file, indent=2, ensure_ascii=False)
 
     @classmethod
-    def read_node_link_json(cls, path: str) -> NXOntology[Node]:
+    def read_node_link_json(cls, path: str | PathLike[str]) -> NXOntology[Node]:
         """
         Retrun a new graph from node-link format as written by `write_node_link_json`.
         """
+        path = fspath(path)
         with fsspec.open(path, "rt", compression="infer") as read_file:
             nld = json.load(read_file)
         digraph = node_link_graph(nld, directed=True, multigraph=False)
