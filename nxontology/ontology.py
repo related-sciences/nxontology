@@ -71,6 +71,7 @@ class NXOntology(Freezable, Generic[Node]):
         nld = node_link_data(self.graph)
         with fsspec.open(path, "wt", compression="infer") as write_file:
             json.dump(obj=nld, fp=write_file, indent=2, ensure_ascii=False)
+            write_file.write("\n")  # json.dump does not include a trailing newline
 
     @classmethod
     def read_node_link_json(cls, path: str | PathLike[str]) -> NXOntology[Node]:
