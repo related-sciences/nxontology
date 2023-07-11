@@ -1,5 +1,6 @@
 import pathlib
 from datetime import date
+from typing import Type
 
 import networkx
 import pytest
@@ -160,9 +161,19 @@ def test_custom_node_info_class() -> None:
         def custom_property(self) -> str:
             return "custom"
 
-    nxo: NXOntology[str] = NXOntology(node_info_class=CustomNodeInfo)
+    class CustomNxontology(NXOntology[str]):
+        @classmethod
+        def _get_node_info_cls(cls) -> Type[CustomNodeInfo]:
+            return CustomNodeInfo
+
+        def node_info(self, node: str) -> CustomNodeInfo:
+            info = super().node_info(node)
+            assert isinstance(info, CustomNodeInfo)
+            return info
+
+    nxo = CustomNxontology()
     nxo.add_node("a", name="a_name")
-    assert nxo.node_info("a").custom_property == "custom"  # type: ignore [attr-defined]
+    assert nxo.node_info("a").custom_property == "custom"
     assert nxo.node_info_by_name("a_name").custom_property == "custom"  # type: ignore [attr-defined]
     similarity = nxo.similarity("a", "a")
     assert similarity.info_0.custom_property == "custom"  # type: ignore [attr-defined]

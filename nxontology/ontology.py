@@ -32,10 +32,8 @@ class NXOntology(Freezable, Generic[Node]):
     def __init__(
         self,
         graph: nx.DiGraph | None = None,
-        node_info_class: type[Node_Info[Node]] = Node_Info,
     ):
         self.graph = nx.DiGraph(graph)
-        self.node_info_class = node_info_class
         if graph is None:
             # Store the nxontology version that created the graph as metadata,
             # in case there are compatability issues in the future.
@@ -214,15 +212,26 @@ class NXOntology(Freezable, Generic[Node]):
             metrics = self.similarity_metrics(node_0, node_1, ic_metric=ic_metric)
             yield metrics
 
+    @classmethod
+    def _get_node_info_cls(cls) -> type[Node_Info[Node]]:
+        """
+        Return the Node_Info class to use for this ontology.
+        Subclasses can override this to use a custom Node_Info class.
+        For the complexity of typing this method, see
+        <https://github.com/related-sciences/nxontology/pull/26>.
+        """
+        return Node_Info
+
     def node_info(self, node: Node) -> Node_Info[Node]:
         """
         Return Node_Info instance for `node`.
         If frozen, cache node info in `self._node_info_cache`.
         """
+        node_info_cls = self._get_node_info_cls()
         if not self.frozen:
-            return self.node_info_class(self, node)
+            return node_info_cls(self, node)
         if node not in self._node_info_cache:
-            self._node_info_cache[node] = self.node_info_class(self, node)
+            self._node_info_cache[node] = node_info_cls(self, node)
         return self._node_info_cache[node]
 
     @cache_on_frozen
