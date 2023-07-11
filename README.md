@@ -188,6 +188,7 @@ The package version is automatically generated from the git tag by [`setuptools_
 
 Here's a list of alternative projects with code for computing semantic similarity measures on ontologies:
 
+- [Ontology Access Kit](https://incatools.github.io/ontology-access-kit/datamodels/similarity/index.html) (OAK) in Python.
 - [Semantic Measures Library & ToolKit](https://www.semantic-measures-library.org/sml/) at [sharispe/slib](https://github.com/sharispe/slib) in Java.
 - [DiShIn](http://labs.rd.ciencias.ulisboa.pt/dishin/) at [lasigeBioTM/DiShIn](https://github.com/lasigeBioTM/DiShIn) in Python.
 - [Sematch](http://sematch.gsi.upm.es/) at [gsi-upm/sematch](https://github.com/gsi-upm/sematch) in Python.
