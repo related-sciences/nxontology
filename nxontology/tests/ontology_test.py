@@ -110,7 +110,7 @@ def test_nxontology_disconnected(disconnected_nxo: NXOntology[str]) -> None:
     assert disconnected_nxo.roots == {"metal", "tree", "water"}
     assert not networkx.is_weakly_connected(disconnected_nxo.graph)
     with pytest.raises(ValueError, match="has multiple roots"):
-        disconnected_nxo.root
+        _root = disconnected_nxo.root
 
 
 def test_set_graph_attributes(metal_nxo: NXOntology[str]) -> None:

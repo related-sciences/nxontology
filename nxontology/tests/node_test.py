@@ -51,7 +51,7 @@ def test_node_info_multiple_parents(metal_nxo_frozen: NXOntology[str]) -> None:
     silver = metal_nxo_frozen.node_info("silver")
     assert silver.parents == {"precious", "coinage"}
     with pytest.raises(ValueError, match="has multiple parents"):
-        silver.parent
+        _parent = silver.parent
     paths_from_roots = list(silver.paths_from_roots)
     assert len(paths_from_roots) == 2
 
