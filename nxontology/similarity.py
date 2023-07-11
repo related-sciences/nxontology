@@ -125,17 +125,17 @@ class SimilarityIC(Similarity[Node]):
 
     def __init__(
         self,
-        graph: NXOntology[Node],
+        nxo: NXOntology[Node],
         node_0: Node,
         node_1: Node,
         ic_metric: str = "intrinsic_ic_sanchez",
     ):
-        super().__init__(graph, node_0, node_1)
+        super().__init__(nxo, node_0, node_1)
 
-        if ic_metric not in Node_Info.ic_metrics:
+        if ic_metric not in nxo.node_info_class.ic_metrics:
             raise ValueError(
                 f"{ic_metric!r} is not a supported ic_metric. "
-                f"Choose from: {', '.join(Node_Info.ic_metrics)}."
+                f"Choose from: {', '.join(nxo.node_info_class.ic_metrics)}."
             )
         self.ic_metric = ic_metric
         self.ic_metric_scaled = f"{ic_metric}_scaled"

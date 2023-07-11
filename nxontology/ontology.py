@@ -29,8 +29,13 @@ class NXOntology(Freezable, Generic[Node]):
     Edges should go from general to more specific.
     """
 
-    def __init__(self, graph: nx.DiGraph | None = None):
+    def __init__(
+        self,
+        graph: nx.DiGraph | None = None,
+        node_info_class: type[Node_Info[Node]] = Node_Info,
+    ):
         self.graph = nx.DiGraph(graph)
+        self.node_info_class = node_info_class
         if graph is None:
             # Store the nxontology version that created the graph as metadata,
             # in case there are compatability issues in the future.
@@ -215,9 +220,9 @@ class NXOntology(Freezable, Generic[Node]):
         If frozen, cache node info in `self._node_info_cache`.
         """
         if not self.frozen:
-            return Node_Info(self, node)
+            return self.node_info_class(self, node)
         if node not in self._node_info_cache:
-            self._node_info_cache[node] = Node_Info(self, node)
+            self._node_info_cache[node] = self.node_info_class(self, node)
         return self._node_info_cache[node]
 
     @cache_on_frozen
