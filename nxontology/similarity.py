@@ -4,11 +4,11 @@ import math
 from typing import TYPE_CHECKING, Any, Generic
 
 if TYPE_CHECKING:
-    from nxontology.ontology import NXOntology
+    from nxontology.ontology import NXOntologyBase
 
 from networkx import shortest_path_length
 
-from nxontology.node import NodeInfo, NodeT
+from nxontology.node import NodeInfo, NodeInfoT, NodeT
 from nxontology.utils import Freezable, cache_on_frozen
 
 
@@ -29,7 +29,9 @@ class Similarity(Freezable, Generic[NodeT]):
         "batet_log",
     ]
 
-    def __init__(self, nxo: NXOntology[NodeT], node_0: NodeT, node_1: NodeT):
+    def __init__(
+        self, nxo: NXOntologyBase[NodeT, NodeInfoT], node_0: NodeT, node_1: NodeT
+    ):
         self.nxo = nxo
         self.node_0 = node_0
         self.node_1 = node_1
@@ -125,7 +127,7 @@ class SimilarityIC(Similarity[NodeT]):
 
     def __init__(
         self,
-        nxo: NXOntology[NodeT],
+        nxo: NXOntologyBase[NodeT],
         node_0: NodeT,
         node_1: NodeT,
         ic_metric: str = "intrinsic_ic_sanchez",
