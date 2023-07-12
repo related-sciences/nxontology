@@ -16,6 +16,7 @@ if TYPE_CHECKING:
 # Type definitions. networkx does not declare types.
 # https://github.com/networkx/networkx/issues/3988#issuecomment-639969263
 NodeT = TypeVar("NodeT", bound=Hashable)
+NodeInfoT = TypeVar("NodeInfoT")
 
 
 class NodeInfo(Freezable, Generic[NodeT]):
@@ -35,7 +36,7 @@ class NodeInfo(Freezable, Generic[NodeT]):
     Each ic_metric has a scaled version accessible by adding a _scaled suffix.
     """
 
-    def __init__(self, nxo: NXOntology[NodeT], node: NodeT):
+    def __init__(self, nxo: NXOntology[NodeT, NodeInfoT], node: NodeT):
         if node not in nxo.graph:
             raise NodeNotFound(f"{node} not in graph.")
         self.nxo = nxo

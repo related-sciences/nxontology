@@ -3,6 +3,7 @@ from __future__ import annotations
 import itertools
 import json
 import logging
+from abc import abstractmethod
 from os import PathLike, fspath
 from typing import Any, Generic, Iterable, cast
 
@@ -12,7 +13,7 @@ from networkx.algorithms.cycles import simple_cycles
 from networkx.algorithms.isolate import isolates
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
 
-from nxontology.node import NodeT
+from nxontology.node import NodeInfoT, NodeT
 
 from .exceptions import DuplicateError, NodeNotFound
 from .node import NodeInfo
@@ -22,7 +23,7 @@ from .utils import Freezable, cache_on_frozen, get_datetime_now, get_nxontology_
 logger = logging.getLogger(__name__)
 
 
-class NXOntology(Freezable, Generic[NodeT]):
+class NXOntologyBase(Freezable, Generic[NodeT, NodeInfoT]):
     """
     Encapsulate a networkx.DiGraph to represent an ontology.
     Regarding edge directionality, parent terms should point to child term.
@@ -77,7 +78,7 @@ class NXOntology(Freezable, Generic[NodeT]):
             write_file.write("\n")  # json.dump does not include a trailing newline
 
     @classmethod
-    def read_node_link_json(cls, path: str | PathLike[str]) -> NXOntology[NodeT]:
+    def read_node_link_json(cls, path: str | PathLike[str]) -> NXOntologyBase[NodeT]:
         """
         Retrun a new graph from node-link format as written by `write_node_link_json`.
         """
@@ -213,7 +214,8 @@ class NXOntology(Freezable, Generic[NodeT]):
             yield metrics
 
     @classmethod
-    def _get_node_info_cls(cls) -> type[NodeInfo[NodeT]]:
+    @abstractmethod
+    def _get_node_info_cls(cls) -> type[NodeInfoT]:
         """
         Return the Node_Info class to use for this ontology.
         Subclasses can override this to use a custom Node_Info class.
@@ -222,7 +224,7 @@ class NXOntology(Freezable, Generic[NodeT]):
         """
         return NodeInfo
 
-    def node_info(self, node: NodeT) -> NodeInfo[NodeT]:
+    def node_info(self, node: NodeT) -> NodeInfoT:
         """
         Return Node_Info instance for `node`.
         If frozen, cache node info in `self._node_info_cache`.
@@ -306,3 +308,9 @@ class NXOntology(Freezable, Generic[NodeT]):
             self.graph.graph["node_identifier_attribute"] = node_identifier_attribute
         if node_url_attribute:
             self.graph.graph["node_url_attribute"] = node_url_attribute
+
+
+class NXOntology(NXOntologyBase[NodeT, NodeInfo[NodeT]]):
+    @classmethod
+    def _get_node_info_cls(cls) -> type[NodeInfo[NodeT]]:
+        return NodeInfo
