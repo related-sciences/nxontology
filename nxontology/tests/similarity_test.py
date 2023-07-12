@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 
 from nxontology.examples import create_disconnected_nxo, create_metal_nxo
-from nxontology.node import Node_Info
+from nxontology.node import NodeInfo
 from nxontology.ontology import NXOntology
 from nxontology.similarity import Similarity, SimilarityIC
 
@@ -74,7 +74,7 @@ def get_similarity_tsv(nxo: NXOntology[str]) -> str:
     sims = nxo.compute_similarities(
         source_nodes=nodes,
         target_nodes=nodes,
-        ic_metrics=Node_Info.ic_metrics,
+        ic_metrics=NodeInfo.ic_metrics,
     )
     sim_df = pd.DataFrame(sims)
     tsv = sim_df.to_csv(sep="\t", index=False, float_format="%.3g", lineterminator="\n")

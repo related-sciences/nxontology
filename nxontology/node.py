@@ -15,10 +15,10 @@ if TYPE_CHECKING:
 
 # Type definitions. networkx does not declare types.
 # https://github.com/networkx/networkx/issues/3988#issuecomment-639969263
-Node = TypeVar("Node", bound=Hashable)
+NodeT = TypeVar("NodeT", bound=Hashable)
 
 
-class Node_Info(Freezable, Generic[Node]):
+class NodeInfo(Freezable, Generic[NodeT]):
     """
     Compute metrics and values for a node of an NXOntology.
     Includes intrinsic information content (IC) metrics.
@@ -35,7 +35,7 @@ class Node_Info(Freezable, Generic[Node]):
     Each ic_metric has a scaled version accessible by adding a _scaled suffix.
     """
 
-    def __init__(self, nxo: NXOntology[Node], node: Node):
+    def __init__(self, nxo: NXOntology[NodeT], node: NodeT):
         if node not in nxo.graph:
             raise NodeNotFound(f"{node} not in graph.")
         self.nxo = nxo
@@ -98,12 +98,12 @@ class Node_Info(Freezable, Generic[Node]):
         return data
 
     @property
-    def parents(self) -> set[Node]:
+    def parents(self) -> set[NodeT]:
         """Direct parent nodes of this node."""
         return set(self.nxo.graph.predecessors(self.node))
 
     @property
-    def parent(self) -> Node | None:
+    def parent(self) -> NodeT | None:
         """
         Sole parent of this node, or None if this node is a root.
         If this node has multiple parents, raise ValueError.
@@ -118,13 +118,13 @@ class Node_Info(Freezable, Generic[Node]):
         raise ValueError(f"Node {self!r} has multiple parents.")
 
     @property
-    def children(self) -> set[Node]:
+    def children(self) -> set[NodeT]:
         """Direct child nodes of this node."""
         return set(self.nxo.graph.successors(self.node))
 
     @property
     @cache_on_frozen
-    def ancestors(self) -> set[Node]:
+    def ancestors(self) -> set[NodeT]:
         """
         Get ancestors of node in graph, including the node itself.
         Ancestors refers to more general concepts in an ontology,
@@ -137,7 +137,7 @@ class Node_Info(Freezable, Generic[Node]):
 
     @property
     @cache_on_frozen
-    def descendants(self) -> set[Node]:
+    def descendants(self) -> set[NodeT]:
         """
         Get descendants of node in graph, including the node itself.
         Descendants refers to more specific concepts in an ontology,
@@ -160,13 +160,13 @@ class Node_Info(Freezable, Generic[Node]):
 
     @property
     @cache_on_frozen
-    def roots(self) -> set[Node]:
+    def roots(self) -> set[NodeT]:
         """Ancestors of this node that are roots (top-level)."""
         return self.ancestors & self.nxo.roots
 
     @property
-    def leaves(self) -> set[Node]:
-        """Descendents of this node that are leaves."""
+    def leaves(self) -> set[NodeT]:
+        """Descendants of this node that are leaves."""
         return self.descendants & self.nxo.leaves
 
     @property
@@ -181,14 +181,14 @@ class Node_Info(Freezable, Generic[Node]):
         return depth
 
     @property
-    def paths_from_roots(self) -> Iterator[list[Node]]:
+    def paths_from_roots(self) -> Iterator[list[NodeT]]:
         for root in self.roots:
             yield from nx.all_simple_paths(
                 self.nxo.graph, source=root, target=self.node
             )
 
     @property
-    def paths_to_leaves(self) -> Iterator[list[Node]]:
+    def paths_to_leaves(self) -> Iterator[list[NodeT]]:
         yield from nx.all_simple_paths(
             self.nxo.graph, source=self.node, target=self.leaves
         )

@@ -12,17 +12,17 @@ from networkx.algorithms.cycles import simple_cycles
 from networkx.algorithms.isolate import isolates
 from networkx.readwrite.json_graph import node_link_data, node_link_graph
 
-from nxontology.node import Node
+from nxontology.node import NodeT
 
 from .exceptions import DuplicateError, NodeNotFound
-from .node import Node_Info
+from .node import NodeInfo
 from .similarity import SimilarityIC
 from .utils import Freezable, cache_on_frozen, get_datetime_now, get_nxontology_version
 
 logger = logging.getLogger(__name__)
 
 
-class NXOntology(Freezable, Generic[Node]):
+class NXOntology(Freezable, Generic[NodeT]):
     """
     Encapsulate a networkx.DiGraph to represent an ontology.
     Regarding edge directionality, parent terms should point to child term.
@@ -39,7 +39,7 @@ class NXOntology(Freezable, Generic[Node]):
             # in case there are compatability issues in the future.
             self._add_nxontology_metadata()
         self.check_is_dag()
-        self._node_info_cache: dict[Node, Node_Info[Node]] = {}
+        self._node_info_cache: dict[NodeT, NodeInfo[NodeT]] = {}
 
     def _add_nxontology_metadata(self) -> None:
         self.graph.graph["nxontology_version"] = get_nxontology_version()
@@ -77,7 +77,7 @@ class NXOntology(Freezable, Generic[Node]):
             write_file.write("\n")  # json.dump does not include a trailing newline
 
     @classmethod
-    def read_node_link_json(cls, path: str | PathLike[str]) -> NXOntology[Node]:
+    def read_node_link_json(cls, path: str | PathLike[str]) -> NXOntology[NodeT]:
         """
         Retrun a new graph from node-link format as written by `write_node_link_json`.
         """
@@ -90,7 +90,7 @@ class NXOntology(Freezable, Generic[Node]):
         nxo = cls(digraph)
         return nxo
 
-    def add_node(self, node_for_adding: Node, **attr: Any) -> None:
+    def add_node(self, node_for_adding: NodeT, **attr: Any) -> None:
         """
         Like networkx.DiGraph.add_node but raises a DuplicateError
         if the node already exists.
@@ -99,7 +99,7 @@ class NXOntology(Freezable, Generic[Node]):
             raise DuplicateError(f"node already in graph: {node_for_adding}")
         self.graph.add_node(node_for_adding, **attr)
 
-    def add_edge(self, u_of_edge: Node, v_of_edge: Node, **attr: Any) -> None:
+    def add_edge(self, u_of_edge: NodeT, v_of_edge: NodeT, **attr: Any) -> None:
         """
         Like networkx.DiGraph.add_edge but
         raises a NodeNotFound if either node does not exist
@@ -116,7 +116,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @property
     @cache_on_frozen
-    def roots(self) -> set[Node]:
+    def roots(self) -> set[NodeT]:
         """
         Return all top-level nodes, including isolates.
         """
@@ -127,7 +127,7 @@ class NXOntology(Freezable, Generic[Node]):
         return roots
 
     @property
-    def root(self) -> Node:
+    def root(self) -> NodeT:
         """
         Sole root of this directed acyclic graph.
         If this ontology has multiple roots, raise ValueError.
@@ -142,7 +142,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @property
     @cache_on_frozen
-    def leaves(self) -> set[Node]:
+    def leaves(self) -> set[NodeT]:
         """
         Return all bottom-level nodes, including isolates.
         """
@@ -154,7 +154,7 @@ class NXOntology(Freezable, Generic[Node]):
 
     @property
     @cache_on_frozen
-    def isolates(self) -> set[Node]:
+    def isolates(self) -> set[NodeT]:
         """
         Return disconnected nodes.
         """
@@ -175,17 +175,17 @@ class NXOntology(Freezable, Generic[Node]):
 
     def similarity(
         self,
-        node_0: Node,
-        node_1: Node,
+        node_0: NodeT,
+        node_1: NodeT,
         ic_metric: str = "intrinsic_ic_sanchez",
-    ) -> SimilarityIC[Node]:
+    ) -> SimilarityIC[NodeT]:
         """SimilarityIC instance for the specified nodes"""
         return SimilarityIC(self, node_0, node_1, ic_metric)
 
     def similarity_metrics(
         self,
-        node_0: Node,
-        node_1: Node,
+        node_0: NodeT,
+        node_1: NodeT,
         ic_metric: str = "intrinsic_ic_sanchez",
         keys: list[str] | None = None,
     ) -> dict[str, Any]:
@@ -197,8 +197,8 @@ class NXOntology(Freezable, Generic[Node]):
 
     def compute_similarities(
         self,
-        source_nodes: Iterable[Node],
-        target_nodes: Iterable[Node],
+        source_nodes: Iterable[NodeT],
+        target_nodes: Iterable[NodeT],
         ic_metrics: list[str] | tuple[str, ...] = ("intrinsic_ic_sanchez",),
     ) -> Iterable[dict[str, Any]]:
         """
@@ -213,16 +213,16 @@ class NXOntology(Freezable, Generic[Node]):
             yield metrics
 
     @classmethod
-    def _get_node_info_cls(cls) -> type[Node_Info[Node]]:
+    def _get_node_info_cls(cls) -> type[NodeInfo[NodeT]]:
         """
         Return the Node_Info class to use for this ontology.
         Subclasses can override this to use a custom Node_Info class.
         For the complexity of typing this method, see
         <https://github.com/related-sciences/nxontology/pull/26>.
         """
-        return Node_Info
+        return NodeInfo
 
-    def node_info(self, node: Node) -> Node_Info[Node]:
+    def node_info(self, node: NodeT) -> NodeInfo[NodeT]:
         """
         Return Node_Info instance for `node`.
         If frozen, cache node info in `self._node_info_cache`.
@@ -235,8 +235,8 @@ class NXOntology(Freezable, Generic[Node]):
         return self._node_info_cache[node]
 
     @cache_on_frozen
-    def _get_name_to_node_info(self) -> dict[str, Node_Info[Node]]:
-        name_to_node_info: dict[str, Node_Info[Node]] = {}
+    def _get_name_to_node_info(self) -> dict[str, NodeInfo[NodeT]]:
+        name_to_node_info: dict[str, NodeInfo[NodeT]] = {}
         for node in self.graph:
             info = self.node_info(node)
             name = info.name
@@ -249,7 +249,7 @@ class NXOntology(Freezable, Generic[Node]):
             name_to_node_info[name] = info
         return name_to_node_info
 
-    def node_info_by_name(self, name: str) -> Node_Info[Node]:
+    def node_info_by_name(self, name: str) -> NodeInfo[NodeT]:
         """
         Return Node_Info instance using a lookup by name.
         """

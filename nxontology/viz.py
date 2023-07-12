@@ -5,13 +5,13 @@ from typing import Iterable
 from networkx.drawing.nx_agraph import to_agraph
 from pygraphviz.agraph import AGraph
 
-from nxontology.node import Node, Node_Info
+from nxontology.node import NodeInfo, NodeT
 from nxontology.similarity import SimilarityIC
 
 
 def create_similarity_graphviz(
-    sim: SimilarityIC[Node],
-    nodes: Iterable[Node] | None = None,
+    sim: SimilarityIC[NodeT],
+    nodes: Iterable[NodeT] | None = None,
 ) -> AGraph:
     """
     Create a pygraphviz AGraph to render the similarity subgraph with graphviz.
@@ -81,7 +81,7 @@ def create_similarity_graphviz(
     return gviz
 
 
-def get_verbose_node_label(info: Node_Info[Node]) -> str:
+def get_verbose_node_label(info: NodeInfo[NodeT]) -> str:
     """Return verbose label like 'name (identifier)'."""
     verbose_label = info.name
     assert isinstance(verbose_label, str)

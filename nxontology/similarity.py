@@ -8,11 +8,11 @@ if TYPE_CHECKING:
 
 from networkx import shortest_path_length
 
-from nxontology.node import Node, Node_Info
+from nxontology.node import NodeInfo, NodeT
 from nxontology.utils import Freezable, cache_on_frozen
 
 
-class Similarity(Freezable, Generic[Node]):
+class Similarity(Freezable, Generic[NodeT]):
     """
     Compute intrinsic similarity metrics for a pair of nodes.
     """
@@ -29,7 +29,7 @@ class Similarity(Freezable, Generic[Node]):
         "batet_log",
     ]
 
-    def __init__(self, nxo: NXOntology[Node], node_0: Node, node_1: Node):
+    def __init__(self, nxo: NXOntology[NodeT], node_0: NodeT, node_1: NodeT):
         self.nxo = nxo
         self.node_0 = node_0
         self.node_1 = node_1
@@ -68,12 +68,12 @@ class Similarity(Freezable, Generic[Node]):
 
     @property
     @cache_on_frozen
-    def common_ancestors(self) -> set[Node]:
+    def common_ancestors(self) -> set[NodeT]:
         return self.info_0.ancestors & self.info_1.ancestors
 
     @property
     @cache_on_frozen
-    def union_ancestors(self) -> set[Node]:
+    def union_ancestors(self) -> set[NodeT]:
         return self.info_0.ancestors | self.info_1.ancestors
 
     @property
@@ -116,7 +116,7 @@ class Similarity(Freezable, Generic[Node]):
         return {key: getattr(self, key) for key in keys}
 
 
-class SimilarityIC(Similarity[Node]):
+class SimilarityIC(Similarity[NodeT]):
     """
     Compute intrinsic similarity metrics for a pair of nodes,
     including Information Content (IC) derived metrics.
@@ -125,9 +125,9 @@ class SimilarityIC(Similarity[Node]):
 
     def __init__(
         self,
-        nxo: NXOntology[Node],
-        node_0: Node,
-        node_1: Node,
+        nxo: NXOntology[NodeT],
+        node_0: NodeT,
+        node_1: NodeT,
         ic_metric: str = "intrinsic_ic_sanchez",
     ):
         super().__init__(nxo, node_0, node_1)
@@ -151,7 +151,7 @@ class SimilarityIC(Similarity[Node]):
         "jiang_seco",
     ]
 
-    def _get_ic(self, node_info: Node_Info[Node], ic_metric: str) -> float:
+    def _get_ic(self, node_info: NodeInfo[NodeT], ic_metric: str) -> float:
         ic = getattr(node_info, ic_metric)
         assert isinstance(ic, float)
         return ic
@@ -174,7 +174,7 @@ class SimilarityIC(Similarity[Node]):
 
     @property
     @cache_on_frozen
-    def _resnik_mica(self) -> tuple[float, Node | None]:
+    def _resnik_mica(self) -> tuple[float, NodeT | None]:
         if not self.common_ancestors:
             return 0.0, None
         resnik, mica = max(
@@ -185,7 +185,7 @@ class SimilarityIC(Similarity[Node]):
         return resnik, mica
 
     @property
-    def mica(self) -> Node | None:
+    def mica(self) -> NodeT | None:
         """
         Most informative common ancestor.
         None if no common ancestors exist.

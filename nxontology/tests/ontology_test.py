@@ -6,7 +6,7 @@ import networkx
 import pytest
 
 from nxontology.exceptions import DuplicateError, NodeNotFound
-from nxontology.node import Node_Info
+from nxontology.node import NodeInfo
 from nxontology.ontology import NXOntology
 
 
@@ -156,7 +156,7 @@ def test_node_info_not_found(metal_nxo_frozen: NXOntology[str]) -> None:
 
 
 def test_custom_node_info_class() -> None:
-    class CustomNodeInfo(Node_Info[str]):
+    class CustomNodeInfo(NodeInfo[str]):
         @property
         def custom_property(self) -> str:
             return "custom"

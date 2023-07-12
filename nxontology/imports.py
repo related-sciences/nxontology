@@ -11,7 +11,7 @@ from pronto.term import Term
 
 from nxontology import NXOntology
 from nxontology.exceptions import NodeNotFound
-from nxontology.node import Node
+from nxontology.node import NodeT
 
 logger = logging.getLogger(__name__)
 
@@ -86,21 +86,21 @@ def from_file(handle: BinaryIO | str | PathLike[AnyStr]) -> NXOntology[str]:
 
 def _pronto_edges_for_term(
     term: Term, default_rel_type: str = "is a"
-) -> list[tuple[Node, Node, str]]:
+) -> list[tuple[NodeT, NodeT, str]]:
     """
     Extract edges including "is a" relationships for a Pronto term.
     https://github.com/althonos/pronto/issues/119#issuecomment-956541286
     """
     rels = []
-    source_id = cast(Node, term.id)
+    source_id = cast(NodeT, term.id)
     for target in term.superclasses(distance=1, with_self=False):
-        rels.append((source_id, cast(Node, target.id), default_rel_type))
+        rels.append((source_id, cast(NodeT, target.id), default_rel_type))
     for rel_type, targets in term.relationships.items():
         for target in sorted(targets):
             rels.append(
                 (
-                    cast(Node, term.id),
-                    cast(Node, target.id),
+                    cast(NodeT, term.id),
+                    cast(NodeT, target.id),
                     rel_type.name or rel_type.id,
                 )
             )
